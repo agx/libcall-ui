@@ -156,7 +156,7 @@ timeout_cb (CuiCallDisplay *self)
   g_return_val_if_fail (CUI_IS_CALL_DISPLAY (self), FALSE);
 
   if (!self->call)
-    return FALSE;
+    return G_SOURCE_REMOVE;
 
   elapsed = g_timer_elapsed (self->timer, NULL);
 
@@ -183,7 +183,7 @@ timeout_cb (CuiCallDisplay *self)
   gtk_label_set_text (self->status, str->str);
 
   g_string_free (str, TRUE);
-  return TRUE;
+  return G_SOURCE_CONTINUE;
 
 #undef DAY
 #undef HOUR
