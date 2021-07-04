@@ -155,8 +155,10 @@ timeout_cb (CuiCallDisplay *self)
 
   g_return_val_if_fail (CUI_IS_CALL_DISPLAY (self), FALSE);
 
-  if (!self->call)
+  if (!self->call) {
+    self->timeout = 0;
     return G_SOURCE_REMOVE;
+  }
 
   elapsed = g_timer_elapsed (self->timer, NULL);
 
