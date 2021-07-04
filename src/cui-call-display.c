@@ -194,12 +194,7 @@ timeout_cb (CuiCallDisplay *self)
 static void
 stop_timeout (CuiCallDisplay *self)
 {
-  if (self->timeout == 0) {
-    return;
-  }
-
-  g_source_remove (self->timeout);
-  self->timeout = 0;
+  g_clear_handle_id (&self->timeout, g_source_remove);
 }
 
 
