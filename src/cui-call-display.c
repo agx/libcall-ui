@@ -62,6 +62,7 @@ struct _CuiCallDisplay {
 
   GCancellable    *cancel;
   GtkRevealer     *dial_pad_revealer;
+  GtkToggleButton *dial_pad;
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -367,7 +368,7 @@ insert_text_cb (GtkEditable    *editable,
 {
   gint end_pos = -1;
 
-  // cui_call_tone_start (self->call, *text);
+  cui_call_send_dtmf (self->call, text);
 
   // Make sure that new chars are inserted at the end of the input
   *position = end_pos;
@@ -431,6 +432,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/ui/cui-call-display.ui");
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, dial_pad);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, incoming_phone_call);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, primary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, secondary_contact_info);
@@ -536,6 +538,12 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
                            self,
                            G_CONNECT_SWAPPED);
   on_call_state_changed (self, NULL, call);
+
+  g_object_bind_property (call,
+                          "can-dtmf",
+                          self->dial_pad,
+                          "sensitive",
+                          G_BINDING_SYNC_CREATE);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }
