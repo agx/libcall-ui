@@ -76,6 +76,19 @@ cui_call_default_init (CuiCallInterface *iface)
                           "",
                           FALSE,
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY));
+
+  /**
+   * CuiCall:can-dtmf
+   *
+   * Whether the call can have DTMF
+   */
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_boolean ("can-dtmf",
+                          "",
+                          "",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY));
 }
 
 
@@ -135,6 +148,20 @@ cui_call_get_encrypted (CuiCall *self)
 }
 
 
+gboolean
+cui_call_get_can_dtmf (CuiCall *self)
+{
+  CuiCallInterface *iface;
+
+  g_return_val_if_fail (CUI_IS_CALL (self), FALSE);
+
+  iface = CUI_CALL_GET_IFACE (self);
+  g_return_val_if_fail (iface->get_can_dtmf, FALSE);
+
+  return iface->get_can_dtmf (self);
+}
+
+
 void
 cui_call_accept (CuiCall *self)
 {
@@ -160,4 +187,21 @@ cui_call_hang_up (CuiCall *self)
   g_return_if_fail (iface->hang_up);
 
   iface->hang_up (self);
+}
+
+
+void
+cui_call_send_dtmf (CuiCall *self, const gchar *dtmf)
+{
+  CuiCallInterface *iface;
+
+  g_return_if_fail (CUI_IS_CALL (self));
+
+  if (!cui_call_get_can_dtmf (self))
+    return;
+
+  iface = CUI_CALL_GET_IFACE (self);
+  g_return_if_fail (iface->send_dtmf);
+
+  iface->send_dtmf (self, dtmf);
 }

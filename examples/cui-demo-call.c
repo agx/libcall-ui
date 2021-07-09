@@ -16,6 +16,7 @@ enum {
   PROP_ID,
   PROP_STATE,
   PROP_ENCRYPED,
+  PROP_CAN_DTMF,
   PROP_LAST_PROP,
 };
 
@@ -27,6 +28,7 @@ struct _CuiDemoCall
   gchar        *display_name;
   CuiCallState  state;
   gboolean      encrypted;
+  gboolean      can_dtmf;
 };
 
 static void cui_demo_cui_call_interface_init (CuiCallInterface *iface);
@@ -56,6 +58,9 @@ cui_demo_call_get_property (GObject    *object,
   case PROP_ENCRYPED:
     g_value_set_boolean (value, self->encrypted);
     break;
+  case PROP_CAN_DTMF:
+    g_value_set_boolean (value, self->can_dtmf);
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -84,6 +89,10 @@ cui_demo_call_class_init (CuiDemoCallClass *klass)
   g_object_class_override_property (object_class,
 				    PROP_ENCRYPED,
                                     "encrypted");
+
+  g_object_class_override_property (object_class,
+                                    PROP_CAN_DTMF,
+                                    "can-dtmf");
 }
 
 
@@ -120,6 +129,15 @@ cui_demo_call_get_encrypted (CuiCall *call)
   g_return_val_if_fail (CUI_IS_DEMO_CALL (call), CUI_CALL_STATE_UNKNOWN);
 
   return CUI_DEMO_CALL (call)->encrypted;
+}
+
+
+static gboolean
+cui_demo_call_get_can_dtmf (CuiCall *call)
+{
+  g_return_val_if_fail (CUI_IS_DEMO_CALL (call), FALSE);
+
+  return CUI_DEMO_CALL (call)->can_dtmf;
 }
 
 
@@ -166,15 +184,26 @@ cui_demo_call_hang_up (CuiCall *call)
 
 
 static void
+cui_demo_call_send_dtmf (CuiCall *call, const gchar *dtmf)
+{
+  g_return_if_fail (CUI_IS_DEMO_CALL (call));
+
+  g_message ("DTMF: %s", dtmf);
+}
+
+
+static void
 cui_demo_cui_call_interface_init (CuiCallInterface *iface)
 {
   iface->get_id = cui_demo_call_get_id;
   iface->get_display_name = cui_demo_call_get_display_name;
   iface->get_state = cui_demo_call_get_state;
   iface->get_encrypted = cui_demo_call_get_encrypted;
+  iface->get_can_dtmf = cui_demo_call_get_can_dtmf;
 
   iface->accept = cui_demo_call_accept;
   iface->hang_up = cui_demo_call_hang_up;
+  iface->send_dtmf = cui_demo_call_send_dtmf;
 }
 
 
@@ -184,6 +213,7 @@ cui_demo_call_init (CuiDemoCall *self)
   self->display_name = g_strdup ("John Doe");
   self->id = "0800 1234";
   self->state = CUI_CALL_STATE_INCOMING;
+  self->can_dtmf = TRUE;
 }
 
 
