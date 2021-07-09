@@ -145,7 +145,7 @@ cui_call_accept (CuiCall *self)
   iface = CUI_CALL_GET_IFACE (self);
   g_return_if_fail (iface->accept);
 
-  return iface->accept (self);
+  iface->accept (self);
 }
 
 
@@ -159,5 +159,5 @@ cui_call_hang_up (CuiCall *self)
   iface = CUI_CALL_GET_IFACE (self);
   g_return_if_fail (iface->hang_up);
 
-  return iface->hang_up (self);
+  iface->hang_up (self);
 }
