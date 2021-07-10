@@ -102,7 +102,7 @@ subdir('po')
 subdir('src')
 subdir('examples')
 #subdir('tests')
-#subdir('docs')
+subdir('doc')
 
 summary = [
   '',
