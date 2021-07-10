@@ -238,8 +238,15 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_DIALING:
-  case CUI_CALL_STATE_ALERTING:
+    /* Start timer when dialing */
+    g_timer_start (self->timer);
+    G_GNUC_FALLTHROUGH;
   case CUI_CALL_STATE_ACTIVE:
+    /* Start timer on active call latest */
+    if (!g_timer_is_active (self->timer))
+	g_timer_start (self->timer);
+    G_GNUC_FALLTHROUGH;
+  case CUI_CALL_STATE_ALERTING:
   case CUI_CALL_STATE_HELD:
   case CUI_CALL_STATE_WAITING:
     gtk_style_context_add_class
@@ -260,6 +267,7 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_DISCONNECTED:
+    g_timer_stop (self->timer);
     call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
                                   on_libcallaudio_async_finished,
                                   NULL);
@@ -355,6 +363,7 @@ cui_call_display_constructed (GObject *object)
   CuiCallDisplay *self = CUI_CALL_DISPLAY (object);
 
   self->timer = g_timer_new ();
+  g_timer_stop (self->timer);
 
   G_OBJECT_CLASS (cui_call_display_parent_class)->constructed (object);
 }
