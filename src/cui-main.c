@@ -63,7 +63,7 @@ cui_init_icons (void)
 
 /**
  * cui_init:
- * @call_audio_init: Whether to initialize libcallaudio
+ * @init_callaudio: Whether to initialize libcallaudio
  *
  * Call this function just after initializing GTK, if you are using
  * #GtkApplication it means it must be called when the #GApplication::startup

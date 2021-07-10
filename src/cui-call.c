@@ -9,16 +9,18 @@
 #include "cui-call.h"
 #include "cui-enums.h"
 
-/**
- * SECTION:call-ui
- * @short_description: Interface to a call
- * @Title: CuiCall
- *
- * #CuiCall is an interface that represents a call being
- * diplayed and interacted with on a #CuiDisplay.
- **/
-
 G_DEFINE_INTERFACE (CuiCall, cui_call, G_TYPE_OBJECT)
+
+
+/**
+ * CuiCall:
+ *
+ * An interface for phone calls.
+ *
+ * Objects implementing the `CuiCall` interface can be handled in a
+ * [class@Cui.CallDisplay]. [class@Cui.CallDisplay] will invoke
+ * this interface's implementation to accept, hang-up calls. etc.
+ */
 
 void
 cui_call_default_init (CuiCallInterface *iface)
@@ -40,7 +42,7 @@ cui_call_default_init (CuiCallInterface *iface)
   /**
    * CuiCall:id:
    *
-   * The calls' id, e.g. a phone number.
+   * The call's id, e.g. a phone number.
    */
   g_object_interface_install_property (
     iface,
@@ -53,7 +55,7 @@ cui_call_default_init (CuiCallInterface *iface)
   /**
    * CuiCall:state:
    *
-   * The calls' id, e.g. a phone number.
+   * The call's state.
    */
   g_object_interface_install_property (
     iface,
@@ -161,7 +163,12 @@ cui_call_get_can_dtmf (CuiCall *self)
   return iface->get_can_dtmf (self);
 }
 
-
+/**
+ * cui_call_accept:
+ * @self: The call
+ *
+ * Accept the call.
+ */
 void
 cui_call_accept (CuiCall *self)
 {
@@ -175,7 +182,12 @@ cui_call_accept (CuiCall *self)
   iface->accept (self);
 }
 
-
+/**
+ * cui_call_hang_up:
+ * @self: The call
+ *
+ * Hang up the call.
+ */
 void
 cui_call_hang_up (CuiCall *self)
 {
@@ -189,7 +201,13 @@ cui_call_hang_up (CuiCall *self)
   iface->hang_up (self);
 }
 
-
+/**
+ * cui_call_send_dtmf
+ * @self: The call
+ * @dtmf: The DTMF data
+ *
+ * Send DTMF to the call.
+ */
 void
 cui_call_send_dtmf (CuiCall *self, const gchar *dtmf)
 {

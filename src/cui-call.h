@@ -13,18 +13,9 @@ G_BEGIN_DECLS
 G_DECLARE_INTERFACE (CuiCall, cui_call, CUI, CALL, GObject)
 
 /**
- * CuiCall
- * @parent_iface: The parent interface
- * @get_dispaly_name: Get current calls's display name
- * @get_id: Get current calls's id
- *
- * Represents a call displayed in the ui
- */
-
-/**
  * CuiCallState:
  *
- * The call state of a #CuiCall
+ * The call state of a [iface@Cui.Call]
  */
 typedef enum
 {
@@ -38,6 +29,18 @@ typedef enum
   CUI_CALL_STATE_DISCONNECTED
 } CuiCallState;
 
+/**
+ * CuiCallInterface:
+ * @parent_iface: The parent interface
+ * @get_display_name: Get current calls's display name
+ * @get_id: Get current calls's id
+ * @get_state: Get the call's state
+ * @get_encrypted: Gets whether the call is encrypted
+ * @get_can_dtmf: Gets whether the call can handle DTMF
+ * @accept: Accept the incoming call
+ * @hang_up: Hang-up an ongoing call or reject an incoming call
+ * @send_dtmf: Send DTMF
+ */
 struct _CuiCallInterface {
   GTypeInterface parent_iface;
 
