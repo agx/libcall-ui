@@ -47,6 +47,7 @@ file_format = "{filename}#L{line}"
 
 [extra]
 content_files = [
+  "build-howto.md",
   "visual-index.md",
 ]
 content_images = [

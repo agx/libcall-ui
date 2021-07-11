@@ -1,6 +1,7 @@
 if get_option('gtk_doc')
 
 expand_content_md_files = [
+  'build-howto.md',
   'visual-index.md',
 ]
 
