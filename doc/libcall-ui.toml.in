@@ -45,3 +45,12 @@ base_url = "https://gitlab.gnome.org/guidog/libcall-ui/-/blob/main/"
 # The format for links, using "filename" and "line" for the format
 file_format = "{filename}#L{line}"
 
+[extra]
+content_files = [
+  "build-howto.md",
+  "visual-index.md",
+]
+content_images = [
+  "images/cui-call-display.png",
+]
+

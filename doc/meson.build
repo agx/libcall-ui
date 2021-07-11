@@ -1,5 +1,10 @@
 if get_option('gtk_doc')
 
+expand_content_md_files = [
+  'build-howto.md',
+  'visual-index.md',
+]
+
 toml_data = configuration_data()
 toml_data.set('VERSION', meson.project_version())
 
@@ -32,6 +37,7 @@ custom_target('libcall-ui-doc',
     '--content-dir=@0@'.format(meson.current_source_dir()),
     '@INPUT1@',
   ],
+  depend_files: [ expand_content_md_files ],
   build_by_default: true,
   install: true,
   install_dir: docs_dir,
