@@ -32,6 +32,14 @@
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 
+/**
+ * CuiCallDisplay:
+ *
+ * A [class@Gtk.Widget] that handles the UI elements of a
+ * phone call. It displays the [iface@Cui.Call]'s information and allows
+ * actions such as accepting or rejecting the call, hanging up, etc.
+ */
+
 enum {
   PROP_0,
   PROP_CALL,
@@ -472,7 +480,13 @@ cui_call_display_init (CuiCallDisplay *self)
   }
 }
 
-
+/**
+ * cui_call_display_new:
+ * @call: The call this #CuiCalLDisplay handles
+ *
+ * Creates a new #CuiCallDisplay.
+ * Returns: the new #CuiCalLDisplay
+ */
 CuiCallDisplay *
 cui_call_display_new (CuiCall *call)
 {
@@ -482,6 +496,13 @@ cui_call_display_new (CuiCall *call)
 }
 
 
+/**
+ * cui_call_display_get_call:
+ * @self: The call display
+ *
+ * Returns the current [class@CuiCall]
+ * Returns: (transfer none) (nullable): The current [class@CuiCall].
+ */
 CuiCall *
 cui_call_display_get_call (CuiCallDisplay *self)
 {
@@ -490,7 +511,14 @@ cui_call_display_get_call (CuiCallDisplay *self)
   return self->call;
 }
 
-
+/**
+ * cui_call_display_set_call:
+ * @self: The call display
+ * @call: (nullable): The current call
+ *
+ * Set a call. The current call will be removed form the display and the
+ * new call displayed instead.
+ */
 void
 cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
 {

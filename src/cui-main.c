@@ -63,14 +63,14 @@ cui_init_icons (void)
 
 /**
  * cui_init:
- * @call_audio_init: Whether to initialize libcallaudio
+ * @init_callaudio: Whether to initialize libcallaudio
  *
  * Call this function just after initializing GTK, if you are using
  * #GtkApplication it means it must be called when the #GApplication::startup
  * signal is emitted. If call-ui has already been initialized, the function
  * will simply return.
  *
- * This makes sure translations and types for the Handy library are
+ * This makes sure translations and types for the call-ui library are
  * set up properly.
  */
 void
