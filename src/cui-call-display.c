@@ -395,7 +395,10 @@ cui_call_display_dispose (GObject *object)
 {
   CuiCallDisplay *self = CUI_CALL_DISPLAY (object);
 
-  /* NOTE: we don't hold a ref on self->call */
+  if (self->call) {
+    g_object_weak_unref (G_OBJECT (self->call), (GWeakNotify) on_call_unrefed, self);
+    self->call = NULL;
+  }
 
   stop_timeout (self);
 
