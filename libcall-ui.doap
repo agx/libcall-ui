@@ -12,7 +12,7 @@
     Libcall-ui carries common user interface parts for call handling. It
     is meant to be used as a git submodule.
   </description>
-  <homepage rdf:resource="https://gitlab.gnome.org/guidog/libcall-ui" />
+  <homepage rdf:resource="https://gitlab.gnome.org/World/Phosh/libcall-ui" />
   <license rdf:resource="http://usefulinc.com/doap/licenses/lgpl" />
 
   <programming-language>C</programming-language>
