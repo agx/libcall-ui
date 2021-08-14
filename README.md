@@ -10,7 +10,7 @@ libcall-ui is licensed under the LGPLv2.1-or-later.
 ## Getting the source
 
 ```sh
-    git clone https://gitlab.gnome.org/guido/libcall-ui.git
+    git clone git@gitlab.gnome.org:World/Phosh/libcall-ui.git
     cd libcall-ui
 ```
 
@@ -33,7 +33,10 @@ You can run the contained demo via:
 
     _build/examples/call-ui-demo
 
+# API docs
+API documentation is available at https://world.pages.gitlab.gnome.org/Phosh/libcall-ui/
+
 # Getting in Touch
-* Issue tracker: https://gitlab.gnome.org/guidog/libcall-ui/issues
+* Issue tracker: https://gitlab.gnome.org/World/Phosh/libcall-ui/-/issues
 * Matrix: https://im.puri.sm/#/room/#calls:talk.puri.sm
 
