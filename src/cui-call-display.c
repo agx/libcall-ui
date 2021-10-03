@@ -545,7 +545,7 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
 
   if (self->call != NULL) {
     g_object_weak_unref (G_OBJECT (self->call), (GWeakNotify) on_call_unrefed, self);
-    g_signal_handlers_disconnect_by_data (call, self);
+    g_signal_handlers_disconnect_by_data (self->call, self);
   }
 
   self->call = call;
