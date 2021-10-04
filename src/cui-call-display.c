@@ -312,13 +312,20 @@ on_call_state_changed (CuiCallDisplay *self,
 
 
 static void
+reset_ui (CuiCallDisplay *self)
+{
+  gtk_label_set_label (self->primary_contact_info, "");
+  gtk_label_set_label (self->secondary_contact_info, "");
+}
+
+static void
 on_call_unrefed (CuiCallDisplay *self,
                  CuiCall        *call)
 {
   g_debug ("Dropping call %p", call);
   self->call = NULL;
-  gtk_label_set_label (self->primary_contact_info, "");
   self->dtmf_bind = NULL;
+  reset_ui (self);
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }
 
@@ -555,7 +562,7 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
   self->call = call;
   gtk_widget_set_sensitive (GTK_WIDGET (self), !!self->call);
   if (self->call == NULL) {
-    /* TODO clean up UI */
+    reset_ui (self);
     return;
   }
 
