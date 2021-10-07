@@ -57,6 +57,7 @@ libcall_ui_dep = declare_dependency(
 if get_option('gtk_doc')
   libcall_ui_gir_extra_args = [
     '--c-include=call-ui.h',
+    '-L@0@'.format(meson.current_build_dir()),
     '--quiet',
     '-DLIBCALL_UI_COMPILATION',
    ]
