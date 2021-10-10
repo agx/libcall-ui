@@ -15,7 +15,7 @@ enum {
   PROP_DISPLAY_NAME,
   PROP_ID,
   PROP_STATE,
-  PROP_ENCRYPED,
+  PROP_ENCRYPTED,
   PROP_CAN_DTMF,
   PROP_LAST_PROP,
 };
@@ -55,7 +55,7 @@ cui_demo_call_get_property (GObject    *object,
   case PROP_STATE:
     g_value_set_enum (value, self->state);
     break;
-  case PROP_ENCRYPED:
+  case PROP_ENCRYPTED:
     g_value_set_boolean (value, self->encrypted);
     break;
   case PROP_CAN_DTMF:
@@ -87,7 +87,7 @@ cui_demo_call_class_init (CuiDemoCallClass *klass)
                                     "state");
 
   g_object_class_override_property (object_class,
-				    PROP_ENCRYPED,
+                                    PROP_ENCRYPTED,
                                     "encrypted");
 
   g_object_class_override_property (object_class,
