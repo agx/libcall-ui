@@ -210,7 +210,7 @@ cui_demo_cui_call_interface_init (CuiCallInterface *iface)
 static void
 cui_demo_call_init (CuiDemoCall *self)
 {
-  self->display_name = g_strdup ("John Doe");
+  self->display_name = "John Doe";
   self->id = "0800 1234";
   self->state = CUI_CALL_STATE_INCOMING;
   self->can_dtmf = TRUE;
