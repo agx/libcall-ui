@@ -75,11 +75,11 @@ cui_demo_call_class_init (CuiDemoCallClass *klass)
   object_class->get_property = cui_demo_call_get_property;
 
   g_object_class_override_property (object_class,
-                                    PROP_DISPLAY_NAME,
+                                    PROP_ID,
                                     "id");
 
   g_object_class_override_property (object_class,
-                                    PROP_ID,
+                                    PROP_DISPLAY_NAME,
                                     "display-name");
 
   g_object_class_override_property (object_class,
