@@ -78,6 +78,7 @@ i18n  = import('i18n')
 
 root_inc = include_directories('.')
 src_inc = include_directories('src')
+tests_inc = include_directories('tests')
 
 gtk_dep = dependency('gtk+-3.0', version: '>=3.22')
 libhandy_dep = dependency('libhandy-1',
@@ -101,7 +102,7 @@ configure_file(
 subdir('po')
 subdir('src')
 subdir('examples')
-#subdir('tests')
+subdir('tests')
 subdir('doc')
 
 summary = [

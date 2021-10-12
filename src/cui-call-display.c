@@ -71,6 +71,8 @@ struct _CuiCallDisplay {
   GCancellable    *cancel;
   GtkRevealer     *dial_pad_revealer;
   GtkToggleButton *dial_pad;
+
+  GBinding        *dtmf_bind;
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -310,12 +312,20 @@ on_call_state_changed (CuiCallDisplay *self,
 
 
 static void
+reset_ui (CuiCallDisplay *self)
+{
+  gtk_label_set_label (self->primary_contact_info, "");
+  gtk_label_set_label (self->secondary_contact_info, "");
+}
+
+static void
 on_call_unrefed (CuiCallDisplay *self,
                  CuiCall        *call)
 {
   g_debug ("Dropping call %p", call);
   self->call = NULL;
-  gtk_label_set_label (self->primary_contact_info, "");
+  self->dtmf_bind = NULL;
+  reset_ui (self);
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }
 
@@ -545,13 +555,14 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
 
   if (self->call != NULL) {
     g_object_weak_unref (G_OBJECT (self->call), (GWeakNotify) on_call_unrefed, self);
-    g_signal_handlers_disconnect_by_data (call, self);
+    g_signal_handlers_disconnect_by_data (self->call, self);
+    g_clear_pointer (&self->dtmf_bind, g_binding_unbind);
   }
 
   self->call = call;
   gtk_widget_set_sensitive (GTK_WIDGET (self), !!self->call);
   if (self->call == NULL) {
-    /* TODO clean up UI */
+    reset_ui (self);
     return;
   }
 
@@ -579,11 +590,11 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
                            G_CONNECT_SWAPPED);
   on_call_state_changed (self, NULL, call);
 
-  g_object_bind_property (call,
-                          "can-dtmf",
-                          self->dial_pad,
-                          "sensitive",
-                          G_BINDING_SYNC_CREATE);
+  self->dtmf_bind = g_object_bind_property (call,
+                                            "can-dtmf",
+                                            self->dial_pad,
+                                            "sensitive",
+                                            G_BINDING_SYNC_CREATE);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }

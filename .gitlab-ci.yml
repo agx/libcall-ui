@@ -1,5 +1,6 @@
 stages:
   - build
+  - tests
   - deploy
 
 variables:
@@ -7,6 +8,7 @@ variables:
   DEPS: >-
     ccache build-essential libgtk-3-dev libcallaudio-dev libhandy-1-dev meson
     python3-toml python3-jinja2 python3-typogrify libgirepository1.0-dev git
+    xvfb
 
 before_script:
   - echo "man-db man-db/auto-update boolean false" | debconf-set-selections
@@ -48,6 +50,13 @@ doc:
   artifacts:
     paths:
       - _doc/
+
+tests:
+  image: debian:bookworm
+  stage: tests
+  script:
+    - meson ${BUILD_OPTS} _build
+    - xvfb-run ninja -C _build test
 
 pages:
   stage: deploy
