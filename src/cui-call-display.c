@@ -302,6 +302,7 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_DISCONNECTED:
+    gtk_label_set_text (self->status, _("Call ended"));
     stop_timeout (self);
     break;
   case CUI_CALL_STATE_UNKNOWN:
