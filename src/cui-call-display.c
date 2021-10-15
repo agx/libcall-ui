@@ -317,6 +317,13 @@ reset_ui (CuiCallDisplay *self)
 {
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
+  gtk_label_set_text (self->status, "");
+  gtk_widget_show (GTK_WIDGET (self->answer));
+  gtk_widget_show (GTK_WIDGET (self->hang_up));
+  gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
+  gtk_widget_show (GTK_WIDGET (self->controls));
+  gtk_widget_show (GTK_WIDGET (self->status));
+  gtk_widget_show (GTK_WIDGET (self->gsm_controls));
 }
 
 static void
