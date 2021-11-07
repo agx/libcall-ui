@@ -8,5 +8,7 @@
     <file preprocess="xml-stripblanks">cui-call-display.ui</file>
     <file preprocess="xml-stripblanks">cui-encryption-indicator.ui</file>
     <file preprocess="xml-stripblanks">cui-dialpad.ui</file>
+    <file preprocess="xml-stripblanks">cui-keypad.ui</file>
+    <file preprocess="xml-stripblanks">cui-keypad-button.ui</file>
   </gresource>
 </gresources>

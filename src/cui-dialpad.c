@@ -7,6 +7,7 @@
  */
 
 #include "cui-dialpad.h"
+#include "cui-keypad.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -40,7 +41,7 @@ struct _CuiDialpad {
   GtkBox               parent_instance;
 
   GtkEntry            *keypad_entry;
-  HdyKeypad           *keypad;
+  CuiKeypad           *keypad;
   GtkButton           *dial;
   GtkButton           *backspace;
   GtkGestureLongPress *long_press_backspace_gesture;
@@ -88,7 +89,7 @@ cui_dialpad_set_property (GObject      *object,
 static void
 dial_clicked_cb (CuiDialpad *self)
 {
-  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
+  GtkEntry *entry = cui_keypad_get_entry (self->keypad);
   const char *text = gtk_entry_get_text (entry);
 
   g_signal_emit (self, signals[DIALED], 0, text);
@@ -97,7 +98,7 @@ dial_clicked_cb (CuiDialpad *self)
 static void
 backspace_clicked_cb (CuiDialpad *self)
 {
-  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
+  GtkEntry *entry = cui_keypad_get_entry (self->keypad);
 
   g_signal_emit_by_name (entry, "backspace", NULL);
 }
@@ -105,7 +106,7 @@ backspace_clicked_cb (CuiDialpad *self)
 static void
 long_press_backspace_cb (CuiDialpad *self)
 {
-  GtkEntry *entry = hdy_keypad_get_entry (self->keypad);
+  GtkEntry *entry = cui_keypad_get_entry (self->keypad);
 
   gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
 }

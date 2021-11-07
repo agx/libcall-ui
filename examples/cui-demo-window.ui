@@ -216,9 +216,26 @@
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="CuiDialpad" id="dialpad">
-                        <signal name="dialed" handler="on_dial" swapped="yes"/>
+                      <object class="HdyStatusPage">
                         <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="icon-name">input-dialpad-symbolic</property>
+                        <property name="title" translatable="yes">Dial Pad</property>
+                        <property name="description" translatable="yes">A simple dial pad to enter phone numbers.</property>
+                        <child>
+                          <object class="HdyClamp">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="maximum-size">300</property>
+                            <property name="tightening-threshold">300</property>
+                            <child>
+                              <object class="CuiDialpad" id="dialpad">
+                                <signal name="dialed" handler="on_dial" swapped="yes"/>
+                                <property name="visible">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -231,6 +248,122 @@
                     <property name="name">dialpad</property>
                     <property name="title" translatable="yes">Dial Pad</property>
                     <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="keypad_box">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="HdyStatusPage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="icon-name">input-dialpad-symbolic</property>
+                        <property name="title" translatable="yes">Keypad</property>
+                        <property name="description" translatable="yes">A number keypad.</property>
+                        <child>
+                          <object class="HdyClamp">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="maximum-size">300</property>
+                            <property name="tightening-threshold">300</property>
+                            <child>
+                              <object class="GtkBox" id="box_keypad">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">True</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">12</property>
+                                <child>
+                                  <object class="GtkListBox" id="keypad_listbox">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="selection-mode">none</property>
+                                    <child>
+                                      <object class="HdyActionRow">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="title" translatable="yes">Show letters</property>
+                                        <property name="activatable-widget">keypad_letters_visible</property>
+                                        <child>
+                                          <object class="GtkSwitch" id="keypad_letters_visible">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="valign">center</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="HdyActionRow">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="title" translatable="yes">Show symbols</property>
+                                        <property name="activatable-widget">keypad_symbols_visible</property>
+                                        <child>
+                                          <object class="GtkSwitch" id="keypad_symbols_visible">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="valign">center</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <style>
+                                      <class name="content"/>
+                                    </style>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="entry_keypad">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="CuiKeypad" id="keypad">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="halign">center</property>
+                                    <property name="symbols-visible" bind-source="keypad_symbols_visible" bind-property="state" bind-flags="sync-create | bidirectional"/>
+                                    <property name="letters-visible" bind-source="keypad_letters_visible" bind-property="state" bind-flags="sync-create | bidirectional"/>
+                                    <property name="entry">entry_keypad</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="pack-type">end</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="name">keypad</property>
+                    <property name="title" translatable="yes">Key pad</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>

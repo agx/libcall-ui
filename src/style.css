@@ -1,15 +1,12 @@
-cui-call-display keypad > grid > button, cui-call-display .dial-button, cui-call-display .delete-button,
-cui-dialpad      keypad > grid > button, cui-dialpad      .dial-button, cui-dialpad      .delete-button{
+cui-dialpad keypad > grid > button, cui-dialpad .dial-button, cui-dialpad .delete-button{
   border-radius: 9999px;
   -gtk-outline-radius: 9999px;
 }
 
-cui-call-display .dial-button,
 cui-dialpad      .dial-button {
-  padding: 19px 42px
+  padding: 19px 42px;
 }
 
-cui-call-display .delete-button,
 cui-dialpad      .delete-button {
   padding: 8px 12px;
 }

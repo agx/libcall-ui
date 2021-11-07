@@ -22,6 +22,7 @@ struct _CuiDemoWindow
 
   CuiCallDisplay      *call_display;
   CuiDialpad          *dialpad;
+  CuiKeypad           *keypad;
   CuiDemoCall         *call1;
 };
 
@@ -156,6 +157,7 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/Demo/ui/cui-demo-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, call_display);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, dialpad);
+  gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, keypad);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, content_box);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, incoming_call);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, theme_variant_image);

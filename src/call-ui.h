@@ -23,6 +23,7 @@ G_BEGIN_DECLS
 #include "cui-call.h"
 #include "cui-call-display.h"
 #include "cui-dialpad.h"
+#include "cui-keypad.h"
 #include "cui-enums.h"
 #include "cui-main.h"
 
