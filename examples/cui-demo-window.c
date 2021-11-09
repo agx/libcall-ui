@@ -72,21 +72,21 @@ on_call_state_changed (CuiDemoCall *call, GParamSpec *pspec, gpointer user_data)
     g_clear_object (&self->call1);
 
   gtk_widget_set_sensitive (GTK_WIDGET (self->incoming_call),
-			    state == CUI_CALL_STATE_DISCONNECTED);
+                            state == CUI_CALL_STATE_DISCONNECTED);
 }
 
 
 static void
 on_incoming_call_clicked (GtkWidget     *sender,
-			  CuiDemoWindow *self)
+                          CuiDemoWindow *self)
 {
   if (!self->call1) {
     self->call1 = cui_demo_call_new ();
 
     g_signal_connect (self->call1,
-		      "notify::state",
-		      G_CALLBACK (on_call_state_changed),
-		      self);
+                      "notify::state",
+                      G_CALLBACK (on_call_state_changed),
+                      self);
     on_call_state_changed (self->call1, NULL, self);
 
     cui_call_display_set_call (self->call_display, CUI_CALL (self->call1));
