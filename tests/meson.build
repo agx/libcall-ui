@@ -11,7 +11,18 @@ display_test_sources = [
   'dummy-call.c', 'dummy-call.h'
 ]
 
-t = executable('display', display_test_sources,
+dialpad_test_sources = [
+  'test-dialpad.c'
+]
+
+display_test = executable('display', display_test_sources,
+               call_ui_resources,
+               pie: true,
+               link_with : call_ui_lib,
+               dependencies : libcall_ui_dep,
+               include_directories : [src_inc, tests_inc]
+)
+dialpad_test = executable('dialpad', dialpad_test_sources,
                call_ui_resources,
                pie: true,
                link_with : call_ui_lib,
@@ -19,6 +30,8 @@ t = executable('display', display_test_sources,
                include_directories : [src_inc, tests_inc]
 )
 
-test ('display', t, env: test_env)
+test ('display', display_test, env: test_env)
+
+test ('dialpad', dialpad_test, env: test_env)
 
 endif

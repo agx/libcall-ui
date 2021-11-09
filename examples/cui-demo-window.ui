@@ -199,15 +199,38 @@
                   <object class="GtkBox" id="accept_call_box">
                     <property name="visible">True</property>
                     <property name="orientation">vertical</property>
-		    <child>
-		      <object class="CuiCallDisplay" id="call_display">
-			<property name="visible">True</property>
-		      </object>
-		    </child>
+                    <child>
+                      <object class="CuiCallDisplay" id="call_display">
+                        <property name="visible">True</property>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="name">accept-call</property>
                     <property name="title" translatable="yes">Call Display</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="dialpad_box">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="CuiDialpad" id="dialpad">
+                        <signal name="dialed" handler="on_dial" swapped="yes"/>
+                        <property name="visible">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="name">dialpad</property>
+                    <property name="title" translatable="yes">Dial Pad</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </object>

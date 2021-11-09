@@ -30,6 +30,8 @@ call_ui_public_sources = files(
  'cui-call-display.h',
  'cui-main.c',
  'cui-main.h',
+ 'cui-dialpad.c',
+ 'cui-dialpad.h',
 )
 
 call_ui_sources = [
