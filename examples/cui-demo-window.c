@@ -21,6 +21,8 @@ struct _CuiDemoWindow
   GtkButton           *incoming_call;
 
   CuiCallDisplay      *call_display;
+  CuiDialpad          *dialpad;
+  CuiKeypad           *keypad;
   CuiDemoCall         *call1;
 };
 
@@ -72,21 +74,21 @@ on_call_state_changed (CuiDemoCall *call, GParamSpec *pspec, gpointer user_data)
     g_clear_object (&self->call1);
 
   gtk_widget_set_sensitive (GTK_WIDGET (self->incoming_call),
-			    state == CUI_CALL_STATE_DISCONNECTED);
+                            state == CUI_CALL_STATE_DISCONNECTED);
 }
 
 
 static void
 on_incoming_call_clicked (GtkWidget     *sender,
-			  CuiDemoWindow *self)
+                          CuiDemoWindow *self)
 {
   if (!self->call1) {
     self->call1 = cui_demo_call_new ();
 
     g_signal_connect (self->call1,
-		      "notify::state",
-		      G_CALLBACK (on_call_state_changed),
-		      self);
+                      "notify::state",
+                      G_CALLBACK (on_call_state_changed),
+                      self);
     on_call_state_changed (self->call1, NULL, self);
 
     cui_call_display_set_call (self->call_display, CUI_CALL (self->call1));
@@ -125,6 +127,27 @@ key_pressed_cb (GtkWidget     *sender,
   return FALSE;
 }
 
+static void
+on_dial (CuiDemoWindow *self, const char number[], GtkWidget *sender)
+{
+  GtkDialogFlags flags;
+  GtkWidget *dialog;
+
+  g_debug ("Dialling %s", number);
+
+  flags = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_USE_HEADER_BAR;
+  dialog = gtk_message_dialog_new (GTK_WINDOW (self),
+                                   flags,
+                                   GTK_MESSAGE_INFO,
+                                   GTK_BUTTONS_OK,
+                                   "Dialling %s", number);
+
+  g_signal_connect_swapped (dialog, "response",
+                            G_CALLBACK (gtk_widget_destroy),
+                            dialog);
+
+  gtk_widget_show_all (dialog);
+}
 
 static void
 cui_demo_window_class_init (CuiDemoWindowClass *klass)
@@ -133,6 +156,8 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/Demo/ui/cui-demo-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, call_display);
+  gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, dialpad);
+  gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, keypad);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, content_box);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, incoming_call);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, theme_variant_image);
@@ -140,6 +165,7 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, key_pressed_cb);
   gtk_widget_class_bind_template_callback (widget_class, theme_variant_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_incoming_call_clicked);
+  gtk_widget_class_bind_template_callback (widget_class, on_dial);
 }
 
 

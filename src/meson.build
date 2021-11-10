@@ -21,6 +21,8 @@ call_ui_deps = [
 call_ui_private_sources = files(
   'cui-encryption-indicator.c',
   'cui-encryption-indicator-priv.h',
+  'cui-keypad-button.c',
+  'cui-keypad-button-private.h'
 )
 
 call_ui_public_sources = files(
@@ -30,6 +32,10 @@ call_ui_public_sources = files(
  'cui-call-display.h',
  'cui-main.c',
  'cui-main.h',
+ 'cui-dialpad.c',
+ 'cui-dialpad.h',
+ 'cui-keypad.c',
+ 'cui-keypad.h',
 )
 
 call_ui_sources = [

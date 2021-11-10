@@ -32,6 +32,8 @@ static void
 cui_init_types (void)
 {
   g_type_ensure (CUI_TYPE_CALL_DISPLAY);
+  g_type_ensure (CUI_TYPE_DIALPAD);
+  g_type_ensure (CUI_TYPE_KEYPAD);
   g_type_ensure (CUI_TYPE_ENCRYPTION_INDICATOR);
 }
 
