@@ -1,4 +1,10 @@
-cui-dialpad keypad > grid > button, cui-dialpad .dial-button, cui-dialpad .delete-button{
+cui-keypad .digit { font-size: 200%; font-weight: bold; }
+
+cui-keypad .letters { font-size: 70%; }
+
+cui-keypad .symbol { font-size: 160%; }
+
+cui-dialpad > cui-keypad > grid > button, cui-dialpad .dial-button, cui-dialpad .delete-button{
   border-radius: 9999px;
   -gtk-outline-radius: 9999px;
 }
