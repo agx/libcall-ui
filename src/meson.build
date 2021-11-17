@@ -12,6 +12,7 @@ call_ui_resources = gnome.compile_resources(
 
 call_ui_deps = [
   libcallaudio_dep,
+  gio_dep,
   gtk_dep,
   libhandy_dep,
   cc.find_library('m', required: false),

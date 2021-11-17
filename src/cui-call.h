@@ -6,6 +6,7 @@
 #pragma once
 
 #include <glib-object.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
@@ -32,6 +33,7 @@ typedef enum
 /**
  * CuiCallInterface:
  * @parent_iface: The parent interface
+ * @get_avatar_icon: Get current calls's avatar icon
  * @get_display_name: Get current calls's display name
  * @get_id: Get current calls's id
  * @get_state: Get the call's state
@@ -44,6 +46,7 @@ typedef enum
 struct _CuiCallInterface {
   GTypeInterface parent_iface;
 
+  GLoadableIcon *(*get_avatar_icon)        (CuiCall *self);
   const char    *(*get_display_name)       (CuiCall *self);
   const char    *(*get_id)                 (CuiCall *self);
   CuiCallState   (*get_state)              (CuiCall *self);
@@ -55,6 +58,7 @@ struct _CuiCallInterface {
   void           (*send_dtmf)              (CuiCall *self, const gchar *dtmf);
 };
 
+GLoadableIcon *cui_call_get_avatar_icon (CuiCall *self);
 const char  *cui_call_get_display_name (CuiCall *self);
 const char  *cui_call_get_id           (CuiCall *self);
 CuiCallState cui_call_get_state        (CuiCall *self);
