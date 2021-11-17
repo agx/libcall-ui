@@ -6,12 +6,18 @@
  * Author: Guido Günther <agx@sigxcpu.org>
  */
 
+#include "config.h"
+
 #include "cui-demo-call.h"
 
 #include <glib/gi18n.h>
 
+
+#define AVATAR_ICON TOP_SOURCE_DIR "/examples/images/cat.jpg"
+
 enum {
   PROP_0,
+  PROP_AVATAR_ICON,
   PROP_DISPLAY_NAME,
   PROP_ID,
   PROP_STATE,
@@ -24,6 +30,7 @@ struct _CuiDemoCall
 {
   GObject       parent_instance;
 
+  GLoadableIcon *avatar_icon;
   gchar        *id;
   gchar        *display_name;
   CuiCallState  state;
@@ -46,6 +53,9 @@ cui_demo_call_get_property (GObject    *object,
   CuiDemoCall *self = CUI_DEMO_CALL (object);
 
   switch (prop_id) {
+  case PROP_AVATAR_ICON:
+    g_value_set_object (value, self->avatar_icon);
+    break;
   case PROP_ID:
     g_value_set_string (value, self->id);
     break;
@@ -68,11 +78,28 @@ cui_demo_call_get_property (GObject    *object,
 
 
 static void
+cui_demo_call_finalize (GObject *object)
+{
+  CuiDemoCall *self = CUI_DEMO_CALL (object);
+
+  g_clear_object (&self->avatar_icon);
+
+  G_OBJECT_CLASS (cui_demo_call_parent_class)->finalize (object);
+}
+
+
+
+static void
 cui_demo_call_class_init (CuiDemoCallClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize = cui_demo_call_finalize;
   object_class->get_property = cui_demo_call_get_property;
+
+  g_object_class_override_property (object_class,
+                                    PROP_AVATAR_ICON,
+                                    "avatar-icon");
 
   g_object_class_override_property (object_class,
                                     PROP_ID,
@@ -93,6 +120,15 @@ cui_demo_call_class_init (CuiDemoCallClass *klass)
   g_object_class_override_property (object_class,
                                     PROP_CAN_DTMF,
                                     "can-dtmf");
+}
+
+
+static GLoadableIcon *
+cui_demo_call_get_avatar_icon (CuiCall *call)
+{
+  g_return_val_if_fail (CUI_IS_DEMO_CALL (call), NULL);
+
+  return CUI_DEMO_CALL (call)->avatar_icon;
 }
 
 
@@ -195,6 +231,7 @@ cui_demo_call_send_dtmf (CuiCall *call, const gchar *dtmf)
 static void
 cui_demo_cui_call_interface_init (CuiCallInterface *iface)
 {
+  iface->get_avatar_icon = cui_demo_call_get_avatar_icon;
   iface->get_id = cui_demo_call_get_id;
   iface->get_display_name = cui_demo_call_get_display_name;
   iface->get_state = cui_demo_call_get_state;
@@ -210,10 +247,15 @@ cui_demo_cui_call_interface_init (CuiCallInterface *iface)
 static void
 cui_demo_call_init (CuiDemoCall *self)
 {
+  g_autoptr (GFile) file = g_file_new_for_path (AVATAR_ICON);
+
   self->display_name = "John Doe";
   self->id = "0800 1234";
   self->state = CUI_CALL_STATE_INCOMING;
   self->can_dtmf = TRUE;
+  self->avatar_icon = G_LOADABLE_ICON (g_file_icon_new (file));
+
+  g_assert (G_IS_LOADABLE_ICON (self->avatar_icon));
 }
 
 

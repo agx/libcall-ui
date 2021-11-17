@@ -9,3 +9,4 @@
 
 #mesondefine LOCALEDIR
 
+#mesondefine TOP_SOURCE_DIR

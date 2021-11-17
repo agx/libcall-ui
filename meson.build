@@ -88,6 +88,7 @@ libcallaudio_dep = dependency('libcallaudio-0.1')
 config_h = configuration_data()
 config_h.set_quoted('GETTEXT_PACKAGE', 'call-ui')
 config_h.set_quoted('LOCALEDIR', localedir)
+config_h.set_quoted('TOP_SOURCE_DIR', meson.current_source_dir())
 
 configure_file(
   input: 'config.h.in',
