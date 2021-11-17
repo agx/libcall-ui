@@ -81,7 +81,7 @@ src_inc = include_directories('src')
 tests_inc = include_directories('tests')
 
 gtk_dep = dependency('gtk+-3.0', version: '>=3.22')
-libhandy_dep = dependency('libhandy-1', version: '>=1.1.90')
+libhandy_dep = dependency('libhandy-1', version: '>=1.2')
 libcallaudio_dep = dependency('libcallaudio-0.1')
 
 config_h = configuration_data()
