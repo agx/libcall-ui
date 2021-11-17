@@ -111,23 +111,6 @@ long_press_backspace_cb (CuiDialpad *self)
   gtk_editable_delete_text (GTK_EDITABLE (entry), 0, -1);
 }
 
-static void
-cui_dialpad_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (cui_dialpad_parent_class)->constructed (object);
-}
-
-static void
-cui_dialpad_dispose (GObject *object)
-{
-  G_OBJECT_CLASS (cui_dialpad_parent_class)->dispose (object);
-}
-
-static void
-cui_dialpad_finalize (GObject *object)
-{
-  G_OBJECT_CLASS (cui_dialpad_parent_class)->finalize (object);
-}
 
 static void
 cui_dialpad_class_init (CuiDialpadClass *klass)
@@ -137,10 +120,6 @@ cui_dialpad_class_init (CuiDialpadClass *klass)
 
   object_class->get_property = cui_dialpad_get_property;
   object_class->set_property = cui_dialpad_set_property;
-
-  object_class->constructed = cui_dialpad_constructed;
-  object_class->dispose = cui_dialpad_dispose;
-  object_class->finalize = cui_dialpad_finalize;
 
   signals [DIALED] =
     g_signal_new ("dialed",
