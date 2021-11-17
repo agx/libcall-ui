@@ -73,6 +73,7 @@ struct _CuiCallDisplay {
   GtkToggleButton *dial_pad;
 
   GBinding        *dtmf_bind;
+  GBinding        *avatar_icon_bind;
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -315,6 +316,7 @@ on_call_state_changed (CuiCallDisplay *self,
 static void
 reset_ui (CuiCallDisplay *self)
 {
+  hdy_avatar_set_loadable_icon (self->avatar, NULL);
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
   gtk_label_set_text (self->status, "");
@@ -333,6 +335,7 @@ on_call_unrefed (CuiCallDisplay *self,
   g_debug ("Dropping call %p", call);
   self->call = NULL;
   self->dtmf_bind = NULL;
+  self->avatar_icon_bind = NULL;
   reset_ui (self);
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }
@@ -565,6 +568,7 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
     g_object_weak_unref (G_OBJECT (self->call), (GWeakNotify) on_call_unrefed, self);
     g_signal_handlers_disconnect_by_data (self->call, self);
     g_clear_pointer (&self->dtmf_bind, g_binding_unbind);
+    g_clear_pointer (&self->avatar_icon_bind, g_binding_unbind);
   }
 
   self->call = call;
@@ -603,6 +607,12 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
                                             self->dial_pad,
                                             "sensitive",
                                             G_BINDING_SYNC_CREATE);
+
+  self->avatar_icon_bind = g_object_bind_property (call,
+						   "avatar-icon",
+						   self->avatar,
+						   "loadable-icon",
+						   G_BINDING_SYNC_CREATE);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }
