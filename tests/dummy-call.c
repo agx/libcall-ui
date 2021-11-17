@@ -14,6 +14,7 @@
 
 enum {
   PROP_0,
+  PROP_AVATAR_ICON,
   PROP_DISPLAY_NAME,
   PROP_ID,
   PROP_STATE,
@@ -51,6 +52,9 @@ cui_dummy_call_get_property (GObject    *object,
   switch (prop_id) {
   case PROP_ID:
     g_value_set_string (value, self->id);
+    break;
+  case PROP_AVATAR_ICON:
+    g_value_set_object (value, NULL);
     break;
   case PROP_DISPLAY_NAME:
     g_value_set_string (value, self->display_name);
@@ -94,6 +98,11 @@ cui_dummy_call_class_init (CuiDummyCallClass *klass)
                                     PROP_ID,
                                     "id");
   props[PROP_ID] = g_object_class_find_property (object_class, "id");
+
+  g_object_class_override_property (object_class,
+                                    PROP_AVATAR_ICON,
+                                    "avatar-icon");
+  props[PROP_AVATAR_ICON] = g_object_class_find_property (object_class, "avatar-icon");
 
   g_object_class_override_property (object_class,
                                     PROP_DISPLAY_NAME,

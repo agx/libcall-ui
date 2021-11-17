@@ -80,17 +80,15 @@ root_inc = include_directories('.')
 src_inc = include_directories('src')
 tests_inc = include_directories('tests')
 
+gio_dep = dependency('gio-2.0', version: '>= 2.62')
 gtk_dep = dependency('gtk+-3.0', version: '>=3.22')
-libhandy_dep = dependency('libhandy-1',
-  version: '>=1.1.90',
-  fallback: ['libhandy', 'libhandy_dep'],
-  default_options: ['introspection=disabled']
-  )
+libhandy_dep = dependency('libhandy-1', version: '>=1.2')
 libcallaudio_dep = dependency('libcallaudio-0.1')
 
 config_h = configuration_data()
 config_h.set_quoted('GETTEXT_PACKAGE', 'call-ui')
 config_h.set_quoted('LOCALEDIR', localedir)
+config_h.set_quoted('TOP_SOURCE_DIR', meson.current_source_dir())
 
 configure_file(
   input: 'config.h.in',

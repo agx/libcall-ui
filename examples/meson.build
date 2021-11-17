@@ -18,6 +18,7 @@ call_ui_demo = executable('call-ui-demo',
   call_ui_demo_sources,
   dependencies: libcall_ui_dep,
   gui_app: true,
+  include_directories: [ root_inc ],
   install: false,
 )
 

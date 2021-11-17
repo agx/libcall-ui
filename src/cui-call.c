@@ -9,6 +9,8 @@
 #include "cui-call.h"
 #include "cui-enums.h"
 
+#include <gio/gio.h>
+
 G_DEFINE_INTERFACE (CuiCall, cui_call, G_TYPE_OBJECT)
 
 
@@ -38,7 +40,18 @@ cui_call_default_init (CuiCallInterface *iface)
                          "",
                          NULL,
                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY));
-
+  /**
+   * CuiCall:avatar-icon:
+   *
+   * The call's avatar icon
+   */
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_object ("avatar-icon",
+                         "",
+                         "",
+                         G_TYPE_LOADABLE_ICON,
+                         G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY));
   /**
    * CuiCall:id:
    *
@@ -91,6 +104,28 @@ cui_call_default_init (CuiCallInterface *iface)
                           "",
                           FALSE,
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY));
+}
+
+
+/**
+ * cui_call_get_avatar_icon:
+ * @self: The call
+ *
+ * Get the avatar icon.
+ *
+ * Returns: (transfer none)(nullable): The icon as `GLoadableIcon`
+ */
+GLoadableIcon *
+cui_call_get_avatar_icon (CuiCall *self)
+{
+  CuiCallInterface *iface;
+
+  g_return_val_if_fail (CUI_IS_CALL (self), NULL);
+
+  iface = CUI_CALL_GET_IFACE (self);
+  g_return_val_if_fail (iface->get_avatar_icon, NULL);
+
+  return iface->get_avatar_icon (self);
 }
 
 
