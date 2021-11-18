@@ -6,11 +6,13 @@
  * Author: Thomas Booker <tw.booker@outlook.com>
  */
 
+#include "config.h"
+
 #include "cui-dialpad.h"
 #include "cui-keypad.h"
 
 #include <glib.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <handy.h>
 #include <libcallaudio.h>
 

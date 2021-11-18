@@ -7,8 +7,10 @@
  * Copyright (C) 2019 Purism SPC
  */
 
+#include "config.h"
+
 #include <glib.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 
 #include "cui-keypad.h"
 #include "cui-keypad-button-private.h"
