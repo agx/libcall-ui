@@ -249,8 +249,8 @@ cui_keypad_class_init (CuiKeypadClass *klass)
    */
   props[PROP_ROW_SPACING] =
     g_param_spec_uint ("row-spacing",
-                       _("Row spacing"),
-                       _("The amount of space between two consecutive rows"),
+                       "Row spacing",
+                       "The amount of space between two consecutive rows",
                        0, G_MAXINT16, 6,
                        G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
 
@@ -261,8 +261,8 @@ cui_keypad_class_init (CuiKeypadClass *klass)
    */
   props[PROP_COLUMN_SPACING] =
     g_param_spec_uint ("column-spacing",
-                       _("Column spacing"),
-                       _("The amount of space between two consecutive columns"),
+                       "Column spacing",
+                       "The amount of space between two consecutive columns",
                        0, G_MAXINT16, 6,
                        G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
 
@@ -274,10 +274,10 @@ cui_keypad_class_init (CuiKeypadClass *klass)
    */
   props[PROP_LETTERS_VISIBLE] =
     g_param_spec_boolean ("letters-visible",
-                         "Letters visible",
-                         "Whether the letters below the digits should be visible",
-                         TRUE,
-                         G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
+			  "Letters visible",
+			  "Whether the letters below the digits should be visible",
+			  TRUE,
+			  G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
 
   /**
    * CuiKeypad:symbols-visible:
@@ -287,8 +287,8 @@ cui_keypad_class_init (CuiKeypadClass *klass)
    */
   props[PROP_SYMBOLS_VISIBLE] =
     g_param_spec_boolean ("symbols-visible",
-                          _("Symbols visible"),
-                          _("Whether the hash, plus, and asterisk symbols should be visible"),
+                          "Symbols visible",
+                          "Whether the hash, plus, and asterisk symbols should be visible",
                           TRUE,
                           G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
 
