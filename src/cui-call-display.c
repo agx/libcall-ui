@@ -316,6 +316,33 @@ on_call_state_changed (CuiCallDisplay *self,
 
 
 static void
+on_update_contact_information (CuiCallDisplay *self)
+{
+  GtkLabel *number_label;
+  const char *number, *display_name;
+
+  g_assert (CUI_IS_CALL_DISPLAY (self));
+  g_assert (CUI_IS_CALL (self->call));
+
+  display_name = cui_call_get_display_name (self->call);
+  if (IS_NULL_OR_EMPTY (display_name) == FALSE) {
+    gtk_label_set_text (self->primary_contact_info, display_name);
+    number_label = self->secondary_contact_info;
+  } else {
+    number_label = self->primary_contact_info;
+  }
+
+  hdy_avatar_set_show_initials (self->avatar, !!display_name);
+
+  number = cui_call_get_id (self->call);
+  if (IS_NULL_OR_EMPTY (number))
+    number = _("Unknown");
+
+  gtk_label_set_label (number_label, number);
+}
+
+
+static void
 reset_ui (CuiCallDisplay *self)
 {
   hdy_avatar_set_loadable_icon (self->avatar, NULL);
@@ -557,9 +584,6 @@ cui_call_display_get_call (CuiCallDisplay *self)
 void
 cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
 {
-  const gchar *number, *display_name;
-  GtkLabel *number_label;
-
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
   g_return_if_fail (CUI_IS_CALL (call) || call == NULL);
 
@@ -584,20 +608,13 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
                      (GWeakNotify) on_call_unrefed,
                      self);
 
-  display_name = cui_call_get_display_name (call);
-  if (IS_NULL_OR_EMPTY (display_name) == FALSE) {
-    gtk_label_set_text (self->primary_contact_info, display_name);
-    number_label = self->secondary_contact_info;
-  } else {
-    number_label = self->primary_contact_info;
-  }
-  hdy_avatar_set_show_initials (self->avatar, !!display_name);
+  g_signal_connect_object (call,
+                           "notify::display-name",
+                           G_CALLBACK (on_update_contact_information),
+                           self,
+                           G_CONNECT_SWAPPED);
+  on_update_contact_information (self);
 
-  number = cui_call_get_id (call);
-  if (IS_NULL_OR_EMPTY (number))
-    number = _("Unknown");
-
-  gtk_label_set_label (number_label, number);
   g_signal_connect_object (call, "notify::state",
                            G_CALLBACK (on_call_state_changed),
                            self,
