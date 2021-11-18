@@ -21,12 +21,14 @@
  * Author: Bob Ham <bob.ham@puri.sm>
  */
 
+#include "config.h"
+
 #include "cui-call-display.h"
 
 #include "cui-call.h"
 
 #include <glib.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <handy.h>
 #include <libcallaudio.h>
 

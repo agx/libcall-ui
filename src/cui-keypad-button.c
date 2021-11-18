@@ -6,9 +6,11 @@
  * based HdyKeypad which is
  * Copyright (C) 2019 Purism SPC
  */
- 
+
+#include "config.h"
+
 #include <glib.h>
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 
 #include "cui-keypad-button-private.h"
 
@@ -224,22 +226,22 @@ cui_keypad_button_class_init (CuiKeypadButtonClass *klass)
 
   props[PROP_DIGIT] =
     g_param_spec_int ("digit",
-                      _("Digit"),
-                      _("The keypad digit of the button"),
+                      "Digit",
+                      "The keypad digit of the button",
                       -1, INT_MAX, 0,
                       G_PARAM_READABLE);
 
   props[PROP_SYMBOLS] =
     g_param_spec_string ("symbols",
-                         _("Symbols"),
-                         _("The keypad symbols of the button. The first symbol is used as the digit"),
+                         "Symbols",
+                         "The keypad symbols of the button. The first symbol is used as the digit",
                          "",
                          G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
 
   props[PROP_SHOW_SYMBOLS] =
     g_param_spec_boolean ("show-symbols",
-                          _("Show symbols"),
-                          _("Whether the second line of symbols should be shown or not"),
+                          "Show symbols",
+                          "Whether the second line of symbols should be shown or not",
                           TRUE,
                           G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY);
 

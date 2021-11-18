@@ -1,5 +1,9 @@
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <call-ui.h>
+
+#include <glib/gi18n.h>
 
 #include "cui-demo-window.h"
 
@@ -34,6 +38,9 @@ main (int    argc,
 {
   GtkApplication *app;
   int status;
+
+  /* This is enough since libcall-ui performs the bindtextdomain */
+  textdomain (GETTEXT_PACKAGE);
 
   app = gtk_application_new ("org.gnome.CallUI.Demo", G_APPLICATION_FLAGS_NONE);
   g_signal_connect (app, "startup", G_CALLBACK (startup), NULL);

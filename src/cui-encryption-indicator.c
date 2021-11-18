@@ -7,9 +7,11 @@
  * Adrien Plazas <adrien.plazas@puri.sm>
  */
 
+#include "config.h"
+
 #include "cui-encryption-indicator-priv.h"
 
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 
 struct _CuiEncryptionIndicator {
   GtkStack parent_instance;
