@@ -54,6 +54,15 @@ doc:
     paths:
       - _doc/
 
+check-po:
+  image: debian:bookworm
+  stage: tests
+  before_script:
+    - apt-get -y update
+    - apt-get -y install intltool gettext
+  script:
+    - tools/check-po
+
 tests:
   image: debian:bookworm
   stage: tests
