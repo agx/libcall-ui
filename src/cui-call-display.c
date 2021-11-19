@@ -418,10 +418,10 @@ cui_call_display_constructed (GObject *object)
 {
   CuiCallDisplay *self = CUI_CALL_DISPLAY (object);
 
+  G_OBJECT_CLASS (cui_call_display_parent_class)->constructed (object);
+
   self->timer = g_timer_new ();
   g_timer_stop (self->timer);
-
-  G_OBJECT_CLASS (cui_call_display_parent_class)->constructed (object);
 }
 
 
