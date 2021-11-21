@@ -54,15 +54,28 @@ doc:
     paths:
       - _doc/
 
+check-po:
+  image: debian:bookworm
+  stage: tests
+  before_script:
+    - apt-get -y update
+    - apt-get -y install intltool gettext
+  script:
+    - tools/check-po
+
 tests:
   image: debian:bookworm
   stage: tests
   variables:
+  needs: ['build-debian-gcc']
   script:
     - meson ${BUILD_OPTS} _build
-    - xvfb-run ninja -C _build test
+    - xvfb-run meson test -C _build
     - ninja -C _build coverage
   coverage: '/^lines:\s+([\d.]+\%)\s+/'
+  artifacts:
+    reports:
+      junit: _build/meson-logs/testlog.junit.xml
 
 pages:
   stage: deploy
