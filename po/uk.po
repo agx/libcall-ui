@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libcall-ui main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/issues/\n"
-"POT-Creation-Date: 2021-11-10 08:16+0000\n"
-"PO-Revision-Date: 2021-11-10 17:46+0200\n"
+"POT-Creation-Date: 2021-11-21 14:47+0000\n"
+"PO-Revision-Date: 2021-11-21 17:08+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -49,43 +49,37 @@ msgstr "Панель набору"
 
 #: examples/cui-demo-window.ui:224
 msgid "A simple dial pad to enter phone numbers."
-msgstr ""
-"Проста клавіатура для введення номерів телефонів."
+msgstr "Проста клавіатура для введення номерів телефонів."
 
 #: examples/cui-demo-window.ui:263
 msgid "Keypad"
-msgstr ""
-"Цифрова клавіатура"
+msgstr "Цифрова клавіатура"
 
 #: examples/cui-demo-window.ui:264
 msgid "A number keypad."
-msgstr ""
-"Цифрова клавіатура."
+msgstr "Цифрова клавіатура."
 
 #: examples/cui-demo-window.ui:288
 msgid "Show letters"
-msgstr ""
-"Показати літери"
+msgstr "Показати літери"
 
 #: examples/cui-demo-window.ui:303
 msgid "Show symbols"
-msgstr ""
-"Показати символи"
+msgstr "Показати символи"
 
 #: examples/cui-demo-window.ui:365
 msgid "Key pad"
-msgstr ""
-"Клавіатура"
+msgstr "Клавіатура"
 
-#: src/cui-call-display.c:291
+#: src/cui-call-display.c:294
 msgid "Calling…"
 msgstr "Виклик…"
 
-#: src/cui-call-display.c:305
+#: src/cui-call-display.c:308
 msgid "Call ended"
 msgstr "Виклик завершено"
 
-#: src/cui-call-display.c:592
+#: src/cui-call-display.c:339
 msgid "Unknown"
 msgstr "Невідомо"
 
@@ -120,6 +114,11 @@ msgstr "Відповісти"
 #: src/cui-call-display.ui:465
 msgid "Hide the dial pad"
 msgstr "Приховати панель набору"
+
+#: src/cui-dialpad.ui:19
+msgid "Enter a number"
+msgstr ""
+"Введіть число"
 
 #: src/cui-encryption-indicator.ui:23
 msgid "This call is not encrypted"
