@@ -16,9 +16,8 @@ before_script:
   - apt-get -y update
   - apt-get -y install eatmydata
   - eatmydata apt-get -y install $DEPS
-  # Forecully drop lcov so gcovr is used
-  # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=987818
-  - eatmydata dpkg --force-depends --remove lcov
+  # Make sure that gcovr is used by removing lcov
+  - eatmydata dpkg --remove lcov
 
 .build: &build_steps
     echo "BUILD_OPTS=${BUILD_OPTS}" &&
