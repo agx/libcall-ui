@@ -73,6 +73,7 @@ struct _CuiCallDisplay {
   GCancellable    *cancel;
   GtkRevealer     *dial_pad_revealer;
   GtkToggleButton *dial_pad;
+  GtkEntry        *keypad_entry;
 
   GBinding        *dtmf_bind;
   GBinding        *avatar_icon_bind;
@@ -348,6 +349,16 @@ on_update_contact_information (CuiCallDisplay *self)
 
 
 static void
+on_dialpad_revealed (CuiCallDisplay *self)
+{
+  g_assert (CUI_IS_CALL_DISPLAY (self));
+
+  if (gtk_revealer_get_child_revealed (self->dial_pad_revealer))
+    gtk_widget_grab_focus (GTK_WIDGET (self->keypad_entry));
+}
+
+
+static void
 reset_ui (CuiCallDisplay *self)
 {
   hdy_avatar_set_loadable_icon (self->avatar, NULL);
@@ -418,10 +429,15 @@ cui_call_display_constructed (GObject *object)
 {
   CuiCallDisplay *self = CUI_CALL_DISPLAY (object);
 
+  G_OBJECT_CLASS (cui_call_display_parent_class)->constructed (object);
+
   self->timer = g_timer_new ();
   g_timer_stop (self->timer);
 
-  G_OBJECT_CLASS (cui_call_display_parent_class)->constructed (object);
+  g_signal_connect_swapped (self->dial_pad_revealer,
+                            "notify::child-revealed",
+                            G_CALLBACK (on_dialpad_revealed),
+                            self);
 }
 
 
@@ -522,6 +538,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, dial_pad_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, keypad_entry);
   gtk_widget_class_bind_template_callback (widget_class, on_answer_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_hang_up_clicked);
   gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
