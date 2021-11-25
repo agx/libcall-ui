@@ -324,9 +324,13 @@ on_update_contact_information (CuiCallDisplay *self)
   g_assert (CUI_IS_CALL_DISPLAY (self));
   g_assert (CUI_IS_CALL (self->call));
 
+  number = cui_call_get_id (self->call);
+  if (IS_NULL_OR_EMPTY (number))
+    number = _("Unknown");
+
   display_name = cui_call_get_display_name (self->call);
-  if (IS_NULL_OR_EMPTY (display_name) == FALSE) {
-    gtk_label_set_text (self->primary_contact_info, display_name);
+  if (IS_NULL_OR_EMPTY (display_name) == FALSE &&
+      g_strcmp0 (number, display_name) != 0) {
     number_label = self->secondary_contact_info;
   } else {
     number_label = self->primary_contact_info;
@@ -334,11 +338,8 @@ on_update_contact_information (CuiCallDisplay *self)
 
   hdy_avatar_set_show_initials (self->avatar, !!display_name);
 
-  number = cui_call_get_id (self->call);
-  if (IS_NULL_OR_EMPTY (number))
-    number = _("Unknown");
-
-  gtk_label_set_label (number_label, number);
+  gtk_label_set_text (self->primary_contact_info, display_name);
+  gtk_label_set_text (number_label, number);
 }
 
 
