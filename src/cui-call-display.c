@@ -320,25 +320,30 @@ on_update_contact_information (CuiCallDisplay *self)
 {
   GtkLabel *number_label;
   const char *number, *display_name;
+  gboolean show_initials;
 
   g_assert (CUI_IS_CALL_DISPLAY (self));
   g_assert (CUI_IS_CALL (self->call));
-
-  display_name = cui_call_get_display_name (self->call);
-  if (IS_NULL_OR_EMPTY (display_name) == FALSE) {
-    gtk_label_set_text (self->primary_contact_info, display_name);
-    number_label = self->secondary_contact_info;
-  } else {
-    number_label = self->primary_contact_info;
-  }
-
-  hdy_avatar_set_show_initials (self->avatar, !!display_name);
 
   number = cui_call_get_id (self->call);
   if (IS_NULL_OR_EMPTY (number))
     number = _("Unknown");
 
-  gtk_label_set_label (number_label, number);
+  display_name = cui_call_get_display_name (self->call);
+  if (IS_NULL_OR_EMPTY (display_name) == FALSE &&
+      g_strcmp0 (number, display_name) != 0) {
+    show_initials = TRUE;
+    number_label = self->secondary_contact_info;
+  } else {
+    show_initials = FALSE;
+    number_label = self->primary_contact_info;
+  }
+
+  hdy_avatar_set_text (self->avatar, display_name);
+  hdy_avatar_set_show_initials (self->avatar, show_initials);
+
+  gtk_label_set_text (self->primary_contact_info, display_name);
+  gtk_label_set_text (number_label, number);
 }
 
 
@@ -346,6 +351,7 @@ static void
 reset_ui (CuiCallDisplay *self)
 {
   hdy_avatar_set_loadable_icon (self->avatar, NULL);
+  hdy_avatar_set_text (self->avatar, "");
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
   gtk_label_set_text (self->status, "");
