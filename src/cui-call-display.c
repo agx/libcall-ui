@@ -339,6 +339,7 @@ on_update_contact_information (CuiCallDisplay *self)
     number_label = self->primary_contact_info;
   }
 
+  hdy_avatar_set_text (self->avatar, display_name);
   hdy_avatar_set_show_initials (self->avatar, show_initials);
 
   gtk_label_set_text (self->primary_contact_info, display_name);
@@ -350,6 +351,7 @@ static void
 reset_ui (CuiCallDisplay *self)
 {
   hdy_avatar_set_loadable_icon (self->avatar, NULL);
+  hdy_avatar_set_text (self->avatar, "");
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
   gtk_label_set_text (self->status, "");
