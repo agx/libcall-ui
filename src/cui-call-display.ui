@@ -99,7 +99,6 @@
                     <child>
                       <object class="GtkToggleButton" id="mute">
                         <property name="visible">True</property>
-                        <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
                         <property name="hexpand">True</property>
                         <property name="sensitive">True</property>
@@ -132,7 +131,6 @@
                     <child>
                       <object class="GtkToggleButton" id="speaker">
                         <property name="visible">True</property>
-                        <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
                         <property name="hexpand">True</property>
                         <property name="sensitive">True</property>
@@ -165,7 +163,6 @@
                     <child>
                       <object class="GtkButton" id="add_call">
                         <property name="visible">True</property>
-                        <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
                         <property name="sensitive">False</property>
                         <signal name="clicked" handler="add_call_clicked_cb" swapped="no"/>
@@ -204,7 +201,6 @@
                     <child>
                       <object class="GtkToggleButton" id="hold">
                         <property name="visible">True</property>
-                        <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
                         <property name="hexpand">True</property>
                         <property name="sensitive">False</property>
@@ -237,7 +233,6 @@
                     <child>
                       <object class="GtkToggleButton" id="dial_pad">
                         <property name="visible">True</property>
-                        <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
                         <property name="active" bind-source="dial_pad_revealer" bind-property="reveal-child" bind-flags="bidirectional|sync-create"/>
                         <property name="hexpand">True</property>
@@ -270,7 +265,6 @@
                       <object class="GtkBox" id="blank">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="receives_default">True</property>
                         <property name="no_show_all">True</property>
                         <property name="hexpand">True</property>
                       </object>
@@ -296,7 +290,6 @@
                 <property name="always_show_image">True</property>
                 <property name="halign">center</property>
                 <property name="height-request">65</property>
-                <property name="receives_default">False</property>
                 <property name="valign">start</property>
                 <property name="visible">True</property>
                 <property name="width-request">150</property>
@@ -325,7 +318,6 @@
                 <property name="always_show_image">True</property>
                 <property name="halign">center</property>
                 <property name="height-request">65</property>
-                <property name="receives_default">False</property>
                 <property name="valign">start</property>
                 <property name="visible">True</property>
                 <property name="width-request">150</property>
@@ -403,7 +395,6 @@
                     <property name="always_show_image">True</property>
                     <property name="halign">center</property>
                     <property name="height-request">65</property>
-                    <property name="receives_default">True</property>
                     <property name="valign">start</property>
                     <property name="relief">none</property>
                     <property name="visible">True</property>
