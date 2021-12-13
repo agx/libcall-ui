@@ -110,6 +110,7 @@ summary = [
   '',
   '        Tests: @0@'.format(get_option('tests')),
   'Documentation: @0@'.format(get_option('gtk_doc')),
+  ' Install i18n: @0@'.format(get_option('install-i18n')),
   '-----------',
 ]
 
