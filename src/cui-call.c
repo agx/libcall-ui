@@ -269,7 +269,7 @@ cui_call_hang_up (CuiCall *self)
 }
 
 /**
- * cui_call_send_dtmf
+ * cui_call_send_dtmf:
  * @self: The call
  * @dtmf: The DTMF data
  *
