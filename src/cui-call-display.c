@@ -201,10 +201,13 @@ on_call_state_changed (CuiCallDisplay           *self,
   hang_up_style = gtk_widget_get_style_context
                     (GTK_WIDGET (self->hang_up));
 
+  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
   /* Widgets */
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
+  case CUI_CALL_STATE_WAITING: /* Deprecated */
     gtk_widget_hide (GTK_WIDGET (self->status));
     gtk_widget_hide (GTK_WIDGET (self->controls));
     gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
@@ -213,11 +216,10 @@ on_call_state_changed (CuiCallDisplay           *self,
       (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
     break;
 
-  case CUI_CALL_STATE_DIALING:
   case CUI_CALL_STATE_ACTIVE:
-  case CUI_CALL_STATE_ALERTING:
+  case CUI_CALL_STATE_CALLING:
+  case CUI_CALL_STATE_ALERTING: /* Deprecated */
   case CUI_CALL_STATE_HELD:
-  case CUI_CALL_STATE_WAITING:
     gtk_style_context_add_class
       (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
     gtk_widget_hide (GTK_WIDGET (self->answer));
@@ -227,8 +229,7 @@ on_call_state_changed (CuiCallDisplay           *self,
 
     gtk_widget_set_visible
       (GTK_WIDGET (self->gsm_controls),
-      state != CUI_CALL_STATE_DIALING
-      && state != CUI_CALL_STATE_ALERTING);
+       state != CUI_CALL_STATE_CALLING);
 
     /* TODO Only switch to "call" audio mode for cellular calls */
     call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
@@ -252,15 +253,16 @@ on_call_state_changed (CuiCallDisplay           *self,
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
-  case CUI_CALL_STATE_WAITING:
+  case CUI_CALL_STATE_WAITING: /* Deprecated */
   case CUI_CALL_STATE_HELD:
     break;
+
   case CUI_CALL_STATE_ACTIVE:
     set_pretty_time (self);
     break;
 
-  case CUI_CALL_STATE_DIALING:
-  case CUI_CALL_STATE_ALERTING:
+  case CUI_CALL_STATE_CALLING:
+  case CUI_CALL_STATE_ALERTING: /* Deprecated */
     gtk_label_set_text (self->status, _("Calling…"));
     break;
 
@@ -272,6 +274,8 @@ on_call_state_changed (CuiCallDisplay           *self,
   default:
     g_warn_if_reached ();
   }
+
+  #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 }
 
 
