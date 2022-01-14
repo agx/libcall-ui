@@ -83,6 +83,7 @@
                   <object class="GtkLabel" id="status">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="name">cui-call-display-status</property>
                     <property name="margin_top">30</property>
                     <property name="margin_bottom">40</property>
                     <attributes>
