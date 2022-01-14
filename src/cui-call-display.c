@@ -161,11 +161,9 @@ timeout_cb (CuiCallDisplay *self)
 {
 #define MINUTE 60
 #define HOUR   (60 * MINUTE)
-#define DAY    (24 * HOUR)
 
   gdouble elapsed;
   g_autoptr (GString) str = NULL;
-  gboolean printing;
   guint minutes;
 
   g_return_val_if_fail (CUI_IS_CALL_DISPLAY (self), FALSE);
@@ -179,13 +177,7 @@ timeout_cb (CuiCallDisplay *self)
 
   str = g_string_new ("");
 
-  if ( (printing = (elapsed > DAY)) ) {
-    guint days = (guint)(elapsed / DAY);
-    g_string_append_printf (str, "%ud ", days);
-    elapsed -= (days * DAY);
-  }
-
-  if (printing || elapsed > HOUR) {
+  if (elapsed > HOUR) {
     guint hours = (guint)(elapsed / HOUR);
     g_string_append_printf (str, "%u:", hours);
     elapsed -= (hours * HOUR);
@@ -201,7 +193,6 @@ timeout_cb (CuiCallDisplay *self)
 
   return G_SOURCE_CONTINUE;
 
-#undef DAY
 #undef HOUR
 #undef MINUTE
 }
