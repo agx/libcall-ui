@@ -52,6 +52,7 @@ struct _CuiCallInterface {
   CuiCallState   (*get_state)              (CuiCall *self);
   gboolean       (*get_encrypted)          (CuiCall *self);
   gboolean       (*get_can_dtmf)           (CuiCall *self);
+  gdouble        (*get_active_time)        (CuiCall *self);
 
   void           (*accept)                 (CuiCall *self);
   void           (*hang_up)                (CuiCall *self);
@@ -64,6 +65,7 @@ const char  *cui_call_get_id           (CuiCall *self);
 CuiCallState cui_call_get_state        (CuiCall *self);
 gboolean     cui_call_get_encrypted    (CuiCall *self);
 gboolean     cui_call_get_can_dtmf     (CuiCall *self);
+gdouble      cui_call_get_active_time  (CuiCall *self);
 
 void         cui_call_accept           (CuiCall *self);
 void         cui_call_hang_up          (CuiCall *self);

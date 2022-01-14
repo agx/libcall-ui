@@ -23,8 +23,10 @@ enum {
   PROP_STATE,
   PROP_ENCRYPTED,
   PROP_CAN_DTMF,
+  PROP_ACTIVE_TIME,
   PROP_LAST_PROP,
 };
+static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CuiDemoCall
 {
@@ -39,6 +41,10 @@ struct _CuiDemoCall
 
   guint accept_timeout_id;
   guint hangup_timeout_id;
+
+  GTimer       *timer;
+  gdouble       active_time;
+  guint         timer_id;
 };
 
 static void cui_demo_cui_call_interface_init (CuiCallInterface *iface);
@@ -74,6 +80,9 @@ cui_demo_call_get_property (GObject    *object,
   case PROP_CAN_DTMF:
     g_value_set_boolean (value, self->can_dtmf);
     break;
+  case PROP_ACTIVE_TIME:
+    g_value_set_double (value, self->active_time);
+    break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
   }
@@ -88,6 +97,8 @@ cui_demo_call_finalize (GObject *object)
   g_clear_object (&self->avatar_icon);
   g_clear_handle_id (&self->accept_timeout_id, g_source_remove);
   g_clear_handle_id (&self->hangup_timeout_id, g_source_remove);
+  g_clear_handle_id (&self->timer_id, g_source_remove);
+  g_clear_pointer (&self->timer, g_timer_destroy);
 
   G_OBJECT_CLASS (cui_demo_call_parent_class)->finalize (object);
 }
@@ -125,6 +136,12 @@ cui_demo_call_class_init (CuiDemoCallClass *klass)
   g_object_class_override_property (object_class,
                                     PROP_CAN_DTMF,
                                     "can-dtmf");
+
+  g_object_class_override_property (object_class,
+                                    PROP_ACTIVE_TIME,
+                                    "active-time");
+  props[PROP_ACTIVE_TIME] =
+    g_object_class_find_property (object_class, "active-time");
 }
 
 
@@ -182,6 +199,27 @@ cui_demo_call_get_can_dtmf (CuiCall *call)
 }
 
 
+static gdouble
+cui_demo_call_get_active_time (CuiCall *call)
+{
+  g_return_val_if_fail (CUI_DEMO_CALL (call), 0.0);
+
+  return CUI_DEMO_CALL (call)->active_time;
+}
+
+
+static gboolean
+on_timer_ticked (CuiDemoCall *self)
+{
+  g_assert (CUI_IS_DEMO_CALL (self));
+
+  self->active_time = g_timer_elapsed (self->timer, NULL);
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_ACTIVE_TIME]);
+
+  return G_SOURCE_CONTINUE;
+}
+
+
 static gboolean
 on_accept_timeout (CuiDemoCall *self)
 {
@@ -192,6 +230,12 @@ on_accept_timeout (CuiDemoCall *self)
 
   self->accept_timeout_id = 0;
 
+  self->timer = g_timer_new ();
+  g_timer_start (self->timer);
+  self->timer_id = g_timeout_add (500,
+                                  G_SOURCE_FUNC (on_timer_ticked),
+                                  self);
+
   return G_SOURCE_REMOVE;
 }
 
@@ -200,6 +244,11 @@ static gboolean
 on_hang_up_timeout (CuiDemoCall *self)
 {
   g_assert (CUI_IS_DEMO_CALL (self));
+
+  if (self->timer)
+    g_timer_stop (self->timer);
+
+  g_clear_handle_id (&self->timer_id, g_source_remove);
 
   self->state = CUI_CALL_STATE_DISCONNECTED;
   g_object_notify (G_OBJECT (self), "state");
@@ -270,6 +319,7 @@ cui_demo_cui_call_interface_init (CuiCallInterface *iface)
   iface->get_state = cui_demo_call_get_state;
   iface->get_encrypted = cui_demo_call_get_encrypted;
   iface->get_can_dtmf = cui_demo_call_get_can_dtmf;
+  iface->get_active_time = cui_demo_call_get_active_time;
 
   iface->accept = cui_demo_call_accept;
   iface->hang_up = cui_demo_call_hang_up;

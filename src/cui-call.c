@@ -104,6 +104,24 @@ cui_call_default_init (CuiCallInterface *iface)
                           "",
                           FALSE,
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY));
+
+  /**
+   * CuiCall:active-time
+   *
+   * The time in seconds that this call has been active.
+   * This corresponds to the time displayed in the call display and
+   * it is the responsibility of the implementing class to update
+   * this property about once a second.
+   */
+  g_object_interface_install_property (
+    iface,
+    g_param_spec_double ("active-time",
+                         "",
+                         "",
+                         0.0,
+                         G_MAXDOUBLE,
+                         0.0,
+                         G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY));
 }
 
 
@@ -182,6 +200,20 @@ cui_call_get_encrypted (CuiCall *self)
   g_return_val_if_fail (iface->get_encrypted, FALSE);
 
   return iface->get_encrypted (self);
+}
+
+
+gdouble
+cui_call_get_active_time (CuiCall *self)
+{
+  CuiCallInterface *iface;
+
+  g_return_val_if_fail (CUI_IS_CALL (self), FALSE);
+
+  iface = CUI_CALL_GET_IFACE (self);
+  g_return_val_if_fail (iface->get_active_time, 0.0);
+
+  return iface->get_active_time (self);
 }
 
 
