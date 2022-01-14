@@ -166,7 +166,7 @@ timeout_cb (CuiCallDisplay *self)
   g_autoptr (GString) str = NULL;
   guint seconds, minutes;
 
-  g_return_val_if_fail (CUI_IS_CALL_DISPLAY (self), FALSE);
+  g_assert (CUI_IS_CALL_DISPLAY (self));
 
   if (!self->call) {
     self->timeout = 0;
