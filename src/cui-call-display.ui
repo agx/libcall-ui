@@ -391,9 +391,6 @@
             </child>
           </object>
         </child>
-        <style>
-          <class name="call-ui-display"/>
-        </style>
       </object>
     </child>
     <child type="overlay">
