@@ -263,11 +263,11 @@ on_call_state_changed (CuiCallDisplay           *self,
 
   case CUI_CALL_STATE_CALLING:
   case CUI_CALL_STATE_ALERTING: /* Deprecated */
-    gtk_label_set_text (self->status, _("Calling…"));
+    gtk_label_set_text (self->status, cui_call_state_to_string (state));
     break;
 
   case CUI_CALL_STATE_DISCONNECTED:
-    gtk_label_set_text (self->status, _("Call ended"));
+    gtk_label_set_text (self->status, cui_call_state_to_string (state));
     break;
 
   case CUI_CALL_STATE_UNKNOWN:
