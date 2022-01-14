@@ -164,7 +164,7 @@ timeout_cb (CuiCallDisplay *self)
 
   gdouble elapsed;
   g_autoptr (GString) str = NULL;
-  guint minutes;
+  guint seconds, minutes;
 
   g_return_val_if_fail (CUI_IS_CALL_DISPLAY (self), FALSE);
 
@@ -184,10 +184,8 @@ timeout_cb (CuiCallDisplay *self)
   }
 
   minutes = (guint)(elapsed / MINUTE);
-  g_string_append_printf (str, "%02u:", minutes);
-  elapsed -= (minutes * MINUTE);
-
-  g_string_append_printf (str, "%02u", (guint)elapsed);
+  seconds = elapsed - (minutes * MINUTE);
+  g_string_append_printf (str, "%02u:%02u", minutes, seconds);
 
   gtk_label_set_text (self->status, str->str);
 
