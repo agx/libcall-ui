@@ -230,6 +230,7 @@ on_call_state_changed (CuiCallDisplay           *self,
       state != CUI_CALL_STATE_DIALING
       && state != CUI_CALL_STATE_ALERTING);
 
+    /* TODO Only switch to "call" audio mode for cellular calls */
     call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
                                   on_libcallaudio_async_finished,
                                   NULL);
