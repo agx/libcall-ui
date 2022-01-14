@@ -254,8 +254,10 @@ on_call_state_changed (CuiCallDisplay *self,
   {
   case CUI_CALL_STATE_INCOMING:
   case CUI_CALL_STATE_WAITING:
-  case CUI_CALL_STATE_ACTIVE:
   case CUI_CALL_STATE_HELD:
+    break;
+  case CUI_CALL_STATE_ACTIVE:
+    set_pretty_time (self);
     break;
 
   case CUI_CALL_STATE_DIALING:
