@@ -164,7 +164,7 @@ timeout_cb (CuiCallDisplay *self)
 #define DAY    (24 * HOUR)
 
   gdouble elapsed;
-  GString *str;
+  g_autoptr (GString) str = NULL;
   gboolean printing;
   guint minutes;
 
@@ -199,7 +199,6 @@ timeout_cb (CuiCallDisplay *self)
 
   gtk_label_set_text (self->status, str->str);
 
-  g_string_free (str, TRUE);
   return G_SOURCE_CONTINUE;
 
 #undef DAY
