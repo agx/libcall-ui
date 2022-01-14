@@ -276,6 +276,7 @@ on_call_state_changed (CuiCallDisplay *self,
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
+  case CUI_CALL_STATE_WAITING:
     break;
 
   case CUI_CALL_STATE_DIALING:
@@ -285,7 +286,6 @@ on_call_state_changed (CuiCallDisplay *self,
 
   case CUI_CALL_STATE_ACTIVE:
   case CUI_CALL_STATE_HELD:
-  case CUI_CALL_STATE_WAITING:
     if (self->timeout == 0) {
       self->timeout = g_timeout_add
                         (500, (GSourceFunc)timeout_cb, self);
