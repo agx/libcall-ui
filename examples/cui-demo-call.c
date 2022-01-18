@@ -36,6 +36,9 @@ struct _CuiDemoCall
   CuiCallState  state;
   gboolean      encrypted;
   gboolean      can_dtmf;
+
+  guint accept_timeout_id;
+  guint hangup_timeout_id;
 };
 
 static void cui_demo_cui_call_interface_init (CuiCallInterface *iface);
@@ -83,6 +86,8 @@ cui_demo_call_finalize (GObject *object)
   CuiDemoCall *self = CUI_DEMO_CALL (object);
 
   g_clear_object (&self->avatar_icon);
+  g_clear_handle_id (&self->accept_timeout_id, g_source_remove);
+  g_clear_handle_id (&self->hangup_timeout_id, g_source_remove);
 
   G_OBJECT_CLASS (cui_demo_call_parent_class)->finalize (object);
 }
@@ -185,6 +190,8 @@ on_accept_timeout (CuiDemoCall *self)
   self->state = CUI_CALL_STATE_ACTIVE;
   g_object_notify (G_OBJECT (self), "state");
 
+  self->accept_timeout_id = 0;
+
   return G_SOURCE_REMOVE;
 }
 
@@ -197,6 +204,8 @@ on_hang_up_timeout (CuiDemoCall *self)
   self->state = CUI_CALL_STATE_DISCONNECTED;
   g_object_notify (G_OBJECT (self), "state");
 
+  self->hangup_timeout_id = 0;
+
   return G_SOURCE_REMOVE;
 }
 
@@ -204,20 +213,24 @@ on_hang_up_timeout (CuiDemoCall *self)
 static void
 cui_demo_call_accept (CuiCall *call)
 {
-  g_return_if_fail (CUI_IS_DEMO_CALL (call));
+  CuiDemoCall *self = CUI_DEMO_CALL (call);
+  g_return_if_fail (CUI_IS_DEMO_CALL (self));
 
   /* Delay accepting the call as "real" calls can take some time until state changes */
-  g_timeout_add_seconds (1, G_SOURCE_FUNC (on_accept_timeout), call);
+  self->accept_timeout_id =
+    g_timeout_add_seconds (1, G_SOURCE_FUNC (on_accept_timeout), call);
 }
 
 
 static void
 cui_demo_call_hang_up (CuiCall *call)
 {
-  g_return_if_fail (CUI_IS_DEMO_CALL (call));
+  CuiDemoCall *self = CUI_DEMO_CALL (call);
+  g_return_if_fail (CUI_IS_DEMO_CALL (self));
 
   /* Delay hanging up the call as "real" calls can take some time until state changes */
-  g_timeout_add (250, G_SOURCE_FUNC (on_hang_up_timeout), call);
+  self->hangup_timeout_id =
+    g_timeout_add (250, G_SOURCE_FUNC (on_hang_up_timeout), call);
 }
 
 
