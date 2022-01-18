@@ -180,6 +180,7 @@ cui_demo_call_get_can_dtmf (CuiCall *call)
 static gboolean
 on_accept_timeout (CuiDemoCall *self)
 {
+  g_assert (CUI_IS_DEMO_CALL (self));
 
   self->state = CUI_CALL_STATE_ACTIVE;
   g_object_notify (G_OBJECT (self), "state");
@@ -191,6 +192,7 @@ on_accept_timeout (CuiDemoCall *self)
 static gboolean
 on_hang_up_timeout (CuiDemoCall *self)
 {
+  g_assert (CUI_IS_DEMO_CALL (self));
 
   self->state = CUI_CALL_STATE_DISCONNECTED;
   g_object_notify (G_OBJECT (self), "state");
