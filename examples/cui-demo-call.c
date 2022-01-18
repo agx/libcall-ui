@@ -178,9 +178,8 @@ cui_demo_call_get_can_dtmf (CuiCall *call)
 
 
 static gboolean
-on_accept_timeout (gpointer data)
+on_accept_timeout (CuiDemoCall *self)
 {
-  CuiDemoCall *self = CUI_DEMO_CALL (data);
 
   self->state = CUI_CALL_STATE_ACTIVE;
   g_object_notify (G_OBJECT (self), "state");
@@ -190,9 +189,8 @@ on_accept_timeout (gpointer data)
 
 
 static gboolean
-on_hang_up_timeout (gpointer data)
+on_hang_up_timeout (CuiDemoCall *self)
 {
-  CuiDemoCall *self = CUI_DEMO_CALL (data);
 
   self->state = CUI_CALL_STATE_DISCONNECTED;
   g_object_notify (G_OBJECT (self), "state");
@@ -207,7 +205,7 @@ cui_demo_call_accept (CuiCall *call)
   g_return_if_fail (CUI_IS_DEMO_CALL (call));
 
   /* Delay accepting the call as "real" calls can take some time until state changes */
-  g_timeout_add_seconds (1, on_accept_timeout, call);
+  g_timeout_add_seconds (1, G_SOURCE_FUNC (on_accept_timeout), call);
 }
 
 
@@ -217,7 +215,7 @@ cui_demo_call_hang_up (CuiCall *call)
   g_return_if_fail (CUI_IS_DEMO_CALL (call));
 
   /* Delay hanging up the call as "real" calls can take some time until state changes */
-  g_timeout_add (250, on_hang_up_timeout, call);
+  g_timeout_add (250, G_SOURCE_FUNC (on_hang_up_timeout), call);
 }
 
 
