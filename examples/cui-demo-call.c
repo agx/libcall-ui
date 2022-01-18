@@ -216,6 +216,16 @@ cui_demo_call_accept (CuiCall *call)
   CuiDemoCall *self = CUI_DEMO_CALL (call);
   g_return_if_fail (CUI_IS_DEMO_CALL (self));
 
+  if (self->accept_timeout_id) {
+    g_debug ("Accepting call already pending");
+    return;
+  }
+
+  if (self->hangup_timeout_id) {
+    g_debug ("Hang-up pending, cannot accept call");
+    return;
+  }
+
   /* Delay accepting the call as "real" calls can take some time until state changes */
   self->accept_timeout_id =
     g_timeout_add_seconds (1, G_SOURCE_FUNC (on_accept_timeout), call);
@@ -227,6 +237,14 @@ cui_demo_call_hang_up (CuiCall *call)
 {
   CuiDemoCall *self = CUI_DEMO_CALL (call);
   g_return_if_fail (CUI_IS_DEMO_CALL (self));
+
+  if (self->hangup_timeout_id) {
+    g_debug ("Hang-up already pending");
+    return;
+  }
+
+  if (self->accept_timeout_id)
+    g_clear_handle_id (&self->accept_timeout_id, g_source_remove);
 
   /* Delay hanging up the call as "real" calls can take some time until state changes */
   self->hangup_timeout_id =
