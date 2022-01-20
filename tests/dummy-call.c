@@ -262,7 +262,7 @@ cui_dummy_call_set_display_name (CuiDummyCall *self,
   g_return_if_fail (CUI_IS_DUMMY_CALL (self));
 
   g_free (self->display_name);
-  self->display_name = g_strdup (self->display_name);
+  self->display_name = g_strdup (display_name);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_DISPLAY_NAME]);
 }
