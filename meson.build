@@ -45,7 +45,7 @@ test_c_args = [
   '-Wmissing-noreturn',
   '-Wnested-externs',
   '-Wno-strict-aliasing',
-  '-Wno-unused-parameter',
+  '-Wunused-parameter',
   '-Wold-style-definition',
   '-Wpointer-arith',
   '-Wredundant-decls',
