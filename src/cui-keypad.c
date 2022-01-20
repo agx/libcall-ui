@@ -225,7 +225,7 @@ static void
 cui_keypad_finalize (GObject *object)
 {
   CuiKeypad *self = CUI_KEYPAD (object);
-  
+
   if (self->long_press_zero_gesture != NULL)
     g_object_unref (self->long_press_zero_gesture);
 
