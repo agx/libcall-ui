@@ -122,8 +122,6 @@ mute_toggled_cb (GtkToggleButton *togglebutton,
 {
   gboolean want_mute;
 
-  g_autoptr (GError) error = NULL;
-
   want_mute = gtk_toggle_button_get_active (togglebutton);
   call_audio_mute_mic_async (want_mute, on_libcallaudio_async_finished, NULL);
 }
