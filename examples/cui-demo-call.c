@@ -206,6 +206,7 @@ cui_demo_call_accept (CuiCall *call)
 {
   g_return_if_fail (CUI_IS_DEMO_CALL (call));
 
+  /* Delay accepting the call as "real" calls can take some time until state changes */
   g_timeout_add_seconds (1, on_accept_timeout, call);
 }
 
@@ -215,6 +216,7 @@ cui_demo_call_hang_up (CuiCall *call)
 {
   g_return_if_fail (CUI_IS_DEMO_CALL (call));
 
+  /* Delay hanging up the call as "real" calls can take some time until state changes */
   g_timeout_add (250, on_hang_up_timeout, call);
 }
 
