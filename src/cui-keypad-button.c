@@ -116,13 +116,13 @@ cui_keypad_button_get_property (GObject    *object,
  * method in GTK 4.
  */
 static void
-cui_keypad_button_measure (GtkWidget     *widget,
-                           GtkOrientation orientation,
-                           int            for_size,
-                           int           *minimum,
-                           int           *natural,
-                           int           *minimum_baseline,
-                           int           *natural_baseline)
+cui_keypad_button_measure (GtkWidget         *widget,
+                           GtkOrientation     orientation,
+                           int                for_size,
+                           int               *minimum,
+                           int               *natural,
+                           G_GNUC_UNUSED int *minimum_baseline,
+                           G_GNUC_UNUSED int *natural_baseline)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (cui_keypad_button_parent_class);
   gint min1, min2, nat1, nat2;
@@ -177,20 +177,20 @@ cui_keypad_button_get_preferred_height (GtkWidget *widget,
 }
 
 static void
-cui_keypad_button_get_preferred_width_for_height (GtkWidget *widget,
-                                                  gint       height,
-                                                  gint      *minimum_width,
-                                                  gint      *natural_width)
+cui_keypad_button_get_preferred_width_for_height (G_GNUC_UNUSED GtkWidget *widget,
+                                                  gint                     height,
+                                                  gint                    *minimum_width,
+                                                  gint                    *natural_width)
 {
   *minimum_width = height;
   *natural_width = height;
 }
 
 static void
-cui_keypad_button_get_preferred_height_for_width (GtkWidget *widget,
-                                                  gint       width,
-                                                  gint      *minimum_height,
-                                                  gint      *natural_height)
+cui_keypad_button_get_preferred_height_for_width (G_GNUC_UNUSED GtkWidget *widget,
+                                                  gint                     width,
+                                                  gint                    *minimum_height,
+                                                  gint                    *natural_height)
 {
   *minimum_height = width;
   *natural_height = width;
