@@ -93,7 +93,7 @@ on_libcallaudio_async_finished (gboolean success, GError *error, gpointer data)
 
 
 static void
-on_answer_clicked (GtkButton *button, CuiCallDisplay *self)
+on_answer_clicked (CuiCallDisplay *self)
 {
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
 
@@ -102,8 +102,7 @@ on_answer_clicked (GtkButton *button, CuiCallDisplay *self)
 
 
 static void
-on_hang_up_clicked (GtkButton      *button,
-                    CuiCallDisplay *self)
+on_hang_up_clicked (CuiCallDisplay *self)
 {
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
 
