@@ -254,7 +254,6 @@ on_call_state_changed (CuiCallDisplay           *self,
   {
   case CUI_CALL_STATE_INCOMING:
   case CUI_CALL_STATE_WAITING: /* Deprecated */
-  case CUI_CALL_STATE_HELD:
     break;
 
   case CUI_CALL_STATE_ACTIVE:
@@ -266,6 +265,7 @@ on_call_state_changed (CuiCallDisplay           *self,
     gtk_label_set_text (self->status, cui_call_state_to_string (state));
     break;
 
+  case CUI_CALL_STATE_HELD:
   case CUI_CALL_STATE_DISCONNECTED:
     gtk_label_set_text (self->status, cui_call_state_to_string (state));
     break;
