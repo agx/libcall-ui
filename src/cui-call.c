@@ -6,10 +6,13 @@
  * Author: Guido Günther <agx@sigxcpu.org>
  */
 
+#include "config.h"
+
 #include "cui-call.h"
 #include "cui-enums.h"
 
 #include <gio/gio.h>
+#include <glib/gi18n-lib.h>
 
 G_DEFINE_INTERFACE (CuiCall, cui_call, G_TYPE_OBJECT)
 
@@ -269,7 +272,7 @@ cui_call_hang_up (CuiCall *self)
 }
 
 /**
- * cui_call_send_dtmf
+ * cui_call_send_dtmf:
  * @self: The call
  * @dtmf: The DTMF data
  *
@@ -289,4 +292,36 @@ cui_call_send_dtmf (CuiCall *self, const gchar *dtmf)
   g_return_if_fail (iface->send_dtmf);
 
   iface->send_dtmf (self, dtmf);
+}
+
+/**
+ * cui_call_state_to_string:
+ * @state: The #CuiCallState
+ *
+ * Returns: (transfer none): A human readable state description
+ */
+const char *
+cui_call_state_to_string (CuiCallState state)
+{
+  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+  switch (state) {
+  case CUI_CALL_STATE_ACTIVE:
+    return _("Call active");
+  case CUI_CALL_STATE_HELD:
+    return _("Call held");
+  case CUI_CALL_STATE_CALLING:
+  case CUI_CALL_STATE_ALERTING: /* Deprecated */
+    return _("Calling…");
+  case CUI_CALL_STATE_INCOMING:
+  case CUI_CALL_STATE_WAITING: /* Deprecated */
+    return _("Incoming call");
+  case CUI_CALL_STATE_DISCONNECTED:
+    return _("Call ended");
+  case CUI_CALL_STATE_UNKNOWN:
+  default:
+    return _("Unknown");
+  }
+
+  #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 }
