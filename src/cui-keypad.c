@@ -84,8 +84,7 @@ button_clicked_cb (CuiKeypad       *self,
 
 
 static void
-asterisk_button_clicked_cb (CuiKeypad *self,
-                            GtkWidget *btn)
+asterisk_button_clicked_cb (CuiKeypad *self)
 {
   symbol_clicked (self, '*');
   g_debug ("Button with * was pressed");
@@ -93,8 +92,7 @@ asterisk_button_clicked_cb (CuiKeypad *self,
 
 
 static void
-hash_button_clicked_cb (CuiKeypad *self,
-                        GtkWidget *btn)
+hash_button_clicked_cb (CuiKeypad *self)
 {
   symbol_clicked (self, '#');
   g_debug ("Button with # was pressed");
