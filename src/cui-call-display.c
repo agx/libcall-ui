@@ -241,6 +241,7 @@ on_call_state_changed (CuiCallDisplay           *self,
                                   NULL);
     gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
     break;
+
   case CUI_CALL_STATE_UNKNOWN:
   default:
     g_warn_if_reached ();
@@ -265,6 +266,7 @@ on_call_state_changed (CuiCallDisplay           *self,
   case CUI_CALL_STATE_DISCONNECTED:
     gtk_label_set_text (self->status, _("Call ended"));
     break;
+
   case CUI_CALL_STATE_UNKNOWN:
   default:
     g_warn_if_reached ();
