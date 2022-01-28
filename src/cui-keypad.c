@@ -84,7 +84,8 @@ button_clicked_cb (CuiKeypad       *self,
 
 
 static void
-asterisk_button_clicked_cb (CuiKeypad *self)
+asterisk_button_clicked_cb (CuiKeypad *self,
+                            GtkWidget *btn)
 {
   symbol_clicked (self, '*');
   g_debug ("Button with * was pressed");
@@ -92,7 +93,8 @@ asterisk_button_clicked_cb (CuiKeypad *self)
 
 
 static void
-hash_button_clicked_cb (CuiKeypad *self)
+hash_button_clicked_cb (CuiKeypad *self,
+                        GtkWidget *btn)
 {
   symbol_clicked (self, '#');
   g_debug ("Button with # was pressed");
@@ -100,11 +102,11 @@ hash_button_clicked_cb (CuiKeypad *self)
 
 
 static void
-insert_text_cb (CuiKeypad             *self,
-                gchar                 *text,
-                gint                   length,
-                G_GNUC_UNUSED gpointer position,
-                GtkEditable           *editable)
+insert_text_cb (CuiKeypad   *self,
+                gchar       *text,
+                gint         length,
+                gpointer     position,
+                GtkEditable *editable)
 {
   gchar *p = text;
 
@@ -131,10 +133,10 @@ insert_text_cb (CuiKeypad             *self,
 
 
 static void
-long_press_zero_cb (CuiKeypad            *self,
-                    G_GNUC_UNUSED gdouble x,
-                    G_GNUC_UNUSED gdouble y,
-                    GtkGesture           *gesture)
+long_press_zero_cb (CuiKeypad  *self,
+                    gdouble     x,
+                    gdouble     y,
+                    GtkGesture *gesture)
 {
   if (!self->symbols_visible)
     return;

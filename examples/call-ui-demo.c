@@ -8,7 +8,7 @@
 #include "cui-demo-window.h"
 
 static void
-startup (G_GNUC_UNUSED GtkApplication *app)
+startup (GtkApplication *app)
 {
   GtkCssProvider *css_provider = gtk_css_provider_new ();
 

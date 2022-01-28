@@ -82,7 +82,7 @@ G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
 
 /* Just print an error, the main point is that libcallaudio uses async DBus calls */
 static void
-on_libcallaudio_async_finished (gboolean success, GError *error, G_GNUC_UNUSED gpointer data)
+on_libcallaudio_async_finished (gboolean success, GError *error, gpointer data)
 {
   if (!success) {
     g_return_if_fail (error && error->message);
@@ -93,7 +93,7 @@ on_libcallaudio_async_finished (gboolean success, GError *error, G_GNUC_UNUSED g
 
 
 static void
-on_answer_clicked (CuiCallDisplay *self)
+on_answer_clicked (GtkButton *button, CuiCallDisplay *self)
 {
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
 
@@ -102,7 +102,8 @@ on_answer_clicked (CuiCallDisplay *self)
 
 
 static void
-on_hang_up_clicked (CuiCallDisplay *self)
+on_hang_up_clicked (GtkButton      *button,
+                    CuiCallDisplay *self)
 {
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
 
@@ -110,14 +111,14 @@ on_hang_up_clicked (CuiCallDisplay *self)
 }
 
 static void
-hold_toggled_cb (G_GNUC_UNUSED GtkToggleButton *togglebutton,
-                 G_GNUC_UNUSED CuiCallDisplay  *self)
+hold_toggled_cb (GtkToggleButton *togglebutton,
+                 CuiCallDisplay  *self)
 {
 }
 
 static void
-mute_toggled_cb (GtkToggleButton              *togglebutton,
-                 G_GNUC_UNUSED CuiCallDisplay *self)
+mute_toggled_cb (GtkToggleButton *togglebutton,
+                 CuiCallDisplay  *self)
 {
   gboolean want_mute;
 
@@ -127,8 +128,8 @@ mute_toggled_cb (GtkToggleButton              *togglebutton,
 
 
 static void
-speaker_toggled_cb (GtkToggleButton              *togglebutton,
-                    G_GNUC_UNUSED CuiCallDisplay *self)
+speaker_toggled_cb (GtkToggleButton *togglebutton,
+                    CuiCallDisplay  *self)
 {
   gboolean want_speaker;
 
@@ -138,8 +139,8 @@ speaker_toggled_cb (GtkToggleButton              *togglebutton,
 
 
 static void
-add_call_clicked_cb (G_GNUC_UNUSED GtkButton      *button,
-                     G_GNUC_UNUSED CuiCallDisplay *self)
+add_call_clicked_cb (GtkButton      *button,
+                     CuiCallDisplay *self)
 {
 }
 
@@ -186,9 +187,9 @@ set_pretty_time (CuiCallDisplay *self)
 
 
 static void
-on_call_state_changed (CuiCallDisplay           *self,
-                       G_GNUC_UNUSED GParamSpec *pspec,
-                       CuiCall                  *call)
+on_call_state_changed (CuiCallDisplay *self,
+                       GParamSpec     *psepc,
+                       CuiCall        *call)
 {
   GtkStyleContext *hang_up_style;
   CuiCallState state;
