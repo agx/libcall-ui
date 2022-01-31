@@ -231,7 +231,6 @@ on_accept_timeout (CuiDemoCall *self)
   self->accept_timeout_id = 0;
 
   self->timer = g_timer_new ();
-  g_timer_start (self->timer);
   self->timer_id = g_timeout_add (500,
                                   G_SOURCE_FUNC (on_timer_ticked),
                                   self);
