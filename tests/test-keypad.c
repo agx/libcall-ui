@@ -16,8 +16,8 @@ gint notified;
 
 
 static void
-notify_cb (G_GNUC_UNUSED GtkWidget *widget,
-           G_GNUC_UNUSED gpointer   data)
+notify_cb (GtkWidget *widget,
+           gpointer   data)
 {
   notified++;
 }

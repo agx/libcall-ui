@@ -30,7 +30,7 @@ G_DEFINE_TYPE (CuiDemoWindow, cui_demo_window, HDY_TYPE_APPLICATION_WINDOW)
 
 
 static void
-theme_variant_button_clicked_cb (G_GNUC_UNUSED CuiDemoWindow *self)
+theme_variant_button_clicked_cb (CuiDemoWindow *self)
 {
   GtkSettings *settings = gtk_settings_get_default ();
   gboolean prefer_dark_theme;
@@ -41,10 +41,10 @@ theme_variant_button_clicked_cb (G_GNUC_UNUSED CuiDemoWindow *self)
 
 
 static gboolean
-prefer_dark_theme_to_icon_name_cb (G_GNUC_UNUSED GBinding *binding,
-                                   const GValue           *from_value,
-                                   GValue                 *to_value,
-                                   G_GNUC_UNUSED gpointer  user_data)
+prefer_dark_theme_to_icon_name_cb (GBinding     *binding,
+                                   const GValue *from_value,
+                                   GValue       *to_value,
+                                   gpointer      user_data)
 {
   g_value_set_string (to_value,
                       g_value_get_boolean (from_value) ? "light-mode-symbolic" :
@@ -62,7 +62,7 @@ back_clicked_cb (CuiDemoWindow *self)
 
 
 static void
-on_call_state_changed (CuiDemoCall *call, G_GNUC_UNUSED GParamSpec *pspec, gpointer user_data)
+on_call_state_changed (CuiDemoCall *call, GParamSpec *pspec, gpointer user_data)
 {
   CuiDemoWindow *self = CUI_DEMO_WINDOW (user_data);
   CuiCallState state = cui_call_get_state (CUI_CALL (call));
@@ -126,7 +126,7 @@ key_pressed_cb (GtkWidget     *sender,
 }
 
 static void
-on_dial (CuiDemoWindow *self, const char number[], G_GNUC_UNUSED GtkWidget *sender)
+on_dial (CuiDemoWindow *self, const char number[], GtkWidget *sender)
 {
   GtkDialogFlags flags;
   GtkWidget *dialog;
