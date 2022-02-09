@@ -244,10 +244,8 @@ on_hang_up_timeout (CuiDemoCall *self)
 {
   g_assert (CUI_IS_DEMO_CALL (self));
 
-  if (self->timer)
-    g_timer_stop (self->timer);
-
   g_clear_handle_id (&self->timer_id, g_source_remove);
+  g_clear_pointer (&self->timer, g_timer_destroy);
 
   self->state = CUI_CALL_STATE_DISCONNECTED;
   g_object_notify (G_OBJECT (self), "state");
