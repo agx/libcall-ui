@@ -24,6 +24,7 @@
 #include "config.h"
 
 #include "cui-call-display.h"
+#include "cui-encryption-indicator-priv.h"
 
 #include "cui-call.h"
 
@@ -67,6 +68,7 @@ struct _CuiCallDisplay {
   GtkToggleButton *mute;
   GtkButton       *hang_up;
   GtkButton       *answer;
+  CuiEncryptionIndicator *encryption_indicator;
 
   GCancellable    *cancel;
   GtkRevealer     *dial_pad_revealer;
@@ -75,6 +77,7 @@ struct _CuiCallDisplay {
 
   GBinding        *dtmf_bind;
   GBinding        *avatar_icon_bind;
+  GBinding        *encryption_bind;
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -361,6 +364,7 @@ on_call_unrefed (CuiCallDisplay *self,
   self->call = NULL;
   self->dtmf_bind = NULL;
   self->avatar_icon_bind = NULL;
+  self->encryption_bind = NULL;
   reset_ui (self);
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }
@@ -493,6 +497,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, dial_pad);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, dial_pad_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, encryption_indicator);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, general_controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, gsm_controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up);
@@ -582,6 +587,7 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
     g_signal_handlers_disconnect_by_data (self->call, self);
     g_clear_pointer (&self->dtmf_bind, g_binding_unbind);
     g_clear_pointer (&self->avatar_icon_bind, g_binding_unbind);
+    g_clear_pointer (&self->encryption_bind, g_binding_unbind);
   }
 
   self->call = call;
@@ -624,6 +630,11 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
 						   self->avatar,
 						   "loadable-icon",
 						   G_BINDING_SYNC_CREATE);
+  self->encryption_bind = g_object_bind_property (call,
+                                                  "encrypted",
+                                                  self->encryption_indicator,
+                                                  "encrypted",
+                                                  G_BINDING_SYNC_CREATE);
 
   g_object_notify_by_pspec (G_OBJECT (self), props[PROP_CALL]);
 }
