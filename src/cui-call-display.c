@@ -488,30 +488,30 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/ui/cui-call-display.ui");
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, avatar);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, dial_pad);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, dial_pad_revealer);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, general_controls);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, gsm_controls);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, incoming_phone_call);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, keypad_entry);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, primary_contact_info);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, secondary_contact_info);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, avatar);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, status);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, controls);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, gsm_controls);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, general_controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, speaker);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, dial_pad_revealer);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, keypad_entry);
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, status);
+  gtk_widget_class_bind_template_callback (widget_class, add_call_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, block_delete_cb);
+  gtk_widget_class_bind_template_callback (widget_class, hide_dial_pad_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
+  gtk_widget_class_bind_template_callback (widget_class, insert_text_cb);
+  gtk_widget_class_bind_template_callback (widget_class, mute_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_answer_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_hang_up_clicked);
-  gtk_widget_class_bind_template_callback (widget_class, hold_toggled_cb);
-  gtk_widget_class_bind_template_callback (widget_class, mute_toggled_cb);
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
-  gtk_widget_class_bind_template_callback (widget_class, add_call_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, hide_dial_pad_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, block_delete_cb);
-  gtk_widget_class_bind_template_callback (widget_class, insert_text_cb);
 
   gtk_widget_class_set_css_name (widget_class, "cui-call-display");
 }
