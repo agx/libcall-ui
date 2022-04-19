@@ -4,7 +4,6 @@
   <requires lib="libhandy" version="0.0"/>
   <template class="CuiDialpad" parent="GtkBox">
     <property name="visible">True</property>
-    <property name="can-focus">False</property>
     <property name="margin-start">24</property>
     <property name="margin-end">24</property>
     <property name="margin-top">16</property>
@@ -13,7 +12,6 @@
     <child>
       <object class="GtkEntry" id="keypad_entry">
         <property name="visible">True</property>
-        <property name="can-focus">True</property>
         <property name="hexpand">True</property>
         <property name="xalign">0.5</property>
         <property name="placeholder-text" translatable="yes">Enter a number</property>
@@ -30,7 +28,6 @@
     <child>
       <object class="CuiKeypad" id="keypad">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
         <property name="halign">center</property>
         <property name="margin-top">18</property>
         <property name="margin-bottom">18</property>
@@ -47,22 +44,18 @@
     <child>
       <object class="HdyClamp">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
         <property name="maximum-size">250</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
             <child type="center">
               <object class="GtkButton" id="dial">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <signal name="clicked" handler="dial_clicked_cb" swapped="yes"/>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="icon-name">call-start-symbolic</property>
                     <property name="icon_size">5</property>
                   </object>
@@ -82,7 +75,6 @@
             <child>
               <object class="GtkButton" id="backspace">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
@@ -91,7 +83,6 @@
                 <child>
                   <object class="GtkImage">
                     <property name="visible">True</property>
-                    <property name="can-focus">False</property>
                     <property name="icon-name">edit-clear-symbolic</property>
                   </object>
                 </child>
