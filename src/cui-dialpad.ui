@@ -106,9 +106,6 @@
         <property name="position">2</property>
       </packing>
     </child>
-    <style>
-      <class name="round-buttons "/>
-    </style>
   </template>
   <object class="GtkGestureLongPress" id="long_press_backspace_gesture">
     <property name="widget">backspace</property>
