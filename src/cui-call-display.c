@@ -78,6 +78,8 @@ struct _CuiCallDisplay {
   GBinding        *dtmf_bind;
   GBinding        *avatar_icon_bind;
   GBinding        *encryption_bind;
+
+  gboolean         call_active;
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -220,6 +222,9 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_ACTIVE:
+    self->call_active = TRUE;
+    G_GNUC_FALLTHROUGH;
+
   case CUI_CALL_STATE_CALLING:
   case CUI_CALL_STATE_ALERTING: /* Deprecated */
   case CUI_CALL_STATE_HELD:
@@ -241,9 +246,11 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_DISCONNECTED:
-    call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
-                                  on_libcallaudio_async_finished,
-                                  NULL);
+    if (self->call_active)
+      call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
+                                    on_libcallaudio_async_finished,
+                                    NULL);
+
     gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
     break;
 
@@ -589,6 +596,8 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
     g_clear_pointer (&self->avatar_icon_bind, g_binding_unbind);
     g_clear_pointer (&self->encryption_bind, g_binding_unbind);
   }
+
+  self->call_active = FALSE;
 
   self->call = call;
   gtk_widget_set_sensitive (GTK_WIDGET (self), !!self->call);
