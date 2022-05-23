@@ -561,8 +561,8 @@ cui_call_display_new (CuiCall *call)
  * cui_call_display_get_call:
  * @self: The call display
  *
- * Returns the current [class@CuiCall]
- * Returns: (transfer none) (nullable): The current [class@CuiCall].
+ * Returns the current [iface@CuiCall]
+ * Returns: (transfer none) (nullable): The current [iface@CuiCall].
  */
 CuiCall *
 cui_call_display_get_call (CuiCallDisplay *self)
@@ -577,7 +577,7 @@ cui_call_display_get_call (CuiCallDisplay *self)
  * @self: The call display
  * @call: (nullable): The current call
  *
- * Set a call. The current call will be removed form the display and the
+ * Set a [iface@CuiCall]. The current call will be removed form the display and the
  * new call displayed instead.
  */
 void
