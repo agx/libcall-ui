@@ -1,5 +1,5 @@
-libcall-ui
-----------
+libcall-ui 0.0.2
+----------------
 Released: February 2022
 * Breaking change: Implementations of CuiCall must implement
   "active-time" property to keep track of time. Sample implementation
@@ -14,8 +14,8 @@ Released: February 2022
   Rafael Fontenelle (pt_BR)
   Vittorio Monti (it)
 
-libcall-ui
-----------
+libcall-ui 0.0.1
+----------------
 Released: January 2022
 * Initial release with call-display, keypad and dialpad widgets
 * UI translations:
