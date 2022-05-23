@@ -79,7 +79,7 @@ struct _CuiCallDisplay {
   GBinding        *avatar_icon_bind;
   GBinding        *encryption_bind;
 
-  gboolean         call_active;
+  gboolean         needs_cam_reset; /* cam = Call Audio Mode */
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -208,7 +208,7 @@ on_call_state_changed (CuiCallDisplay *self,
 
   #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
-  /* Widgets */
+  /* Widgets and call audio mode*/
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
@@ -222,7 +222,7 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_ACTIVE:
-    self->call_active = TRUE;
+    self->needs_cam_reset = TRUE;
     G_GNUC_FALLTHROUGH;
 
   case CUI_CALL_STATE_CALLING:
@@ -246,7 +246,7 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_DISCONNECTED:
-    if (self->call_active)
+    if (self->needs_cam_reset)
       call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
                                     on_libcallaudio_async_finished,
                                     NULL);
@@ -597,7 +597,7 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
     g_clear_pointer (&self->encryption_bind, g_binding_unbind);
   }
 
-  self->call_active = FALSE;
+  self->needs_cam_reset = FALSE;
 
   self->call = call;
   gtk_widget_set_sensitive (GTK_WIDGET (self), !!self->call);
