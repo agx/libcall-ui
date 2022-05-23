@@ -6,13 +6,13 @@ Released: February 2022
   available in the demo
 * Deprecate some call states
 * UI translations:
-  Matej Urbančič (sl)
-  Maite Guix (ca)
-  Fran Dieguez (gl)
-  Yuri Chornoivan (uk)
-  Danial Behzadi (fa)
-  Rafael Fontenelle (pt_BR)
-  Vittorio Monti (it)
+	Matej Urbančič (sl)
+	Maite Guix (ca)
+	Fran Dieguez (gl)
+	Yuri Chornoivan (uk)
+	Danial Behzadi (fa)
+	Rafael Fontenelle (pt_BR)
+	Vittorio Monti (it)
 
 libcall-ui 0.0.1
 ----------------
