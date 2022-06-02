@@ -12,8 +12,7 @@
 #include <glib/gi18n.h>
 
 
-struct _CuiDemoWindow
-{
+struct _CuiDemoWindow {
   HdyApplicationWindow parent_instance;
 
   GtkImage            *theme_variant_image;
@@ -47,8 +46,9 @@ prefer_dark_theme_to_icon_name_cb (GBinding     *binding,
                                    gpointer      user_data)
 {
   g_value_set_string (to_value,
-                      g_value_get_boolean (from_value) ? "light-mode-symbolic" :
-                                                         "dark-mode-symbolic");
+                      g_value_get_boolean (from_value) ?
+                      "light-mode-symbolic" :
+                      "dark-mode-symbolic");
 
   return TRUE;
 }

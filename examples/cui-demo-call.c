@@ -28,23 +28,22 @@ enum {
 };
 static GParamSpec *props[PROP_LAST_PROP];
 
-struct _CuiDemoCall
-{
-  GObject       parent_instance;
+struct _CuiDemoCall {
+  GObject        parent_instance;
 
   GLoadableIcon *avatar_icon;
-  gchar        *id;
-  gchar        *display_name;
-  CuiCallState  state;
-  gboolean      encrypted;
-  gboolean      can_dtmf;
+  gchar         *id;
+  gchar         *display_name;
+  CuiCallState   state;
+  gboolean       encrypted;
+  gboolean       can_dtmf;
 
-  guint accept_timeout_id;
-  guint hangup_timeout_id;
+  guint          accept_timeout_id;
+  guint          hangup_timeout_id;
 
-  GTimer       *timer;
-  gdouble       active_time;
-  guint         timer_id;
+  GTimer        *timer;
+  gdouble        active_time;
+  guint          timer_id;
 };
 
 static void cui_demo_cui_call_interface_init (CuiCallInterface *iface);
@@ -55,9 +54,9 @@ G_DEFINE_TYPE_WITH_CODE (CuiDemoCall, cui_demo_call, G_TYPE_OBJECT,
 
 static void
 cui_demo_call_get_property (GObject    *object,
-			    guint       prop_id,
-			    GValue     *value,
-			    GParamSpec *pspec)
+                            guint       prop_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
 {
   CuiDemoCall *self = CUI_DEMO_CALL (object);
 
@@ -344,7 +343,7 @@ cui_demo_call_init (CuiDemoCall *self)
 CuiDemoCall *
 cui_demo_call_new (void)
 {
-   return g_object_new (CUI_TYPE_DEMO_CALL, NULL);
+  return g_object_new (CUI_TYPE_DEMO_CALL, NULL);
 }
 
 void

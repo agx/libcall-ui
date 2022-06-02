@@ -51,35 +51,35 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CuiCallDisplay {
-  GtkOverlay       parent_instance;
+  GtkOverlay              parent_instance;
 
-  CuiCall         *call;
+  CuiCall                *call;
 
-  GtkLabel        *incoming_phone_call;
-  HdyAvatar       *avatar;
-  GtkLabel        *primary_contact_info;
-  GtkLabel        *secondary_contact_info;
-  GtkLabel        *status;
+  GtkLabel               *incoming_phone_call;
+  HdyAvatar              *avatar;
+  GtkLabel               *primary_contact_info;
+  GtkLabel               *secondary_contact_info;
+  GtkLabel               *status;
 
-  GtkBox          *controls;
-  GtkBox          *gsm_controls;
-  GtkBox          *general_controls;
-  GtkToggleButton *speaker;
-  GtkToggleButton *mute;
-  GtkButton       *hang_up;
-  GtkButton       *answer;
+  GtkBox                 *controls;
+  GtkBox                 *gsm_controls;
+  GtkBox                 *general_controls;
+  GtkToggleButton        *speaker;
+  GtkToggleButton        *mute;
+  GtkButton              *hang_up;
+  GtkButton              *answer;
   CuiEncryptionIndicator *encryption_indicator;
 
-  GCancellable    *cancel;
-  GtkRevealer     *dial_pad_revealer;
-  GtkToggleButton *dial_pad;
-  GtkEntry        *keypad_entry;
+  GCancellable           *cancel;
+  GtkRevealer            *dial_pad_revealer;
+  GtkToggleButton        *dial_pad;
+  GtkEntry               *keypad_entry;
 
-  GBinding        *dtmf_bind;
-  GBinding        *avatar_icon_bind;
-  GBinding        *encryption_bind;
+  GBinding               *dtmf_bind;
+  GBinding               *avatar_icon_bind;
+  GBinding               *encryption_bind;
 
-  gboolean         needs_cam_reset; /* cam = Call Audio Mode */
+  gboolean                needs_cam_reset; /* cam = Call Audio Mode */
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -114,11 +114,13 @@ on_hang_up_clicked (CuiCallDisplay *self)
   cui_call_hang_up (self->call);
 }
 
+
 static void
 hold_toggled_cb (GtkToggleButton *togglebutton,
                  CuiCallDisplay  *self)
 {
 }
+
 
 static void
 mute_toggled_cb (GtkToggleButton *togglebutton,
@@ -174,12 +176,12 @@ set_pretty_time (CuiCallDisplay *self)
   str = g_string_new ("");
 
   if (elapsed > HOUR) {
-    guint hours = (guint)(elapsed / HOUR);
+    guint hours = (guint) (elapsed / HOUR);
     g_string_append_printf (str, "%u:", hours);
     elapsed -= (hours * HOUR);
   }
 
-  minutes = (guint)(elapsed / MINUTE);
+  minutes = (guint) (elapsed / MINUTE);
   seconds = elapsed - (minutes * MINUTE);
   g_string_append_printf (str, "%02u:%02u", minutes, seconds);
 
@@ -237,7 +239,7 @@ on_call_state_changed (CuiCallDisplay *self,
 
     gtk_widget_set_visible
       (GTK_WIDGET (self->gsm_controls),
-       state != CUI_CALL_STATE_CALLING);
+      state != CUI_CALL_STATE_CALLING);
 
     /* TODO Only switch to "call" audio mode for cellular calls */
     call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
@@ -362,6 +364,7 @@ reset_ui (CuiCallDisplay *self)
   gtk_widget_show (GTK_WIDGET (self->status));
   gtk_widget_show (GTK_WIDGET (self->gsm_controls));
 }
+
 
 static void
 on_call_unrefed (CuiCallDisplay *self,
@@ -635,10 +638,10 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
                                             G_BINDING_SYNC_CREATE);
 
   self->avatar_icon_bind = g_object_bind_property (call,
-						   "avatar-icon",
-						   self->avatar,
-						   "loadable-icon",
-						   G_BINDING_SYNC_CREATE);
+                                                   "avatar-icon",
+                                                   self->avatar,
+                                                   "loadable-icon",
+                                                   G_BINDING_SYNC_CREATE);
   self->encryption_bind = g_object_bind_property (call,
                                                   "encrypted",
                                                   self->encryption_indicator,
