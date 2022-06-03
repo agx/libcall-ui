@@ -488,7 +488,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   object_class->dispose = cui_call_display_dispose;
 
   /**
-   * CuiCallDisplay:call-handle:
+   * CuiCallDisplay:call:
    *
    * An opaque handle to a call
    */
