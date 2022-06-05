@@ -75,11 +75,6 @@
               </object>
             </child>
             <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <child>
                   <object class="GtkLabel" id="status">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -310,8 +305,6 @@
                       </object>
                     </child>
                   </object>
-                </child>
-              </object>
             </child>
           </object>
         </child>

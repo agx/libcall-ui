@@ -226,7 +226,6 @@ on_call_state_changed (CuiCallDisplay *self,
   {
   case CUI_CALL_STATE_INCOMING:
   case CUI_CALL_STATE_WAITING: /* Deprecated */
-    gtk_widget_hide (GTK_WIDGET (self->status));
     gtk_widget_hide (GTK_WIDGET (self->controls));
     gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
     gtk_widget_show (GTK_WIDGET (self->answer));
@@ -246,7 +245,6 @@ on_call_state_changed (CuiCallDisplay *self,
     gtk_widget_hide (GTK_WIDGET (self->answer));
     gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
     gtk_widget_show (GTK_WIDGET (self->controls));
-    gtk_widget_show (GTK_WIDGET (self->status));
 
     gtk_widget_set_visible
       (GTK_WIDGET (self->gsm_controls),
@@ -382,7 +380,6 @@ reset_ui (CuiCallDisplay *self)
   gtk_widget_show (GTK_WIDGET (self->hang_up));
   gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
   gtk_widget_show (GTK_WIDGET (self->controls));
-  gtk_widget_show (GTK_WIDGET (self->status));
   gtk_widget_show (GTK_WIDGET (self->gsm_controls));
   gtk_widget_set_sensitive (GTK_WIDGET (self->answer), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (self->hang_up), TRUE);
