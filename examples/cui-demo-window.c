@@ -76,6 +76,18 @@ back_clicked_cb (CuiDemoWindow *self)
 }
 
 
+static gboolean
+clear_call (CuiDemoWindow *self)
+{
+  g_assert (CUI_IS_DEMO_WINDOW (self));
+
+  g_clear_object (&self->call1);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->incoming_call), TRUE);
+
+  return G_SOURCE_REMOVE;
+}
+
+
 static void
 on_call_state_changed (CuiDemoCall *call, GParamSpec *pspec, gpointer user_data)
 {
@@ -85,10 +97,7 @@ on_call_state_changed (CuiDemoCall *call, GParamSpec *pspec, gpointer user_data)
   g_return_if_fail (call == self->call1);
 
   if (state == CUI_CALL_STATE_DISCONNECTED)
-    g_clear_object (&self->call1);
-
-  gtk_widget_set_sensitive (GTK_WIDGET (self->incoming_call),
-                            state == CUI_CALL_STATE_DISCONNECTED);
+    g_timeout_add_seconds (3, G_SOURCE_FUNC (clear_call), self);
 }
 
 
@@ -104,6 +113,7 @@ on_incoming_call_clicked (CuiDemoWindow *self)
                       G_CALLBACK (on_call_state_changed),
                       self);
     on_call_state_changed (self->call1, NULL, self);
+    gtk_widget_set_sensitive (GTK_WIDGET (self->incoming_call), FALSE);
 
     cui_call_display_set_call (self->call_display, CUI_CALL (self->call1));
   }
