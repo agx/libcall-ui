@@ -194,6 +194,10 @@ on_call_state_changed (CuiCallDisplay *self,
 
   state = cui_call_get_state (call);
 
+  g_debug ("Call %p changed state to %s",
+           call,
+           cui_call_state_to_string (state));
+
   hang_up_style = gtk_widget_get_style_context
                     (GTK_WIDGET (self->hang_up));
 
@@ -341,6 +345,10 @@ on_dialpad_revealed (CuiCallDisplay *self)
 static void
 reset_ui (CuiCallDisplay *self)
 {
+  g_assert (CUI_IS_CALL_DISPLAY (self));
+
+  g_debug ("Resetting UI");
+
   hdy_avatar_set_loadable_icon (self->avatar, NULL);
   hdy_avatar_set_text (self->avatar, "");
   gtk_label_set_label (self->primary_contact_info, "");
@@ -359,7 +367,10 @@ static void
 on_call_unrefed (CuiCallDisplay *self,
                  CuiCall        *call)
 {
+  g_assert (CUI_IS_CALL_DISPLAY (self));
+
   g_debug ("Dropping call %p", call);
+
   self->call = NULL;
   self->dtmf_bind = NULL;
   self->avatar_icon_bind = NULL;
