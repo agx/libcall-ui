@@ -174,7 +174,7 @@ set_pretty_time (CuiCallDisplay *self)
   seconds = elapsed - (minutes * MINUTE);
   g_string_append_printf (str, "%02u:%02u", minutes, seconds);
 
-  gtk_label_set_text (self->status, str->str);
+  gtk_label_set_label (self->status, str->str);
 
 #undef HOUR
 #undef MINUTE
@@ -265,7 +265,7 @@ on_call_state_changed (CuiCallDisplay *self,
   case CUI_CALL_STATE_ALERTING: /* Deprecated */
   case CUI_CALL_STATE_HELD:
   case CUI_CALL_STATE_DISCONNECTED:
-    gtk_label_set_text (self->status, cui_call_state_to_string (state));
+    gtk_label_set_label (self->status, cui_call_state_to_string (state));
     break;
 
   case CUI_CALL_STATE_UNKNOWN:
@@ -304,8 +304,8 @@ on_update_contact_information (CuiCallDisplay *self)
   hdy_avatar_set_text (self->avatar, display_name);
   hdy_avatar_set_show_initials (self->avatar, show_initials);
 
-  gtk_label_set_text (self->primary_contact_info, display_name);
-  gtk_label_set_text (number_label, number);
+  gtk_label_set_label (self->primary_contact_info, display_name);
+  gtk_label_set_label (number_label, number);
 }
 
 
@@ -345,7 +345,7 @@ reset_ui (CuiCallDisplay *self)
   hdy_avatar_set_text (self->avatar, "");
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
-  gtk_label_set_text (self->status, "");
+  gtk_label_set_label (self->status, "");
   gtk_widget_show (GTK_WIDGET (self->answer));
   gtk_widget_show (GTK_WIDGET (self->hang_up));
   gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
