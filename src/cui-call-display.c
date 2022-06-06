@@ -24,6 +24,9 @@
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 
+#define HDY_AVATAR_SIZE_BIG 160
+#define HDY_AVATAR_SIZE_DEFAULT 100
+
 /**
  * CuiCallDisplay:
  *
@@ -225,6 +228,9 @@ on_call_state_changed (CuiCallDisplay *self,
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
+    hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_BIG);
+    G_GNUC_FALLTHROUGH;
+
   case CUI_CALL_STATE_WAITING: /* Deprecated */
     gtk_widget_hide (GTK_WIDGET (self->controls));
     gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
@@ -234,6 +240,7 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_ACTIVE:
+    hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_DEFAULT);
     self->needs_cam_reset = TRUE;
     G_GNUC_FALLTHROUGH;
 
@@ -373,6 +380,7 @@ reset_ui (CuiCallDisplay *self)
   self->update_status_time = TRUE;
   hdy_avatar_set_loadable_icon (self->avatar, NULL);
   hdy_avatar_set_text (self->avatar, "");
+  hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_DEFAULT);
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
   gtk_label_set_label (self->status, "");
