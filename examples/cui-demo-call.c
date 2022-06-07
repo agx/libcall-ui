@@ -127,6 +127,8 @@ cui_demo_call_class_init (CuiDemoCallClass *klass)
   g_object_class_override_property (object_class,
                                     PROP_STATE,
                                     "state");
+  props[PROP_STATE] =
+    g_object_class_find_property (object_class, "state");
 
   g_object_class_override_property (object_class,
                                     PROP_ENCRYPTED,
@@ -227,7 +229,7 @@ on_accept_timeout (CuiDemoCall *self)
   g_assert (CUI_IS_DEMO_CALL (self));
 
   self->state = CUI_CALL_STATE_ACTIVE;
-  g_object_notify (G_OBJECT (self), "state");
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
 
   self->accept_timeout_id = 0;
 
@@ -249,7 +251,7 @@ on_hang_up_timeout (CuiDemoCall *self)
   g_clear_pointer (&self->timer, g_timer_destroy);
 
   self->state = CUI_CALL_STATE_DISCONNECTED;
-  g_object_notify (G_OBJECT (self), "state");
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_STATE]);
 
   self->hangup_timeout_id = 0;
 
