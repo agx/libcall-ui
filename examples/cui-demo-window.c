@@ -105,7 +105,7 @@ static void
 on_incoming_call_clicked (CuiDemoWindow *self)
 {
   if (!self->call1) {
-    self->call1 = cui_demo_call_new ();
+    self->call1 = cui_demo_call_new (TRUE);
     cui_demo_call_set_encrypted (self->call1, TRUE);
 
     g_signal_connect (self->call1,
