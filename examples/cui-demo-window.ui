@@ -155,7 +155,7 @@
                             <property name="valign">center</property>
                             <property name="use-underline">True</property>
                             <property name="visible">True</property>
-                            <signal name="clicked" handler="on_incoming_call_clicked" swapped="yes"/>
+                            <signal name="clicked" handler="on_new_call_clicked" swapped="no"/>
                             <style>
                               <class name="image-button"/>
                             </style>
@@ -164,6 +164,27 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="icon_name">call-arrow-incoming-symbolic</property>
+                                <property name="icon_size">1</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="outgoing_call">
+                            <property name="can_focus">False</property>
+                            <property name="receives_default">False</property>
+                            <property name="valign">center</property>
+                            <property name="use-underline">True</property>
+                            <property name="visible">True</property>
+                            <signal name="clicked" handler="on_new_call_clicked" swapped="no"/>
+                            <style>
+                              <class name="image-button"/>
+                            </style>
+                            <child>
+                              <object class="GtkImage">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="icon_name">call-arrow-outgoing-symbolic</property>
                                 <property name="icon_size">1</property>
                               </object>
                             </child>

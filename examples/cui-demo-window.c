@@ -18,6 +18,7 @@ struct _CuiDemoWindow {
   GtkImage            *theme_variant_image;
   HdyLeaflet          *content_box;
   GtkButton           *incoming_call;
+  GtkButton           *outgoing_call;
 
   CuiCallDisplay      *call_display;
   CuiDialpad          *dialpad;
@@ -83,6 +84,7 @@ clear_call (CuiDemoWindow *self)
 
   g_clear_object (&self->call1);
   gtk_widget_set_sensitive (GTK_WIDGET (self->incoming_call), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->outgoing_call), TRUE);
 
   return G_SOURCE_REMOVE;
 }
@@ -102,10 +104,17 @@ on_call_state_changed (CuiDemoCall *call, GParamSpec *pspec, gpointer user_data)
 
 
 static void
-on_incoming_call_clicked (CuiDemoWindow *self)
+on_new_call_clicked (GtkButton     *button,
+                     CuiDemoWindow *self)
 {
+  g_assert (CUI_IS_DEMO_WINDOW (self));
+  g_assert (button == self->incoming_call ||
+            button == self->outgoing_call);
+
   if (!self->call1) {
-    self->call1 = cui_demo_call_new (TRUE);
+    gboolean incoming = button == self->incoming_call;
+
+    self->call1 = cui_demo_call_new (incoming);
     cui_demo_call_set_encrypted (self->call1, TRUE);
 
     g_signal_connect (self->call1,
@@ -113,7 +122,9 @@ on_incoming_call_clicked (CuiDemoWindow *self)
                       G_CALLBACK (on_call_state_changed),
                       self);
     on_call_state_changed (self->call1, NULL, self);
+
     gtk_widget_set_sensitive (GTK_WIDGET (self->incoming_call), FALSE);
+    gtk_widget_set_sensitive (GTK_WIDGET (self->outgoing_call), FALSE);
 
     cui_call_display_set_call (self->call_display, CUI_CALL (self->call1));
   }
@@ -184,11 +195,12 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, keypad);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, content_box);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, incoming_call);
+  gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, outgoing_call);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, theme_variant_image);
   gtk_widget_class_bind_template_callback (widget_class, back_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, key_pressed_cb);
   gtk_widget_class_bind_template_callback (widget_class, theme_variant_button_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, on_incoming_call_clicked);
+  gtk_widget_class_bind_template_callback (widget_class, on_new_call_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_dial);
 }
 
