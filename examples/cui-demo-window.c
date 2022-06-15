@@ -31,11 +31,26 @@ G_DEFINE_TYPE (CuiDemoWindow, cui_demo_window, HDY_TYPE_APPLICATION_WINDOW)
 static void
 theme_variant_button_clicked_cb (CuiDemoWindow *self)
 {
+#if HDY_CHECK_VERSION (1, 6, 0)
+  HdyStyleManager *style_manager;
+  gboolean is_dark;
+
+  style_manager = hdy_style_manager_get_default ();
+  is_dark = hdy_style_manager_get_dark (style_manager);
+
+  g_debug ("let there be %s", is_dark ? "light" : "darkness");
+
+  hdy_style_manager_set_color_scheme (style_manager,
+                                      is_dark ?
+                                      HDY_COLOR_SCHEME_FORCE_LIGHT :
+                                      HDY_COLOR_SCHEME_FORCE_DARK);
+#else
   GtkSettings *settings = gtk_settings_get_default ();
   gboolean prefer_dark_theme;
 
   g_object_get (settings, "gtk-application-prefer-dark-theme", &prefer_dark_theme, NULL);
   g_object_set (settings, "gtk-application-prefer-dark-theme", !prefer_dark_theme, NULL);
+#endif
 }
 
 
@@ -171,11 +186,19 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
 static void
 cui_demo_window_init (CuiDemoWindow *self)
 {
+#if HDY_CHECK_VERSION (1, 6, 0)
+  HdyStyleManager *style_manager = hdy_style_manager_get_default();
+#else
   GtkSettings *settings = gtk_settings_get_default ();
+#endif
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
+#if HDY_CHECK_VERSION (1, 6, 0)
+  g_object_bind_property_full (style_manager, "dark",
+#else
   g_object_bind_property_full (settings, "gtk-application-prefer-dark-theme",
+#endif
                                self->theme_variant_image, "icon-name",
                                G_BINDING_SYNC_CREATE,
                                prefer_dark_theme_to_icon_name_cb,
