@@ -24,6 +24,9 @@
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 
+#define HDY_AVATAR_SIZE_BIG 160
+#define HDY_AVATAR_SIZE_DEFAULT 100
+
 /**
  * CuiCallDisplay:
  *
@@ -69,6 +72,7 @@ struct _CuiCallDisplay {
   GBinding               *encryption_bind;
 
   gboolean                needs_cam_reset; /* cam = Call Audio Mode */
+  gboolean                update_status_time;
 };
 
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_OVERLAY);
@@ -91,6 +95,12 @@ on_answer_clicked (CuiCallDisplay *self)
 {
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
 
+  self->update_status_time = FALSE;
+  gtk_label_set_label (self->status,
+                       _("Accepting call…"));
+
+  gtk_widget_set_sensitive (GTK_WIDGET (self->answer), FALSE);
+
   cui_call_accept (self->call);
 }
 
@@ -99,6 +109,12 @@ static void
 on_hang_up_clicked (CuiCallDisplay *self)
 {
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
+
+  self->update_status_time = FALSE;
+  gtk_label_set_label (self->status,
+                       _("Hanging up…"));
+
+  gtk_widget_set_sensitive (GTK_WIDGET (self->hang_up), FALSE);
 
   cui_call_hang_up (self->call);
 }
@@ -201,14 +217,21 @@ on_call_state_changed (CuiCallDisplay *self,
   hang_up_style = gtk_widget_get_style_context
                     (GTK_WIDGET (self->hang_up));
 
+  /* if the state changed than the call must be responsive */
+  self->update_status_time = TRUE;
+  gtk_widget_set_sensitive (GTK_WIDGET (self->answer), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->hang_up), TRUE);
+
   #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
   /* Widgets and call audio mode*/
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
+    hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_BIG);
+    G_GNUC_FALLTHROUGH;
+
   case CUI_CALL_STATE_WAITING: /* Deprecated */
-    gtk_widget_hide (GTK_WIDGET (self->status));
     gtk_widget_hide (GTK_WIDGET (self->controls));
     gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
     gtk_widget_show (GTK_WIDGET (self->answer));
@@ -217,6 +240,7 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_ACTIVE:
+    hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_DEFAULT);
     self->needs_cam_reset = TRUE;
     G_GNUC_FALLTHROUGH;
 
@@ -228,7 +252,6 @@ on_call_state_changed (CuiCallDisplay *self,
     gtk_widget_hide (GTK_WIDGET (self->answer));
     gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
     gtk_widget_show (GTK_WIDGET (self->controls));
-    gtk_widget_show (GTK_WIDGET (self->status));
 
     gtk_widget_set_visible
       (GTK_WIDGET (self->gsm_controls),
@@ -328,6 +351,11 @@ on_time_updated (CuiCallDisplay *self)
     return;
   }
 
+  /* We don't want to overwrite the status text if there
+   * is an unfinished operation */
+  if (!self->update_status_time)
+    return;
+
   set_pretty_time (self);
 }
 
@@ -349,8 +377,10 @@ reset_ui (CuiCallDisplay *self)
 
   g_debug ("Resetting UI");
 
+  self->update_status_time = TRUE;
   hdy_avatar_set_loadable_icon (self->avatar, NULL);
   hdy_avatar_set_text (self->avatar, "");
+  hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_DEFAULT);
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
   gtk_label_set_label (self->status, "");
@@ -358,8 +388,9 @@ reset_ui (CuiCallDisplay *self)
   gtk_widget_show (GTK_WIDGET (self->hang_up));
   gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
   gtk_widget_show (GTK_WIDGET (self->controls));
-  gtk_widget_show (GTK_WIDGET (self->status));
   gtk_widget_show (GTK_WIDGET (self->gsm_controls));
+  gtk_widget_set_sensitive (GTK_WIDGET (self->answer), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->hang_up), TRUE);
 }
 
 
@@ -600,10 +631,12 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
     g_clear_pointer (&self->encryption_bind, g_binding_unbind);
   }
 
+  self->update_status_time = TRUE;
   self->needs_cam_reset = FALSE;
 
   self->call = call;
   gtk_widget_set_sensitive (GTK_WIDGET (self), !!self->call);
+
   if (self->call == NULL) {
     reset_ui (self);
     return;
