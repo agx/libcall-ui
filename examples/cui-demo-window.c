@@ -184,6 +184,16 @@ on_dial (CuiDemoWindow *self, const char number[], GtkWidget *sender)
   gtk_widget_show_all (dialog);
 }
 
+
+static void
+on_visible_child_changed (GObject       *sender,
+                          GParamSpec    *pspec,
+                          CuiDemoWindow *self)
+{
+  hdy_leaflet_navigate (self->content_box, HDY_NAVIGATION_DIRECTION_FORWARD);
+}
+
+
 static void
 cui_demo_window_class_init (CuiDemoWindowClass *klass)
 {
@@ -202,6 +212,7 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, theme_variant_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_new_call_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_dial);
+  gtk_widget_class_bind_template_callback (widget_class, on_visible_child_changed);
 }
 
 
