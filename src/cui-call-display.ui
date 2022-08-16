@@ -33,6 +33,7 @@
                 <property name="margin-top">12</property>
                 <property name="margin-bottom">12</property>
                 <property name="label" translatable="yes">Incoming phone call</property>
+                <property name="ellipsize">middle</property>
               </object>
             </child>
             <child>
@@ -77,6 +78,7 @@
                 <property name="margin-bottom">12</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
+                <property name="ellipsize">middle</property>
                 <attributes>
                   <attribute name="scale" value="1.6"/>
                 </attributes>
@@ -122,6 +124,7 @@
                                 <property name="wrap">True</property>
                                 <property name="justify">center</property>
                                 <property name="label" translatable="yes">Mute</property>
+                                <property name="ellipsize">middle</property>
                               </object>
                             </child>
                           </object>
@@ -154,6 +157,7 @@
                                 <property name="wrap">True</property>
                                 <property name="justify">center</property>
                                 <property name="label" translatable="yes">Speaker</property>
+                                <property name="ellipsize">middle</property>
                               </object>
                             </child>
                           </object>
@@ -185,6 +189,7 @@
                                 <property name="wrap">True</property>
                                 <property name="justify">center</property>
                                 <property name="label" translatable="yes">Add call</property>
+                                <property name="ellipsize">middle</property>
                               </object>
                             </child>
                           </object>
@@ -224,6 +229,7 @@
                                 <property name="wrap">True</property>
                                 <property name="justify">center</property>
                                 <property name="label" translatable="yes">Hold</property>
+                                <property name="ellipsize">middle</property>
                               </object>
                             </child>
                           </object>
@@ -255,6 +261,7 @@
                                 <property name="wrap">True</property>
                                 <property name="justify">center</property>
                                 <property name="label" translatable="yes">Dial Pad</property>
+                                <property name="ellipsize">middle</property>
                               </object>
                             </child>
                           </object>
