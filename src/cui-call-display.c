@@ -25,7 +25,7 @@
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 
 #define HDY_AVATAR_SIZE_BIG 160
-#define HDY_AVATAR_SIZE_DEFAULT 100
+#define HDY_AVATAR_SIZE_DEFAULT 80
 
 /**
  * CuiCallDisplay:
