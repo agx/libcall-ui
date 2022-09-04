@@ -47,7 +47,6 @@ struct _CuiCallDisplay {
 
   CuiCall                *call;
 
-  GtkLabel               *incoming_phone_call;
   HdyAvatar              *avatar;
   GtkLabel               *primary_contact_info;
   GtkLabel               *secondary_contact_info;
@@ -229,7 +228,6 @@ on_call_state_changed (CuiCallDisplay *self,
     hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_BIG);
 
     gtk_widget_hide (GTK_WIDGET (self->controls));
-    gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
     gtk_widget_show (GTK_WIDGET (self->answer));
     gtk_style_context_remove_class
       (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
@@ -244,7 +242,6 @@ on_call_state_changed (CuiCallDisplay *self,
     gtk_style_context_add_class
       (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
     gtk_widget_hide (GTK_WIDGET (self->answer));
-    gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
     gtk_widget_show (GTK_WIDGET (self->controls));
 
     gtk_widget_set_visible
@@ -275,13 +272,11 @@ on_call_state_changed (CuiCallDisplay *self,
   /* Status text */
   switch (state)
   {
-  case CUI_CALL_STATE_INCOMING:
-    break;
-
   case CUI_CALL_STATE_ACTIVE:
     set_pretty_time (self);
     break;
 
+  case CUI_CALL_STATE_INCOMING:
   case CUI_CALL_STATE_CALLING:
   case CUI_CALL_STATE_HELD:
   case CUI_CALL_STATE_DISCONNECTED:
@@ -378,7 +373,6 @@ reset_ui (CuiCallDisplay *self)
   gtk_label_set_label (self->status, "");
   gtk_widget_show (GTK_WIDGET (self->answer));
   gtk_widget_show (GTK_WIDGET (self->hang_up));
-  gtk_widget_hide (GTK_WIDGET (self->incoming_phone_call));
   gtk_widget_show (GTK_WIDGET (self->controls));
   gtk_widget_show (GTK_WIDGET (self->gsm_controls));
   gtk_widget_set_sensitive (GTK_WIDGET (self->answer), TRUE);
@@ -534,7 +528,6 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, general_controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, gsm_controls);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, hang_up);
-  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, incoming_phone_call);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, keypad_entry);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, mute);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, primary_contact_info);
