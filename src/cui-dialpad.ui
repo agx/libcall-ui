@@ -40,7 +40,7 @@
               </object>
             </child>
             <child>
-              <object class="GtkBox">
+              <object class="GtkBox" id="control_box">
                 <property name="visible">True</property>
                 <child type="center">
                   <object class="GtkButton" id="dial">
@@ -86,6 +86,11 @@
                 </child>
               </object>
             </child>
+            <focus-chain>
+              <widget name="keypad_entry"/>
+              <widget name="control_box"/>
+              <widget name="keypad"/>
+            </focus-chain>
           </object>
         </child>
       </object>
