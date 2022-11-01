@@ -222,16 +222,12 @@ on_call_state_changed (CuiCallDisplay *self,
   gtk_widget_set_sensitive (GTK_WIDGET (self->answer), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (self->hang_up), TRUE);
 
-  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
   /* Widgets and call audio mode*/
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
     hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_BIG);
-    G_GNUC_FALLTHROUGH;
 
-  case CUI_CALL_STATE_WAITING: /* Deprecated */
     gtk_widget_hide (GTK_WIDGET (self->controls));
     gtk_widget_show (GTK_WIDGET (self->incoming_phone_call));
     gtk_widget_show (GTK_WIDGET (self->answer));
@@ -244,7 +240,6 @@ on_call_state_changed (CuiCallDisplay *self,
     G_GNUC_FALLTHROUGH;
 
   case CUI_CALL_STATE_CALLING:
-  case CUI_CALL_STATE_ALERTING: /* Deprecated */
   case CUI_CALL_STATE_HELD:
     gtk_style_context_add_class
       (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
@@ -281,7 +276,6 @@ on_call_state_changed (CuiCallDisplay *self,
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
-  case CUI_CALL_STATE_WAITING: /* Deprecated */
     break;
 
   case CUI_CALL_STATE_ACTIVE:
@@ -289,7 +283,6 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_CALLING:
-  case CUI_CALL_STATE_ALERTING: /* Deprecated */
   case CUI_CALL_STATE_HELD:
   case CUI_CALL_STATE_DISCONNECTED:
     gtk_label_set_label (self->status, cui_call_state_to_string (state));
@@ -299,8 +292,6 @@ on_call_state_changed (CuiCallDisplay *self,
   default:
     g_warn_if_reached ();
   }
-
-  #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 }
 
 
