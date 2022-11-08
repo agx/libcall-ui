@@ -285,6 +285,7 @@ on_accept_timeout (CuiDemoCall *self)
   self->timer_id = g_timeout_add (500,
                                   G_SOURCE_FUNC (on_timer_ticked),
                                   self);
+  g_source_set_name_by_id (self->timer_id, "[cui-call] active_time_timer");
 
   return G_SOURCE_REMOVE;
 }
