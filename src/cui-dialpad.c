@@ -9,7 +9,7 @@
  * Adrien Plazas <adrien.plazas@puri.sm>
  */
 
-#include "config.h"
+#include "cui-config.h"
 
 #include "cui-dialpad.h"
 #include "cui-keypad.h"

@@ -6,7 +6,7 @@
  * Author: Guido Günther <agx@sigxcpu.org>
  */
 
-#include "config.h"
+#include "cui-config.h"
 
 #include "cui-call.h"
 #include "cui-enums.h"

@@ -10,7 +10,7 @@
  * Author: Bob Ham <bob.ham@puri.sm>
  */
 
-#include "config.h"
+#include "cui-config.h"
 
 #include "cui-call-display.h"
 #include "cui-encryption-indicator-priv.h"
