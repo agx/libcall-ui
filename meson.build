@@ -90,8 +90,8 @@ config_h.set_quoted('LOCALEDIR', localedir)
 config_h.set_quoted('TOP_SOURCE_DIR', meson.current_source_dir())
 
 configure_file(
-  input: 'config.h.in',
-  output: 'config.h',
+  input: 'cui-config.h.in',
+  output: 'cui-config.h',
   configuration: config_h,
 )
 
