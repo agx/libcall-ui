@@ -16,8 +16,6 @@ before_script:
   - apt-get -y update
   - apt-get -y install eatmydata
   - eatmydata apt-get -y install $DEPS
-  # Make sure that gcovr is used by removing lcov
-  - eatmydata dpkg --remove lcov
 
 .build: &build_steps
     echo "BUILD_OPTS=${BUILD_OPTS}" &&
