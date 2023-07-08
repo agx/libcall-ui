@@ -80,7 +80,7 @@ src_inc = include_directories('src')
 tests_inc = include_directories('tests')
 
 gio_dep = dependency('gio-2.0', version: '>= 2.62')
-gtk_dep = dependency('gtk+-3.0', version: '>=3.22')
+gtk_dep = dependency('gtk4', version: '>=4.0')
 libhandy_dep = dependency('libhandy-1', version: '>=1.2')
 libcallaudio_dep = dependency('libcallaudio-0.1')
 
