@@ -14,14 +14,14 @@
 #include <glib/gi18n-lib.h>
 
 struct _CuiEncryptionIndicator {
-  GtkBin parent_instance;
+  GtkWidget parent_instance;
 
   GtkStack  *stack;
   GtkBox  *is_not_encrypted;
   GtkBox  *is_encrypted;
 };
 
-G_DEFINE_TYPE (CuiEncryptionIndicator, cui_encryption_indicator, GTK_TYPE_BIN);
+G_DEFINE_TYPE (CuiEncryptionIndicator, cui_encryption_indicator, GTK_TYPE_WIDGET);
 
 enum {
   PROP_0,

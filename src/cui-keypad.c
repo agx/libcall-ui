@@ -38,7 +38,7 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CuiKeypad {
-  GtkBin      parent_instance;
+  GtkWidget   parent_instance;
 
   GtkEntry   *entry;
   GtkGrid    *grid;
@@ -57,7 +57,7 @@ struct _CuiKeypad {
   GRegex     *re_no_digits_or_symbols;
 };
 
-G_DEFINE_TYPE (CuiKeypad, cui_keypad, GTK_TYPE_BIN)
+G_DEFINE_TYPE (CuiKeypad, cui_keypad, GTK_TYPE_WIDGET)
 
 static void
 symbol_clicked (CuiKeypad *self,

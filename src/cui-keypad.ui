@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="call-ui">
   <requires lib="gtk+" version="3.20"/>
-  <template class="CuiKeypad" parent="GtkBin">
+  <template class="CuiKeypad" parent="GtkWidget">
     <child>
       <!-- n-columns=3 n-rows=4 -->
       <object class="GtkGrid" id="grid">

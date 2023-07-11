@@ -43,7 +43,7 @@ static guint signals[LAST_SIGNAL];
 
 
 struct _CuiDialpad {
-  GtkBin               parent_instance;
+  GtkWidget            parent_instance;
 
   GtkEntry            *keypad_entry;
   CuiKeypad           *keypad;
@@ -52,7 +52,7 @@ struct _CuiDialpad {
   GtkGestureLongPress *long_press_backspace_gesture;
 };
 
-G_DEFINE_TYPE (CuiDialpad, cui_dialpad, GTK_TYPE_BIN);
+G_DEFINE_TYPE (CuiDialpad, cui_dialpad, GTK_TYPE_WIDGET);
 
 static void
 cui_dialpad_get_property (GObject    *object,
