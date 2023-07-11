@@ -15,7 +15,7 @@ G_BEGIN_DECLS
 
 #define CUI_TYPE_ENCRYPTION_INDICATOR (cui_encryption_indicator_get_type ())
 
-G_DECLARE_FINAL_TYPE (CuiEncryptionIndicator, cui_encryption_indicator, CUI, ENCRYPTION_INDICATOR, GtkStack);
+G_DECLARE_FINAL_TYPE (CuiEncryptionIndicator, cui_encryption_indicator, CUI, ENCRYPTION_INDICATOR, GtkBin);
 
 void     cui_encryption_indicator_set_encrypted (CuiEncryptionIndicator *self,
                                                  gboolean                encrypted);

@@ -14,13 +14,14 @@
 #include <glib/gi18n-lib.h>
 
 struct _CuiEncryptionIndicator {
-  GtkStack parent_instance;
+  GtkBin parent_instance;
 
+  GtkStack  *stack;
   GtkBox  *is_not_encrypted;
   GtkBox  *is_encrypted;
 };
 
-G_DEFINE_TYPE (CuiEncryptionIndicator, cui_encryption_indicator, GTK_TYPE_STACK);
+G_DEFINE_TYPE (CuiEncryptionIndicator, cui_encryption_indicator, GTK_TYPE_BIN);
 
 enum {
   PROP_0,
@@ -39,7 +40,7 @@ cui_encryption_indicator_set_encrypted (CuiEncryptionIndicator *self,
   encrypted = !!encrypted;
 
   gtk_stack_set_visible_child (
-    GTK_STACK (self),
+    self->stack,
     GTK_WIDGET (encrypted ? self->is_encrypted : self->is_not_encrypted));
 }
 
@@ -49,7 +50,7 @@ cui_encryption_indicator_get_encrypted (CuiEncryptionIndicator *self)
 {
   g_return_val_if_fail (CUI_IS_ENCRYPTION_INDICATOR (self), FALSE);
 
-  return gtk_stack_get_visible_child (GTK_STACK (self)) == GTK_WIDGET (self->is_encrypted);
+  return gtk_stack_get_visible_child (GTK_STACK (self->stack)) == GTK_WIDGET (self->is_encrypted);
 }
 
 
@@ -120,4 +121,5 @@ cui_encryption_indicator_class_init (CuiEncryptionIndicatorClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/ui/cui-encryption-indicator.ui");
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, is_not_encrypted);
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, is_encrypted);
+  gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, stack);
 }
