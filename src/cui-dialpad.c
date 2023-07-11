@@ -64,7 +64,7 @@ cui_dialpad_get_property (GObject    *object,
 
   switch (property_id) {
   case PROP_NUMBER:
-    g_value_set_string (value, gtk_entry_get_text (self->keypad_entry));
+    g_value_set_string (value, gtk_editable_get_text (GTK_EDITABLE (self->keypad_entry)));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -82,7 +82,7 @@ cui_dialpad_set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_NUMBER:
-    gtk_entry_set_text (self->keypad_entry, g_value_get_string (value));
+    gtk_editable_set_text (GTK_EDITABLE (self->keypad_entry), g_value_get_string (value));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -95,7 +95,7 @@ static void
 dial_clicked_or_activated_cb (CuiDialpad *self)
 {
   GtkEntry *entry = cui_keypad_get_entry (self->keypad);
-  const char *text = gtk_entry_get_text (entry);
+  const char *text = gtk_editable_get_text (GTK_EDITABLE (entry));
 
   g_signal_emit (self, signals[DIALED], 0, text);
 }
