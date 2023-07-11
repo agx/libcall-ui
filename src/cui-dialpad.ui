@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="call-ui">
-  <requires lib="gtk+" version="3.24"/>
+  <requires lib="gtk" version="4.0"/>
   <requires lib="libhandy" version="0.0"/>
   <template class="CuiDialpad" parent="GtkWidget">
-    <property name="visible">True</property>
     <child>
       <object class="AdwClamp">
         <property name="visible">True</property>
         <property name="maximum-size">300</property>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
             <property name="margin-start">24</property>
             <property name="margin-end">24</property>
             <property name="margin-top">16</property>
@@ -18,11 +16,10 @@
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkEntry" id="keypad_entry">
-                <property name="visible">True</property>
-                <property name="hexpand">True</property>
+                <property name="hexpand">1</property>
                 <property name="xalign">0.5</property>
-                <property name="placeholder-text" translatable="yes">Enter a number</property>
-                <property name="tooltip-text" translatable="yes">Type a phone number</property>
+                <property name="placeholder-text" translatable="1">Enter a number</property>
+                <property name="tooltip-text" translatable="1">Type a phone number</property>
                 <signal name="activate" handler="dial_clicked_or_activated_cb" swapped="yes"/>
                 <style>
                   <class name="phone-number-entry"/>
@@ -42,16 +39,13 @@
             </child>
             <child>
               <object class="GtkBox" id="control_box">
-                <property name="visible">True</property>
                 <child type="center">
                   <object class="GtkButton" id="dial">
-                    <property name="visible">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="tooltip-text" translatable="yes">Call that phone number</property>
+                    <property name="receives-default">1</property>
+                    <property name="tooltip-text" translatable="1">Call that phone number</property>
                     <signal name="clicked" handler="dial_clicked_or_activated_cb" swapped="yes"/>
                     <child>
                       <object class="GtkImage">
-                        <property name="visible">True</property>
                         <property name="icon-name">call-start-symbolic</property>
                         <property name="icon_size">5</property>
                       </object>
@@ -65,15 +59,13 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="backspace">
-                    <property name="visible">True</property>
-                    <property name="receives-default">True</property>
+                    <property name="receives-default">1</property>
                     <property name="halign">center</property>
                     <property name="valign">center</property>
                     <property name="margin-end">15</property>
                     <signal name="clicked" handler="backspace_clicked_cb" swapped="yes"/>
                     <child>
                       <object class="GtkImage">
-                        <property name="visible">True</property>
                         <property name="icon-name">edit-clear-symbolic</property>
                       </object>
                     </child>
@@ -81,9 +73,6 @@
                       <class name="delete-button"/>
                     </style>
                   </object>
-                  <packing>
-                    <property name="pack-type">end</property>
-                  </packing>
                 </child>
               </object>
             </child>
