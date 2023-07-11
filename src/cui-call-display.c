@@ -343,7 +343,7 @@ reset_ui (CuiCallDisplay *self)
   g_debug ("Resetting UI");
 
   self->update_status_time = TRUE;
-  adw_avatar_set_loadable_icon (self->avatar, NULL);
+  adw_avatar_set_custom_image (self->avatar, NULL);
   adw_avatar_set_text (self->avatar, "");
   adw_avatar_set_size (self->avatar, ADW_AVATAR_SIZE_DEFAULT);
   gtk_label_set_label (self->primary_contact_info, "");
@@ -636,7 +636,7 @@ cui_call_display_set_call (CuiCallDisplay *self, CuiCall *call)
   self->avatar_icon_bind = g_object_bind_property (call,
                                                    "avatar-icon",
                                                    self->avatar,
-                                                   "loadable-icon",
+                                                   "custom-image",
                                                    G_BINDING_SYNC_CREATE);
   self->encryption_bind = g_object_bind_property (call,
                                                   "encrypted",

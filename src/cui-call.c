@@ -136,7 +136,7 @@ cui_call_default_init (CuiCallInterface *iface)
  *
  * Returns: (transfer none)(nullable): The icon as `GLoadableIcon`
  */
-GLoadableIcon *
+GdkTexture *
 cui_call_get_avatar_icon (CuiCall *self)
 {
   CuiCallInterface *iface;
