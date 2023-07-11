@@ -43,9 +43,9 @@ cui_init_css (void)
   GtkCssProvider *css_provider = gtk_css_provider_new ();
 
   gtk_css_provider_load_from_resource (css_provider, "/org/gnome/CallUI/style.css");
-  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
-                                             GTK_STYLE_PROVIDER (css_provider),
-                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
+                                              GTK_STYLE_PROVIDER (css_provider),
+                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   g_object_unref (css_provider);
 }
 

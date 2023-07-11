@@ -26,6 +26,7 @@
 
 #define ADW_AVATAR_SIZE_BIG 160
 #define ADW_AVATAR_SIZE_DEFAULT 80
+#define ADW_CSS_CLASS_DESTRUCTIVE_ACTION "destructive-action"
 
 /**
  * CuiCallDisplay:
@@ -183,7 +184,6 @@ on_call_state_changed (CuiCallDisplay *self,
                        GParamSpec     *psepc,
                        CuiCall        *call)
 {
-  GtkStyleContext *hang_up_style;
   CuiCallState state;
 
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
@@ -194,9 +194,6 @@ on_call_state_changed (CuiCallDisplay *self,
   g_debug ("Call %p changed state to %s",
            call,
            cui_call_state_to_string (state));
-
-  hang_up_style = gtk_widget_get_style_context
-                    (GTK_WIDGET (self->hang_up));
 
   /* if the state changed than the call must be responsive */
   self->update_status_time = TRUE;
@@ -211,8 +208,7 @@ on_call_state_changed (CuiCallDisplay *self,
 
     gtk_widget_set_visible (GTK_WIDGET (self->controls), false);
     gtk_widget_set_visible (GTK_WIDGET (self->answer), true);
-    gtk_style_context_remove_class
-      (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
+    gtk_widget_remove_css_class(GTK_WIDGET (self->hang_up), ADW_CSS_CLASS_DESTRUCTIVE_ACTION);
     break;
 
   case CUI_CALL_STATE_ACTIVE:
@@ -221,8 +217,8 @@ on_call_state_changed (CuiCallDisplay *self,
 
   case CUI_CALL_STATE_CALLING:
   case CUI_CALL_STATE_HELD:
-    gtk_style_context_add_class
-      (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
+    gtk_widget_add_css_class
+      (GTK_WIDGET (self->hang_up), ADW_CSS_CLASS_DESTRUCTIVE_ACTION);
     gtk_widget_set_visible (GTK_WIDGET (self->answer), false);
     gtk_widget_set_visible (GTK_WIDGET (self->controls), true);
 
