@@ -57,7 +57,7 @@ cui_init_icons (void)
   if (!g_once_init_enter (&guard))
     return;
 
-  gtk_icon_theme_add_resource_path (gtk_icon_theme_get_default (),
+  gtk_icon_theme_add_resource_path (gtk_icon_theme_get_for_display (gdk_display_get_default ()),
                                     "/org/gnome/CallUI/icons");
 
   g_once_init_leave (&guard, 1);
