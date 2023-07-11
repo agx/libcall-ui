@@ -60,7 +60,7 @@
                 <property name="transition-type" bind-source="header_revealer" bind-property="transition-type" bind-flags="bidirectional|sync-create"/>
                 <property name="reveal-child" bind-source="header_revealer" bind-property="reveal-child" bind-flags="bidirectional|sync-create"/>
                 <child>
-                  <object class="AdwWindowHandle" id="header_separator">
+                  <object class="GtkWindowHandle" id="header_separator">
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkSeparator">
