@@ -173,7 +173,7 @@ on_dial (CuiDemoWindow *self, const char number[], GtkWidget *sender)
                             G_CALLBACK (gtk_window_destroy),
                             dialog);
 
-  gtk_widget_show_all (dialog);
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 
