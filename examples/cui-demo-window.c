@@ -146,7 +146,7 @@ key_pressed_cb (GtkWidget     *sender,
 
   if ((keyval == GDK_KEY_q || keyval == GDK_KEY_Q) &&
       (state & default_modifiers) == GDK_CONTROL_MASK) {
-    gtk_widget_destroy (GTK_WIDGET (self));
+    gtk_window_destroy (GTK_WINDOW (self));
 
     return TRUE;
   }
@@ -170,7 +170,7 @@ on_dial (CuiDemoWindow *self, const char number[], GtkWidget *sender)
                                    "Dialling %s", number);
 
   g_signal_connect_swapped (dialog, "response",
-                            G_CALLBACK (gtk_widget_destroy),
+                            G_CALLBACK (gtk_window_destroy),
                             dialog);
 
   gtk_widget_show_all (dialog);
