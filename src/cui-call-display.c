@@ -209,8 +209,8 @@ on_call_state_changed (CuiCallDisplay *self,
   case CUI_CALL_STATE_INCOMING:
     adw_avatar_set_size (self->avatar, ADW_AVATAR_SIZE_BIG);
 
-    gtk_widget_hide (GTK_WIDGET (self->controls));
-    gtk_widget_show (GTK_WIDGET (self->answer));
+    gtk_widget_set_visible (GTK_WIDGET (self->controls), false);
+    gtk_widget_set_visible (GTK_WIDGET (self->answer), true);
     gtk_style_context_remove_class
       (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
     break;
@@ -223,8 +223,8 @@ on_call_state_changed (CuiCallDisplay *self,
   case CUI_CALL_STATE_HELD:
     gtk_style_context_add_class
       (hang_up_style, GTK_STYLE_CLASS_DESTRUCTIVE_ACTION);
-    gtk_widget_hide (GTK_WIDGET (self->answer));
-    gtk_widget_show (GTK_WIDGET (self->controls));
+    gtk_widget_set_visible (GTK_WIDGET (self->answer), false);
+    gtk_widget_set_visible (GTK_WIDGET (self->controls), true);
 
     gtk_widget_set_visible
       (GTK_WIDGET (self->gsm_controls),
@@ -353,10 +353,10 @@ reset_ui (CuiCallDisplay *self)
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
   gtk_label_set_label (self->status, "");
-  gtk_widget_show (GTK_WIDGET (self->answer));
-  gtk_widget_show (GTK_WIDGET (self->hang_up));
-  gtk_widget_show (GTK_WIDGET (self->controls));
-  gtk_widget_show (GTK_WIDGET (self->gsm_controls));
+  gtk_widget_set_visible (GTK_WIDGET (self->answer), true);
+  gtk_widget_set_visible (GTK_WIDGET (self->hang_up), true);
+  gtk_widget_set_visible (GTK_WIDGET (self->controls), true);
+  gtk_widget_set_visible (GTK_WIDGET (self->gsm_controls), true);
   gtk_widget_set_sensitive (GTK_WIDGET (self->answer), TRUE);
   gtk_widget_set_sensitive (GTK_WIDGET (self->hang_up), TRUE);
 }

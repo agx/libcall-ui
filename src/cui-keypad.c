@@ -602,7 +602,7 @@ cui_keypad_set_entry (CuiKeypad *self,
   if (entry) {
     self->entry = g_object_ref (entry);
 
-    gtk_widget_show (GTK_WIDGET (self->entry));
+    gtk_widget_set_visible (GTK_WIDGET (self->entry), true);
     /* Workaround: To keep the osk closed
      * https://gitlab.gnome.org/GNOME/gtk/merge_requests/978#note_546576 */
     g_object_set (self->entry, "im-module", "gtk-im-context-none", NULL);
