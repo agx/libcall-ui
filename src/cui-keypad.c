@@ -354,7 +354,7 @@ cui_keypad_class_init (CuiKeypadClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, hash_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, long_press_zero_cb);
 
-  gtk_widget_class_set_accessible_role (widget_class, ATK_ROLE_DIAL);
+  gtk_widget_class_set_accessible_role (widget_class, GTK_ACCESSIBLE_ROLE_GRID);
   gtk_widget_class_set_css_name (widget_class, "cui-keypad");
 }
 

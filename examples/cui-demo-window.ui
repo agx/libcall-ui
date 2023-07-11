@@ -123,11 +123,6 @@
                             <style>
                               <class name="image-button"/>
                             </style>
-                            <child internal-child="accessible">
-                              <object class="AtkObject" id="a11y-back">
-                                <property name="accessible-name" translatable="yes">Back</property>
-                              </object>
-                            </child>
                             <child>
                               <object class="GtkImage" id="back_image">
                                 <property name="visible">True</property>
