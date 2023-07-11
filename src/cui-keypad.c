@@ -657,7 +657,7 @@ cui_keypad_set_start_action (CuiKeypad *self,
     return;
 
   if (old_widget != NULL)
-    gtk_container_remove (GTK_CONTAINER (self->grid), old_widget);
+    gtk_grid_remove (self->grid, old_widget);
 
   if (start_action != NULL)
     gtk_grid_attach (GTK_GRID (self->grid), start_action, 0, 3, 1, 1);
@@ -707,7 +707,7 @@ cui_keypad_set_end_action (CuiKeypad *self,
     return;
 
   if (old_widget != NULL)
-    gtk_container_remove (GTK_CONTAINER (self->grid), old_widget);
+    gtk_grid_remove (self->grid, old_widget);
 
   if (end_action != NULL)
     gtk_grid_attach (GTK_GRID (self->grid), end_action, 2, 3, 1, 1);
