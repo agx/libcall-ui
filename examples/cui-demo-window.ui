@@ -2,13 +2,13 @@
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <requires lib="libhandy" version="1.0"/>
-  <template class="CuiDemoWindow" parent="HdyApplicationWindow">
+  <template class="CuiDemoWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Call-UI Demo</property>
     <property name="default_width">800</property>
     <property name="default_height">576</property>
     <signal name="key-press-event" handler="key_pressed_cb" after="yes" swapped="no"/>
     <child>
-      <object class="HdyLeaflet" id="content_box">
+      <object class="AdwLeaflet" id="content_box">
         <property name="visible">True</property>
         <property name="can-swipe-back">True</property>
         <property name="width-request">360</property>
@@ -22,7 +22,7 @@
                 <property name="transition-type">slide-down</property>
                 <property name="reveal-child">True</property>
                 <child>
-                  <object class="HdyHeaderBar" id="header_bar">
+                  <object class="AdwHeaderBar" id="header_bar">
                     <property name="visible">True</property>
                     <property name="title" translatable="yes">Call-UI Demo</property>
                     <property name="show_close_button" bind-source="content_box" bind-property="folded"/>
@@ -65,7 +65,7 @@
                 <property name="transition-type" bind-source="header_revealer" bind-property="transition-type" bind-flags="bidirectional|sync-create"/>
                 <property name="reveal-child" bind-source="header_revealer" bind-property="reveal-child" bind-flags="bidirectional|sync-create"/>
                 <child>
-                  <object class="HdyWindowHandle" id="header_separator">
+                  <object class="AdwWindowHandle" id="header_separator">
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkSeparator">
@@ -110,7 +110,7 @@
                     <property name="vexpand">False</property>
                     <property name="transition-type" bind-source="stack" bind-property="transition-type" bind-flags="sync-create"/>
                     <child>
-                      <object class="HdyHeaderBar" id="default_header_bar">
+                      <object class="AdwHeaderBar" id="default_header_bar">
                         <property name="visible">True</property>
                         <property name="expand">True</property>
                         <property name="show_close_button">True</property>
@@ -190,7 +190,7 @@
                 <property name="vhomogeneous">False</property>
                 <signal name="notify::visible-child" handler="on_visible_child_changed" after="yes" swapped="no"/>
                 <child>
-                  <object class="HdyStatusPage">
+                  <object class="AdwStatusPage">
                     <property name="visible">True</property>
                     <property name="icon-name">call-ui-symbolic</property>
                     <property name="title" translatable="yes">Welcome to Call-UI Demo</property>
@@ -222,7 +222,7 @@
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="HdyStatusPage">
+                      <object class="AdwStatusPage">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="icon-name">input-dialpad-symbolic</property>
@@ -254,14 +254,14 @@
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="HdyStatusPage">
+                      <object class="AdwStatusPage">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="icon-name">input-dialpad-symbolic</property>
                         <property name="title" translatable="yes">Keypad</property>
                         <property name="description" translatable="yes">A number keypad.</property>
                         <child>
-                          <object class="HdyClamp">
+                          <object class="AdwClamp">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="maximum-size">300</property>
@@ -280,7 +280,7 @@
                                     <property name="can-focus">False</property>
                                     <property name="selection-mode">none</property>
                                     <child>
-                                      <object class="HdyActionRow">
+                                      <object class="AdwActionRow">
                                         <property name="visible">True</property>
                                         <property name="can-focus">True</property>
                                         <property name="title" translatable="yes">Show letters</property>
@@ -295,7 +295,7 @@
                                       </object>
                                     </child>
                                     <child>
-                                      <object class="HdyActionRow">
+                                      <object class="AdwActionRow">
                                         <property name="visible">True</property>
                                         <property name="can-focus">True</property>
                                         <property name="title" translatable="yes">Show symbols</property>

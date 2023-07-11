@@ -5,7 +5,7 @@
   <template class="CuiDialpad" parent="GtkWidget">
     <property name="visible">True</property>
     <child>
-      <object class="HdyClamp">
+      <object class="AdwClamp">
         <property name="visible">True</property>
         <property name="maximum-size">300</property>
         <child>

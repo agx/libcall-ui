@@ -54,7 +54,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="HdyAvatar" id="avatar">
+                  <object class="AdwAvatar" id="avatar">
                     <property name="visible">True</property>
                     <property name="size">80</property>
                   </object>

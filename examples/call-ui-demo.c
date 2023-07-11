@@ -12,7 +12,7 @@ startup (GtkApplication *app)
 {
   GtkCssProvider *css_provider = gtk_css_provider_new ();
 
-  hdy_init ();
+  adw_init ();
   cui_init (FALSE);
 
   gtk_css_provider_load_from_resource (css_provider, "/org/gnome/CallUI/Demo/ui/style.css");

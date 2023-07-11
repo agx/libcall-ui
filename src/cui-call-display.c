@@ -17,15 +17,15 @@
 
 #include "cui-call.h"
 
+#include <adwaita.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <handy.h>
 #include <libcallaudio.h>
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 
-#define HDY_AVATAR_SIZE_BIG 160
-#define HDY_AVATAR_SIZE_DEFAULT 80
+#define ADW_AVATAR_SIZE_BIG 160
+#define ADW_AVATAR_SIZE_DEFAULT 80
 
 /**
  * CuiCallDisplay:
@@ -47,7 +47,7 @@ struct _CuiCallDisplay {
 
   CuiCall                *call;
 
-  HdyAvatar              *avatar;
+  AdwAvatar              *avatar;
   GtkLabel               *primary_contact_info;
   GtkLabel               *secondary_contact_info;
   GtkLabel               *status;
@@ -207,7 +207,7 @@ on_call_state_changed (CuiCallDisplay *self,
   switch (state)
   {
   case CUI_CALL_STATE_INCOMING:
-    hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_BIG);
+    adw_avatar_set_size (self->avatar, ADW_AVATAR_SIZE_BIG);
 
     gtk_widget_hide (GTK_WIDGET (self->controls));
     gtk_widget_show (GTK_WIDGET (self->answer));
@@ -216,7 +216,7 @@ on_call_state_changed (CuiCallDisplay *self,
     break;
 
   case CUI_CALL_STATE_ACTIVE:
-    hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_DEFAULT);
+    adw_avatar_set_size (self->avatar, ADW_AVATAR_SIZE_DEFAULT);
     G_GNUC_FALLTHROUGH;
 
   case CUI_CALL_STATE_CALLING:
@@ -300,8 +300,8 @@ on_update_contact_information (CuiCallDisplay *self)
     gtk_label_set_label (self->secondary_contact_info, "");
   }
 
-  hdy_avatar_set_text (self->avatar, display_name);
-  hdy_avatar_set_show_initials (self->avatar, show_initials);
+  adw_avatar_set_text (self->avatar, display_name);
+  adw_avatar_set_show_initials (self->avatar, show_initials);
 }
 
 
@@ -347,9 +347,9 @@ reset_ui (CuiCallDisplay *self)
   g_debug ("Resetting UI");
 
   self->update_status_time = TRUE;
-  hdy_avatar_set_loadable_icon (self->avatar, NULL);
-  hdy_avatar_set_text (self->avatar, "");
-  hdy_avatar_set_size (self->avatar, HDY_AVATAR_SIZE_DEFAULT);
+  adw_avatar_set_loadable_icon (self->avatar, NULL);
+  adw_avatar_set_text (self->avatar, "");
+  adw_avatar_set_size (self->avatar, ADW_AVATAR_SIZE_DEFAULT);
   gtk_label_set_label (self->primary_contact_info, "");
   gtk_label_set_label (self->secondary_contact_info, "");
   gtk_label_set_label (self->status, "");

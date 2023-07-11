@@ -13,10 +13,10 @@
 
 
 struct _CuiDemoWindow {
-  HdyApplicationWindow parent_instance;
+  AdwApplicationWindow parent_instance;
 
   GtkImage            *theme_variant_image;
-  HdyLeaflet          *content_box;
+  AdwLeaflet          *content_box;
   GtkButton           *incoming_call;
   GtkButton           *outgoing_call;
 
@@ -26,25 +26,25 @@ struct _CuiDemoWindow {
   CuiDemoCall         *call1;
 };
 
-G_DEFINE_TYPE (CuiDemoWindow, cui_demo_window, HDY_TYPE_APPLICATION_WINDOW)
+G_DEFINE_TYPE (CuiDemoWindow, cui_demo_window, ADW_TYPE_APPLICATION_WINDOW)
 
 
 static void
 theme_variant_button_clicked_cb (CuiDemoWindow *self)
 {
-#if HDY_CHECK_VERSION (1, 6, 0)
-  HdyStyleManager *style_manager;
+#if ADW_CHECK_VERSION (1, 6, 0)
+  AdwStyleManager *style_manager;
   gboolean is_dark;
 
-  style_manager = hdy_style_manager_get_default ();
-  is_dark = hdy_style_manager_get_dark (style_manager);
+  style_manager = adw_style_manager_get_default ();
+  is_dark = adw_style_manager_get_dark (style_manager);
 
   g_debug ("let there be %s", is_dark ? "light" : "darkness");
 
-  hdy_style_manager_set_color_scheme (style_manager,
+  adw_style_manager_set_color_scheme (style_manager,
                                       is_dark ?
-                                      HDY_COLOR_SCHEME_FORCE_LIGHT :
-                                      HDY_COLOR_SCHEME_FORCE_DARK);
+                                      ADW_COLOR_SCHEME_FORCE_LIGHT :
+                                      ADW_COLOR_SCHEME_FORCE_DARK);
 #else
   GtkSettings *settings = gtk_settings_get_default ();
   gboolean prefer_dark_theme;
@@ -73,7 +73,7 @@ prefer_dark_theme_to_icon_name_cb (GBinding     *binding,
 static void
 back_clicked_cb (CuiDemoWindow *self)
 {
-  hdy_leaflet_navigate (self->content_box, HDY_NAVIGATION_DIRECTION_BACK);
+  adw_leaflet_navigate (self->content_box, ADW_NAVIGATION_DIRECTION_BACK);
 }
 
 
@@ -190,7 +190,7 @@ on_visible_child_changed (GObject       *sender,
                           GParamSpec    *pspec,
                           CuiDemoWindow *self)
 {
-  hdy_leaflet_navigate (self->content_box, HDY_NAVIGATION_DIRECTION_FORWARD);
+  adw_leaflet_navigate (self->content_box, ADW_NAVIGATION_DIRECTION_FORWARD);
 }
 
 
@@ -219,15 +219,15 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
 static void
 cui_demo_window_init (CuiDemoWindow *self)
 {
-#if HDY_CHECK_VERSION (1, 6, 0)
-  HdyStyleManager *style_manager = hdy_style_manager_get_default();
+#if ADW_CHECK_VERSION (1, 6, 0)
+  AdwStyleManager *style_manager = adw_style_manager_get_default();
 #else
   GtkSettings *settings = gtk_settings_get_default ();
 #endif
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-#if HDY_CHECK_VERSION (1, 6, 0)
+#if ADW_CHECK_VERSION (1, 6, 0)
   g_object_bind_property_full (style_manager, "dark",
 #else
   g_object_bind_property_full (settings, "gtk-application-prefer-dark-theme",

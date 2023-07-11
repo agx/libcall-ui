@@ -14,7 +14,7 @@ call_ui_deps = [
   libcallaudio_dep,
   gio_dep,
   gtk_dep,
-  libhandy_dep,
+  libadwaita_dep,
   cc.find_library('m', required: false),
   cc.find_library('rt', required: false),
 ]
