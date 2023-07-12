@@ -47,46 +47,10 @@
                 <property name="stack">stack</property>
               </object>
             </child>
+            <layout>
+              <property name="name">sidebar</property>
+            </layout>
           </object>
-          <packing>
-            <property name="name">sidebar</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox">
-            <property name="orientation">vertical</property>
-            <child>
-              <object class="GtkRevealer">
-                <property name="transition-type" bind-source="header_revealer" bind-property="transition-type" bind-flags="bidirectional|sync-create"/>
-                <property name="reveal-child" bind-source="header_revealer" bind-property="reveal-child" bind-flags="bidirectional|sync-create"/>
-                <child>
-                  <object class="GtkWindowHandle" id="header_separator">
-                    <property name="visible">True</property>
-                    <child>
-                      <object class="GtkSeparator">
-                        <property name="orientation">vertical</property>
-                        <style>
-                          <class name="sidebar"/>
-                        </style>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSeparator">
-                <property name="orientation">vertical</property>
-                <property name="vexpand">1</property>
-                <style>
-                  <class name="sidebar"/>
-                </style>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="navigatable">False</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="right_box">
@@ -320,10 +284,10 @@
                 </child>
               </object>
             </child>
+            <layout>
+              <property name="name">content</property>
+            </layout>
           </object>
-          <packing>
-            <property name="name">content</property>
-          </packing>
         </child>
       </object>
     </child>
@@ -332,7 +296,6 @@
     <property name="mode">vertical</property>
     <widgets>
       <widget name="header_bar"/>
-      <widget name="header_separator"/>
       <widget name="header_stack"/>
     </widgets>
   </object>
