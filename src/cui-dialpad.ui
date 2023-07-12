@@ -4,7 +4,7 @@
   <requires lib="libhandy" version="0.0"/>
   <template class="CuiDialpad" parent="GtkWidget">
     <child>
-      <object class="AdwClamp">
+      <object class="AdwClamp" id="clamp">
         <property name="visible">True</property>
         <property name="maximum-size">300</property>
         <child>

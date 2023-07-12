@@ -45,11 +45,11 @@ static guint signals[LAST_SIGNAL];
 struct _CuiDialpad {
   GtkWidget            parent_instance;
 
+  AdwClamp            *clamp;
   GtkEntry            *keypad_entry;
   CuiKeypad           *keypad;
   GtkButton           *dial;
   GtkButton           *backspace;
-  GtkGestureLongPress *long_press_backspace_gesture;
 };
 
 G_DEFINE_TYPE (CuiDialpad, cui_dialpad, GTK_TYPE_WIDGET);
@@ -118,6 +118,18 @@ long_press_backspace_cb (CuiDialpad *self)
 
 
 static void
+cui_dialpad_dispose (GObject *object)
+{
+  CuiDialpad *self = CUI_DIALPAD (object);
+
+  GtkWidget *clamp = GTK_WIDGET (self->clamp);
+  g_clear_pointer (&clamp, gtk_widget_unparent);
+
+  G_OBJECT_CLASS (cui_dialpad_parent_class)->dispose (object);
+}
+
+
+static void
 cui_dialpad_class_init (CuiDialpadClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -125,6 +137,8 @@ cui_dialpad_class_init (CuiDialpadClass *klass)
 
   object_class->get_property = cui_dialpad_get_property;
   object_class->set_property = cui_dialpad_set_property;
+
+  object_class->dispose = cui_dialpad_dispose;
 
   signals[DIALED] =
     g_signal_new ("dialed",
@@ -147,16 +161,18 @@ cui_dialpad_class_init (CuiDialpadClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/ui/cui-dialpad.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, CuiDialpad, clamp);
   gtk_widget_class_bind_template_child (widget_class, CuiDialpad, keypad);
   gtk_widget_class_bind_template_child (widget_class, CuiDialpad, keypad_entry);
   gtk_widget_class_bind_template_child (widget_class, CuiDialpad, dial);
   gtk_widget_class_bind_template_child (widget_class, CuiDialpad, backspace);
-  gtk_widget_class_bind_template_child (widget_class, CuiDialpad, long_press_backspace_gesture);
   gtk_widget_class_bind_template_callback (widget_class, dial_clicked_or_activated_cb);
   gtk_widget_class_bind_template_callback (widget_class, backspace_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, long_press_backspace_cb);
 
   gtk_widget_class_set_css_name (widget_class, "cui-dialpad");
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

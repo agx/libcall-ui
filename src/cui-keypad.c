@@ -230,6 +230,18 @@ cui_keypad_get_property (GObject    *object,
 
 
 static void
+cui_keypad_dispose (GObject *object)
+{
+  CuiKeypad *self = CUI_KEYPAD (object);
+
+  GtkWidget *grid = GTK_WIDGET (self->grid);
+  g_clear_pointer (&grid, gtk_widget_unparent);
+
+  G_OBJECT_CLASS (cui_keypad_parent_class)->dispose (object);
+}
+
+
+static void
 cui_keypad_finalize (GObject *object)
 {
   CuiKeypad *self = CUI_KEYPAD (object);
@@ -249,6 +261,7 @@ cui_keypad_class_init (CuiKeypadClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose = cui_keypad_dispose;
   object_class->finalize = cui_keypad_finalize;
 
   object_class->set_property = cui_keypad_set_property;
@@ -356,6 +369,8 @@ cui_keypad_class_init (CuiKeypadClass *klass)
 
   gtk_widget_class_set_accessible_role (widget_class, GTK_ACCESSIBLE_ROLE_GRID);
   gtk_widget_class_set_css_name (widget_class, "cui-keypad");
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_GRID_LAYOUT);
 }
 
 

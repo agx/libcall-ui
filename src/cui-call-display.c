@@ -46,6 +46,8 @@ static GParamSpec *props[PROP_LAST_PROP];
 struct _CuiCallDisplay {
   GtkWidget               parent_instance;
 
+  GtkOverlay             *overlay;
+
   CuiCall                *call;
 
   AdwAvatar              *avatar;
@@ -461,6 +463,10 @@ cui_call_display_dispose (GObject *object)
 {
   CuiCallDisplay *self = CUI_CALL_DISPLAY (object);
 
+  GtkWidget *overlay = GTK_WIDGET (self->overlay);
+
+  g_clear_pointer (&overlay, gtk_widget_unparent);
+
   if (self->call) {
     g_object_weak_unref (G_OBJECT (self->call), (GWeakNotify) on_call_unrefed, self);
     self->call = NULL;
@@ -497,6 +503,7 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/ui/cui-call-display.ui");
+  gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, overlay);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, answer);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, avatar);
   gtk_widget_class_bind_template_child (widget_class, CuiCallDisplay, controls);
@@ -523,6 +530,8 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
 
   gtk_widget_class_set_css_name (widget_class, "cui-call-display");
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

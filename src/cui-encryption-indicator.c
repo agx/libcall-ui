@@ -102,6 +102,19 @@ get_property (GObject    *object,
 
 
 static void
+cui_encryption_indicator_dispose (GObject *object)
+{
+  CuiEncryptionIndicator *self = CUI_ENCRYPTION_INDICATOR (object);
+
+  GtkWidget *stack= GTK_WIDGET (self->stack);
+
+  g_clear_pointer (&stack, gtk_widget_unparent);
+
+  G_OBJECT_CLASS (cui_encryption_indicator_parent_class)->dispose (object);
+}
+
+
+static void
 cui_encryption_indicator_class_init (CuiEncryptionIndicatorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -109,6 +122,8 @@ cui_encryption_indicator_class_init (CuiEncryptionIndicatorClass *klass)
 
   object_class->set_property = set_property;
   object_class->get_property = get_property;
+
+  object_class->dispose = cui_encryption_indicator_dispose;
 
   props[PROP_ENCRYPTED] =
     g_param_spec_boolean ("encrypted",
@@ -122,4 +137,6 @@ cui_encryption_indicator_class_init (CuiEncryptionIndicatorClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, is_not_encrypted);
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, is_encrypted);
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, stack);
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
