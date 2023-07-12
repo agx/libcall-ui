@@ -47,7 +47,7 @@
                     <child>
                       <object class="GtkImage">
                         <property name="icon-name">call-start-symbolic</property>
-                        <property name="icon_size">5</property>
+                        <property name="icon_size">large</property>
                       </object>
                     </child>
                     <style>
