@@ -38,7 +38,8 @@
               </object>
             </child>
             <child>
-              <object class="GtkBox" id="control_box">
+              <object class="GtkCenterBox" id="control_box">
+                <property name="hexpand">1</property>
                 <child type="center">
                   <object class="GtkButton" id="dial">
                     <property name="receives-default">1</property>
@@ -57,7 +58,7 @@
                     </style>
                   </object>
                 </child>
-                <child>
+                <child type="end">
                   <object class="GtkButton" id="backspace">
                     <property name="receives-default">1</property>
                     <property name="halign">center</property>
