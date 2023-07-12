@@ -171,7 +171,6 @@
                   <object class="GtkStackPage">
                     <property name="name">dialpad</property>
                     <property name="title" translatable="1">Dial Pad</property>
-                    <property name="position">2</property>
                     <property name="child">
                       <object class="GtkBox" id="dialpad_box">
                         <property name="orientation">vertical</property>
@@ -198,7 +197,6 @@
                   <object class="GtkStackPage">
                     <property name="name">keypad</property>
                     <property name="title" translatable="1">Key pad</property>
-                    <property name="position">3</property>
                     <property name="child">
                       <object class="GtkBox" id="keypad_box">
                         <property name="orientation">vertical</property>
