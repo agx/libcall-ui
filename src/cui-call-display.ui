@@ -312,7 +312,6 @@
                     <property name="height-request">72</property>
                     <property name="halign">center</property>
                     <property name="valign">start</property>
-                    <property name="always-show-image">True</property>
                     <signal name="clicked" handler="on_hang_up_clicked" swapped="yes"/>
                     <child>
                       <object class="GtkImage">
@@ -332,7 +331,6 @@
                     <property name="height-request">72</property>
                     <property name="halign">center</property>
                     <property name="valign">start</property>
-                    <property name="always-show-image">True</property>
                     <signal name="clicked" handler="on_answer_clicked" swapped="yes"/>
                     <child>
                       <object class="GtkImage">
@@ -372,8 +370,7 @@
                         <property name="height-request">34</property>
                         <property name="halign">center</property>
                         <property name="valign">start</property>
-                        <property name="relief">none</property>
-                        <property name="always-show-image">True</property>
+                        <property name="has-frame">0</property>
                         <signal name="clicked" handler="hide_dial_pad_clicked_cb" swapped="yes"/>
                         <child>
                           <object class="GtkImage">
