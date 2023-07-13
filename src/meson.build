@@ -78,7 +78,7 @@ if get_option('gtk_doc')
            symbol_prefix: 'cui',
        identifier_prefix: 'Cui',
                link_with: call_ui_lib,
-                includes: ['Gio-2.0', 'Gtk-3.0', 'Handy-1'],
+                includes: ['Gio-2.0', 'Gtk-4.0', 'Adw-1'],
                  install: true,
               extra_args: libcall_ui_gir_extra_args,
    )
