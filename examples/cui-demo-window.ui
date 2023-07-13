@@ -177,7 +177,6 @@
                         <child>
                           <object class="AdwStatusPage">
                             <property name="visible">True</property>
-                            <property name="can-focus">False</property>
                             <property name="icon-name">input-dialpad-symbolic</property>
                             <property name="title" translatable="1">Dial Pad</property>
                             <property name="description" translatable="1">A simple dial pad to enter phone numbers.</property>
@@ -203,14 +202,12 @@
                         <child>
                           <object class="AdwStatusPage">
                             <property name="visible">True</property>
-                            <property name="can-focus">False</property>
                             <property name="icon-name">input-dialpad-symbolic</property>
                             <property name="title" translatable="1">Keypad</property>
                             <property name="description" translatable="1">A number keypad.</property>
                             <child>
                               <object class="AdwClamp">
                                 <property name="visible">True</property>
-                                <property name="can-focus">False</property>
                                 <property name="maximum-size">300</property>
                                 <property name="tightening-threshold">300</property>
                                 <child>
