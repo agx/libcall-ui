@@ -32,7 +32,6 @@ G_DEFINE_TYPE (CuiDemoWindow, cui_demo_window, ADW_TYPE_APPLICATION_WINDOW)
 static void
 theme_variant_button_clicked_cb (CuiDemoWindow *self)
 {
-#if ADW_CHECK_VERSION (1, 6, 0)
   AdwStyleManager *style_manager;
   gboolean is_dark;
 
@@ -45,13 +44,6 @@ theme_variant_button_clicked_cb (CuiDemoWindow *self)
                                       is_dark ?
                                       ADW_COLOR_SCHEME_FORCE_LIGHT :
                                       ADW_COLOR_SCHEME_FORCE_DARK);
-#else
-  GtkSettings *settings = gtk_settings_get_default ();
-  gboolean prefer_dark_theme;
-
-  g_object_get (settings, "gtk-application-prefer-dark-theme", &prefer_dark_theme, NULL);
-  g_object_set (settings, "gtk-application-prefer-dark-theme", !prefer_dark_theme, NULL);
-#endif
 }
 
 
@@ -211,19 +203,11 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
 static void
 cui_demo_window_init (CuiDemoWindow *self)
 {
-#if ADW_CHECK_VERSION (1, 6, 0)
   AdwStyleManager *style_manager = adw_style_manager_get_default();
-#else
-  GtkSettings *settings = gtk_settings_get_default ();
-#endif
 
   gtk_widget_init_template (GTK_WIDGET (self));
 
-#if ADW_CHECK_VERSION (1, 6, 0)
   g_object_bind_property_full (style_manager, "dark",
-#else
-  g_object_bind_property_full (settings, "gtk-application-prefer-dark-theme",
-#endif
                                self->theme_variant_image, "icon-name",
                                G_BINDING_SYNC_CREATE,
                                prefer_dark_theme_to_icon_name_cb,
