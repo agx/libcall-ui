@@ -44,8 +44,7 @@ struct _CuiKeypad {
   GtkGrid    *grid;
   GtkLabel   *label_asterisk;
   GtkLabel   *label_hash;
-
-  GtkGesture *long_press_zero_gesture;
+  CuiKeypadButton *btn_0;
 
   guint16     row_spacing;
   guint16     column_spacing;
@@ -255,7 +254,6 @@ cui_keypad_finalize (GObject *object)
 {
   CuiKeypad *self = CUI_KEYPAD (object);
 
-  g_clear_object (&self->long_press_zero_gesture);
   g_clear_pointer (&self->re_separators, g_regex_unref);
   g_clear_pointer (&self->re_no_digits, g_regex_unref);
   g_clear_pointer (&self->re_no_digits_or_symbols, g_regex_unref);
@@ -369,7 +367,7 @@ cui_keypad_class_init (CuiKeypadClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiKeypad, grid);
   gtk_widget_class_bind_template_child (widget_class, CuiKeypad, label_asterisk);
   gtk_widget_class_bind_template_child (widget_class, CuiKeypad, label_hash);
-  gtk_widget_class_bind_template_child (widget_class, CuiKeypad, long_press_zero_gesture);
+  gtk_widget_class_bind_template_child (widget_class, CuiKeypad, btn_0);
 
   gtk_widget_class_bind_template_callback (widget_class, button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, asterisk_button_clicked_cb);
@@ -387,6 +385,9 @@ static void
 cui_keypad_init (CuiKeypad *self)
 {
   g_autoptr (GError) error = NULL;
+
+  GtkGesture *gesture = gtk_gesture_long_press_new ();
+  g_signal_connect_swapped (gesture, "pressed", G_CALLBACK (long_press_zero_cb), self);
 
   self->row_spacing = 6;
   self->column_spacing = 6;
@@ -412,6 +413,8 @@ cui_keypad_init (CuiKeypad *self)
 
   g_type_ensure (CUI_TYPE_KEYPAD_BUTTON);
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  gtk_widget_add_controller (GTK_WIDGET (self->btn_0), GTK_EVENT_CONTROLLER (gesture));
 }
 
 

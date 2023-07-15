@@ -124,17 +124,13 @@ on_new_call_clicked (GtkButton     *button,
 
 
 static gboolean
-key_pressed_cb (GtkWidget     *sender,
-                GdkEvent      *event,
-                CuiDemoWindow *self)
+key_pressed_cb (CuiDemoWindow *self,
+                guint keyval,
+                guint keycode,
+                GdkModifierType state,
+                GtkEventControllerKey* controller)
 {
   GdkModifierType default_modifiers = gtk_accelerator_get_default_mod_mask ();
-  guint keyval;
-  GdkModifierType state;
-
-  state = gdk_key_event_get_consumed_modifiers (event);
-
-  keyval = gdk_key_event_get_keyval (event);
 
   if ((keyval == GDK_KEY_q || keyval == GDK_KEY_Q) &&
       (state & default_modifiers) == GDK_CONTROL_MASK) {
@@ -205,6 +201,9 @@ cui_demo_window_init (CuiDemoWindow *self)
 {
   AdwStyleManager *style_manager = adw_style_manager_get_default();
 
+  GtkEventController *controller = gtk_event_controller_key_new ();
+  g_signal_connect_swapped (controller, "key-pressed", G_CALLBACK (key_pressed_cb), self);
+
   gtk_widget_init_template (GTK_WIDGET (self));
 
   g_object_bind_property_full (style_manager, "dark",
@@ -214,6 +213,8 @@ cui_demo_window_init (CuiDemoWindow *self)
                                NULL,
                                NULL,
                                NULL);
+
+  gtk_widget_add_controller (GTK_WIDGET (self), controller);
 }
 
 CuiDemoWindow *

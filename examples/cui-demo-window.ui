@@ -6,7 +6,6 @@
     <property name="title" translatable="1">Call-UI Demo</property>
     <property name="default_width">800</property>
     <property name="default_height">576</property>
-    <signal name="key-press-event" handler="key_pressed_cb" after="yes" swapped="no"/>
     <child>
       <object class="AdwLeaflet" id="content_box">
         <property name="visible">True</property>

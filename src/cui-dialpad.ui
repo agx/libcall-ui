@@ -87,8 +87,4 @@
       </object>
     </child>
   </template>
-  <object class="GtkGestureLongPress" id="long_press_backspace_gesture">
-    <property name="widget">backspace</property>
-    <signal name="pressed" handler="long_press_backspace_cb" object="CuiDialpad" swapped="true"/>
-  </object>
 </interface>

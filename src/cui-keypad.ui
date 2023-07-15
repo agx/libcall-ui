@@ -180,8 +180,4 @@
       </object>
     </child>
   </template>
-  <object class="GtkGestureLongPress" id="long_press_zero_gesture">
-    <property name="widget">btn_0</property>
-    <signal name="pressed" handler="long_press_zero_cb" object="CuiKeypad" swapped="true"/>
-  </object>
 </interface>

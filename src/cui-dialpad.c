@@ -183,7 +183,12 @@ cui_dialpad_class_init (CuiDialpadClass *klass)
 static void
 cui_dialpad_init (CuiDialpad *self)
 {
+  GtkGesture *gesture = gtk_gesture_long_press_new ();
+  g_signal_connect_swapped (gesture, "pressed", G_CALLBACK (long_press_backspace_cb), self);
+
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  gtk_widget_add_controller (GTK_WIDGET (self->backspace), GTK_EVENT_CONTROLLER (gesture));
 }
 
 /**
