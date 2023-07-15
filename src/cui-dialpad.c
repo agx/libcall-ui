@@ -104,8 +104,12 @@ static void
 backspace_clicked_cb (CuiDialpad *self)
 {
   GtkEntry *entry = cui_keypad_get_entry (self->keypad);
+  const char* text = gtk_editable_get_text (GTK_EDITABLE (entry));
+  unsigned long len = strlen(text);
 
-  g_signal_emit_by_name (entry, "backspace", NULL);
+  if (len > 0) {
+    gtk_editable_delete_text (GTK_EDITABLE (entry), len - 1, len);
+  }
 }
 
 static void

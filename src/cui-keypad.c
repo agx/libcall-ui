@@ -68,7 +68,7 @@ symbol_clicked (CuiKeypad *self,
   if (!self->entry)
     return;
 
-  g_signal_emit_by_name (self->entry, "insert-at-cursor", string, NULL);
+  g_signal_emit_by_name (self->entry, "insert-text", string, 1, string, NULL);
   /* Set focus to the entry only when it can get focus
    * https://gitlab.gnome.org/GNOME/gtk/issues/2204
    */
@@ -136,7 +136,16 @@ insert_text_cb (CuiKeypad   *self,
        g_regex_match (self->re_no_digits, text, 0, NULL))) {
     gtk_widget_error_bell (GTK_WIDGET (editable));
     g_signal_stop_emission_by_name (editable, "insert-text");
+    return;
   }
+
+  g_signal_handlers_block_by_func (editable,
+                               (gpointer) insert_text_cb, self);
+  gtk_editable_insert_text (editable, text, length, position);
+  g_signal_handlers_unblock_by_func (editable,
+                               (gpointer) insert_text_cb, self);
+  g_signal_stop_emission_by_name (editable, "insert-text");
+  gtk_editable_set_position(editable, strlen(gtk_editable_get_text(editable)) + 1);
 }
 
 
@@ -622,7 +631,7 @@ cui_keypad_set_entry (CuiKeypad *self,
      * https://gitlab.gnome.org/GNOME/gtk/merge_requests/978#note_546576 */
     g_object_set (self->entry, "im-module", "gtk-im-context-none", NULL);
 
-    g_signal_connect_swapped (G_OBJECT (self->entry),
+    g_signal_connect_swapped (G_OBJECT (gtk_editable_get_delegate (GTK_EDITABLE (self->entry))),
                               "insert-text",
                               G_CALLBACK (insert_text_cb),
                               self);

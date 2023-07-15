@@ -388,8 +388,6 @@
                       <object class="GtkEntry" id="keypad_entry">
                         <property name="hexpand">1</property>
                         <property name="xalign">0.5</property>
-                        <signal name="delete-text" handler="block_delete_cb" swapped="no"/>
-                        <signal name="insert-text" handler="insert_text_cb" swapped="no"/>
                         <style>
                           <class name="phone-number-entry"/>
                         </style>

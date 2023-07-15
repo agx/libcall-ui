@@ -540,6 +540,15 @@ cui_call_display_init (CuiCallDisplay *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
 
+  g_signal_connect (gtk_editable_get_delegate (GTK_EDITABLE (self->keypad_entry)),
+                            "insert-text",
+                            G_CALLBACK (insert_text_cb),
+                            self);
+  g_signal_connect (gtk_editable_get_delegate (GTK_EDITABLE (self->keypad_entry)),
+                            "delete-text",
+                            G_CALLBACK (block_delete_cb),
+                            self);
+
   if (!call_audio_is_inited ()) {
     g_warning ("libcallaudio not initialized");
     gtk_widget_set_sensitive (GTK_WIDGET (self->speaker), FALSE);
