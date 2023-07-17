@@ -77,11 +77,6 @@
                 </child>
               </object>
             </child>
-            <focus-chain>
-              <widget name="keypad_entry"/>
-              <widget name="control_box"/>
-              <widget name="keypad"/>
-            </focus-chain>
           </object>
         </child>
       </object>
