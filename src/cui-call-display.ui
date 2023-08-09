@@ -3,11 +3,11 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="libhandy" version="1.0"/>
   <template class="CuiCallDisplay" parent="AdwBin">
-    <property name="sensitive">0</property>
-    <property name="vexpand">1</property>
+    <property name="sensitive">False</property>
+    <property name="vexpand">True</property>
     <child>
       <object class="GtkOverlay" id="overlay">
-        <property name="vexpand">1</property>
+        <property name="vexpand">True</property>
         <property name="child">
           <object class="GtkBox">
             <property name="width-request">300</property>
@@ -17,13 +17,13 @@
             <property name="margin-end">24</property>
             <property name="margin-top">24</property>
             <property name="margin-bottom">24</property>
-            <property name="vexpand">1</property>
+            <property name="vexpand">True</property>
             <property name="valign">center</property>
             <property name="orientation">vertical</property>
             <property name="spacing">24</property>
             <child>
               <object class="GtkBox" id="call_info">
-                <property name="hexpand">1</property>
+                <property name="hexpand">True</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">12</property>
                 <child>
@@ -33,7 +33,7 @@
                     <child>
                       <object class="GtkLabel" id="primary_contact_info">
                         <property name="ellipsize">middle</property>
-                        <property name="label" translatable="0">Name Placeholder</property>
+                        <property name="label" translatable="False">Name Placeholder</property>
                         <style>
                           <class name="title-2"/>
                         </style>
@@ -42,7 +42,7 @@
                     <child>
                       <object class="GtkLabel" id="secondary_contact_info">
                         <property name="ellipsize">middle</property>
-                        <property name="label" translatable="0">Number Placeholder</property>
+                        <property name="label" translatable="False">Number Placeholder</property>
                       </object>
                     </child>
                   </object>
@@ -87,7 +87,7 @@
                 <child>
                   <object class="GtkGrid" id="general_controls">
                     <property name="row-spacing">6</property>
-                    <property name="column-homogeneous">1</property>
+                    <property name="column-homogeneous">True</property>
                     <child>
                       <object class="GtkToggleButton" id="mute">
                         <property name="width-request">72</property>
@@ -97,7 +97,7 @@
                         <signal name="toggled" handler="mute_toggled_cb" swapped="no"/>
                         <child>
                           <object class="GtkImage">
-                            <property name="vexpand">1</property>
+                            <property name="vexpand">True</property>
                             <property name="pixel-size">32</property>
                             <property name="icon-name">microphone-sensitivity-muted-symbolic</property>
                           </object>
@@ -120,7 +120,7 @@
                         <signal name="toggled" handler="speaker_toggled_cb" swapped="no"/>
                         <child>
                           <object class="GtkImage">
-                            <property name="vexpand">1</property>
+                            <property name="vexpand">True</property>
                             <property name="pixel-size">32</property>
                             <property name="icon-name">audio-speakers-symbolic</property>
                           </object>
@@ -138,13 +138,13 @@
                       <object class="GtkButton" id="add_call">
                         <property name="width-request">72</property>
                         <property name="height-request">72</property>
-                        <property name="sensitive">0</property>
+                        <property name="sensitive">False</property>
                         <property name="halign">center</property>
                         <property name="valign">start</property>
                         <signal name="clicked" handler="add_call_clicked_cb" swapped="no"/>
                         <child>
                           <object class="GtkImage">
-                            <property name="vexpand">1</property>
+                            <property name="vexpand">True</property>
                             <property name="pixel-size">32</property>
                             <property name="icon-name">list-add-symbolic</property>
                           </object>
@@ -161,10 +161,10 @@
                     <child>
                       <object class="GtkLabel">
                         <property name="valign">start</property>
-                        <property name="vexpand">1</property>
-                        <property name="label" translatable="1">Mute</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="True">Mute</property>
                         <property name="justify">center</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">True</property>
                         <property name="wrap-mode">word-char</property>
                         <property name="max-width-chars">12</property>
                         <layout>
@@ -176,10 +176,10 @@
                     <child>
                       <object class="GtkLabel">
                         <property name="valign">start</property>
-                        <property name="vexpand">1</property>
-                        <property name="label" translatable="1">Speaker</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="True">Speaker</property>
                         <property name="justify">center</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">True</property>
                         <property name="wrap-mode">word-char</property>
                         <property name="max-width-chars">12</property>
                         <layout>
@@ -191,10 +191,10 @@
                     <child>
                       <object class="GtkLabel">
                         <property name="valign">start</property>
-                        <property name="vexpand">1</property>
-                        <property name="label" translatable="1">Add call</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="True">Add call</property>
                         <property name="justify">center</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">True</property>
                         <property name="wrap-mode">word-char</property>
                         <property name="max-width-chars">12</property>
                         <layout>
@@ -208,18 +208,18 @@
                 <child>
                   <object class="GtkGrid" id="gsm_controls">
                     <property name="row-spacing">6</property>
-                    <property name="column-homogeneous">1</property>
+                    <property name="column-homogeneous">True</property>
                     <child>
                       <object class="GtkToggleButton" id="hold">
                         <property name="width-request">72</property>
                         <property name="height-request">72</property>
-                        <property name="sensitive">0</property>
+                        <property name="sensitive">False</property>
                         <property name="halign">center</property>
                         <property name="valign">start</property>
                         <signal name="toggled" handler="hold_toggled_cb" swapped="no"/>
                         <child>
                           <object class="GtkImage">
-                            <property name="vexpand">1</property>
+                            <property name="vexpand">True</property>
                             <property name="pixel-size">32</property>
                             <property name="icon-name">media-playback-pause-symbolic</property>
                           </object>
@@ -236,10 +236,10 @@
                     <child>
                       <object class="GtkLabel">
                         <property name="valign">start</property>
-                        <property name="vexpand">1</property>
-                        <property name="label" translatable="1">Hold</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="True">Hold</property>
                         <property name="justify">center</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">True</property>
                         <property name="wrap-mode">word-char</property>
                         <property name="max-width-chars">12</property>
                         <layout>
@@ -257,7 +257,7 @@
                         <property name="active" bind-source="dial_pad_revealer" bind-property="reveal-child" bind-flags="bidirectional|sync-create"/>
                         <child>
                           <object class="GtkImage">
-                            <property name="vexpand">1</property>
+                            <property name="vexpand">True</property>
                             <property name="pixel-size">32</property>
                             <property name="icon-name">input-dialpad-symbolic</property>
                           </object>
@@ -274,10 +274,10 @@
                     <child>
                       <object class="GtkLabel">
                         <property name="valign">start</property>
-                        <property name="vexpand">1</property>
-                        <property name="label" translatable="1">Dial Pad</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="True">Dial Pad</property>
                         <property name="justify">center</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">True</property>
                         <property name="wrap-mode">word-char</property>
                         <property name="max-width-chars">12</property>
                         <layout>
@@ -288,8 +288,8 @@
                     </child>
                     <child>
                       <object class="GtkBox" id="blank">
-                        <property name="focusable">1</property>
-                        <property name="hexpand">1</property>
+                        <property name="focusable">True</property>
+                        <property name="hexpand">True</property>
                         <layout>
                           <property name="column">2</property>
                           <property name="row">1</property>
@@ -305,8 +305,8 @@
             </child>
             <child>
               <object class="GtkBox" id="action_box">
-                <property name="hexpand">1</property>
-                <property name="homogeneous">1</property>
+                <property name="hexpand">True</property>
+                <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkButton" id="hang_up">
                     <property name="width-request">112</property>
@@ -352,8 +352,8 @@
         <child type="overlay">
           <object class="GtkRevealer" id="dial_pad_revealer">
             <property name="valign">end</property>
-            <property name="hexpand">1</property>
-            <property name="vexpand">0</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">False</property>
             <property name="transition-type">slide-up</property>
             <property name="reveal-child" bind-source="dial_pad" bind-property="active" bind-flags="bidirectional|sync-create"/>
             <property name="child">
@@ -371,7 +371,7 @@
                         <property name="height-request">34</property>
                         <property name="halign">center</property>
                         <property name="valign">start</property>
-                        <property name="has-frame">0</property>
+                        <property name="has-frame">False</property>
                         <signal name="clicked" handler="hide_dial_pad_clicked_cb" swapped="yes"/>
                         <child>
                           <object class="GtkImage">
@@ -386,7 +386,7 @@
                     </child>
                     <child>
                       <object class="GtkEntry" id="keypad_entry">
-                        <property name="hexpand">1</property>
+                        <property name="hexpand">True</property>
                         <property name="xalign">0.5</property>
                         <style>
                           <class name="phone-number-entry"/>
