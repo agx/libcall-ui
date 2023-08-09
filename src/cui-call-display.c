@@ -44,7 +44,7 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CuiCallDisplay {
-  GtkWidget               parent_instance;
+  AdwBin                  parent_instance;
 
   GtkOverlay             *overlay;
 
@@ -77,7 +77,7 @@ struct _CuiCallDisplay {
   gboolean                update_status_time;
 };
 
-G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, ADW_TYPE_BIN);
 
 
 /* Just print an error, the main point is that libcallaudio uses async DBus calls */

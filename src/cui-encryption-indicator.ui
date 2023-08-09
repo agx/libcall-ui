@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="call-ui">
   <requires lib="gtk" version="4.0"/>
-  <template class="CuiEncryptionIndicator" parent="GtkWidget">
+  <template class="CuiEncryptionIndicator" parent="AdwBin">
     <child>
       <object class="GtkStack" id="stack">
         <child>

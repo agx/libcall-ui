@@ -43,7 +43,7 @@ static guint signals[LAST_SIGNAL];
 
 
 struct _CuiDialpad {
-  GtkWidget            parent_instance;
+  AdwBin               parent_instance;
 
   AdwClamp            *clamp;
   GtkEntry            *keypad_entry;
@@ -52,7 +52,7 @@ struct _CuiDialpad {
   GtkButton           *backspace;
 };
 
-G_DEFINE_TYPE (CuiDialpad, cui_dialpad, GTK_TYPE_WIDGET);
+G_DEFINE_TYPE (CuiDialpad, cui_dialpad, ADW_TYPE_BIN);
 
 static void
 cui_dialpad_get_property (GObject    *object,

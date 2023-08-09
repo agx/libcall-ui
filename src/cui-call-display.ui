@@ -2,7 +2,7 @@
 <interface domain="call-ui">
   <requires lib="gtk" version="4.0"/>
   <requires lib="libhandy" version="1.0"/>
-  <template class="CuiCallDisplay" parent="GtkWidget">
+  <template class="CuiCallDisplay" parent="AdwBin">
     <property name="sensitive">0</property>
     <property name="vexpand">1</property>
     <child>

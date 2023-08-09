@@ -2,7 +2,7 @@
 <interface domain="call-ui">
   <requires lib="gtk" version="4.0"/>
   <requires lib="libhandy" version="0.0"/>
-  <template class="CuiDialpad" parent="GtkWidget">
+  <template class="CuiDialpad" parent="AdwBin">
     <child>
       <object class="AdwClamp" id="clamp">
         <property name="visible">True</property>

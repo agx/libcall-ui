@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="call-ui">
   <requires lib="gtk" version="4.0"/>
-  <template class="CuiKeypad" parent="GtkWidget">
+  <template class="CuiKeypad" parent="AdwBin">
     <child>
       <object class="GtkGrid" id="grid">
         <property name="hexpand">0</property>
