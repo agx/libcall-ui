@@ -197,12 +197,12 @@ cui_demo_call_class_init (CuiDemoCallClass *klass)
 }
 
 
-static GdkTexture *
+static GdkPaintable *
 cui_demo_call_get_avatar_icon (CuiCall *call)
 {
   g_return_val_if_fail (CUI_IS_DEMO_CALL (call), NULL);
 
-  return CUI_DEMO_CALL (call)->avatar_icon;
+  return GDK_PAINTABLE (CUI_DEMO_CALL (call)->avatar_icon);
 }
 
 
