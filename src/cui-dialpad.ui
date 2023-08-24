@@ -5,7 +5,6 @@
   <template class="CuiDialpad" parent="AdwBin">
     <child>
       <object class="AdwClamp" id="clamp">
-        <property name="visible">True</property>
         <property name="maximum-size">300</property>
         <child>
           <object class="GtkBox">
@@ -28,7 +27,6 @@
             </child>
             <child>
               <object class="CuiKeypad" id="keypad">
-                <property name="visible">True</property>
                 <property name="halign">center</property>
                 <property name="margin-top">18</property>
                 <property name="margin-bottom">18</property>

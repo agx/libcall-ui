@@ -49,7 +49,6 @@
                 </child>
                 <child>
                   <object class="AdwAvatar" id="avatar">
-                    <property name="visible">True</property>
                     <property name="size">80</property>
                   </object>
                 </child>
@@ -68,7 +67,6 @@
                     </child>
                     <child>
                       <object class="CuiEncryptionIndicator" id="encryption_indicator">
-                        <property name="visible">True</property>
                         <style>
                           <class name="dim-label"/>
                         </style>
@@ -395,7 +393,6 @@
                     </child>
                     <child>
                       <object class="CuiKeypad" id="keypad">
-                        <property name="visible">True</property>
                         <property name="column_spacing">16</property>
                         <property name="row_spacing">10</property>
                         <property name="halign">center</property>
