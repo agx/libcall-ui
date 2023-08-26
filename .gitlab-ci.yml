@@ -8,7 +8,7 @@ variables:
   DEPS: >-
     ccache build-essential libgtk-4-dev libcallaudio-dev libadwaita-1-dev meson
     python3-toml python3-jinja2 python3-typogrify libgirepository1.0-dev git
-    xvfb gcovr libxml2-utils gi-docgen
+    xvfb gcovr libxml2-utils gi-docgen dbus-x11
 
 before_script:
   - echo "man-db man-db/auto-update boolean false" | debconf-set-selections
