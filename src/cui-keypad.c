@@ -238,6 +238,30 @@ cui_keypad_get_property (GObject    *object,
 
 
 static void
+cui_keypad_measure (GtkWidget     *widget,
+                    GtkOrientation orientation,
+                    int            for_size,
+                    int           *minimum,
+                    int           *natural,
+                    int           *minimum_baseline,
+                    int           *natural_baseline)
+{
+  CuiKeypad *self = CUI_KEYPAD (widget);
+  GtkWidget *grid = GTK_WIDGET (self->grid);
+  gtk_widget_measure(grid, orientation, for_size, minimum, natural, minimum_baseline, natural_baseline);
+}
+
+
+static GtkSizeRequestMode
+cui_keypad_get_request_mode (GtkWidget *widget)
+{
+  CuiKeypad *self = CUI_KEYPAD (widget);
+  GtkWidget *grid = GTK_WIDGET (self->grid);
+  return gtk_widget_get_request_mode(grid);
+}
+
+
+static void
 cui_keypad_dispose (GObject *object)
 {
   CuiKeypad *self = CUI_KEYPAD (object);
@@ -273,6 +297,9 @@ cui_keypad_class_init (CuiKeypadClass *klass)
 
   object_class->set_property = cui_keypad_set_property;
   object_class->get_property = cui_keypad_get_property;
+
+  widget_class->measure = cui_keypad_measure;
+  widget_class->get_request_mode = cui_keypad_get_request_mode;
 
   /**
    * CuiKeypad:row-spacing:
