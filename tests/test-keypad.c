@@ -244,19 +244,19 @@ test_cui_keypad_separators (void)
 
   cui_keypad_set_entry (keypad, entry);
 
-  gtk_entry_set_text (entry, "(0123) / 456-789");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "0123456789");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "(0123) / 456-789");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "0123456789");
 
   cui_keypad_set_symbols_visible (keypad, FALSE);
-  gtk_entry_set_text (entry, "+31[123] / (456) - 789.0");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "+31[123] / (456) - 789.0");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "");
 
   cui_keypad_set_symbols_visible (keypad, TRUE);
-  gtk_entry_set_text (entry, "+31[123] / (456) - 789.0");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "+311234567890");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "+31[123] / (456) - 789.0");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "+311234567890");
 
-  gtk_entry_set_text (entry, "+31(0)123 / (456) - 789.0");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "+311234567890");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "+31(0)123 / (456) - 789.0");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "+311234567890");
 }
 
 static void
@@ -270,17 +270,17 @@ test_cui_keypad_invalid_input (void)
 
   cui_keypad_set_entry (keypad, entry);
 
-  gtk_entry_set_text (entry, "not-a-number");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "not-a-number");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "");
 
-  gtk_entry_set_text (entry, "(0123) still-not-a-number / (456) - 789.0");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "(0123) still-not-a-number / (456) - 789.0");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "");
 
-  gtk_entry_set_text (entry, "?%!@");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "?%!@");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "");
 
-  gtk_entry_set_text (entry, "(0123) ? / (456) - 789.0");
-  g_assert_cmpstr (gtk_entry_get_text (entry), ==, "");
+  gtk_editable_set_text (GTK_EDITABLE (entry), "(0123) ? / (456) - 789.0");
+  g_assert_cmpstr (gtk_editable_get_text (GTK_EDITABLE (entry)), ==, "");
 }
 
 

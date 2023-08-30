@@ -7,6 +7,7 @@ static void
 test_dialpad (void)
 {
   CuiDialpad *dialpad;
+  GtkWidget *dialpad_w;
   GValue val = G_VALUE_INIT;
 
   g_test_expect_message ("Cui", G_LOG_LEVEL_WARNING, "libcallaudio not initialized");
@@ -29,7 +30,8 @@ test_dialpad (void)
 
   /* Clean up */
   g_value_unset (&val);
-  gtk_widget_destroy (GTK_WIDGET (dialpad));
+  dialpad_w = GTK_WIDGET (dialpad);
+  g_clear_pointer (&dialpad_w, gtk_widget_unrealize);
 }
 
 int

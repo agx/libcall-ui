@@ -38,14 +38,13 @@ enum {
 static GParamSpec *props[PROP_LAST_PROP];
 
 struct _CuiKeypad {
-  GtkBin      parent_instance;
+  AdwBin      parent_instance;
 
   GtkEntry   *entry;
   GtkGrid    *grid;
   GtkLabel   *label_asterisk;
   GtkLabel   *label_hash;
-
-  GtkGesture *long_press_zero_gesture;
+  CuiKeypadButton *btn_0;
 
   guint16     row_spacing;
   guint16     column_spacing;
@@ -57,7 +56,7 @@ struct _CuiKeypad {
   GRegex     *re_no_digits_or_symbols;
 };
 
-G_DEFINE_TYPE (CuiKeypad, cui_keypad, GTK_TYPE_BIN)
+G_DEFINE_TYPE (CuiKeypad, cui_keypad, ADW_TYPE_BIN)
 
 static void
 symbol_clicked (CuiKeypad *self,
@@ -68,7 +67,7 @@ symbol_clicked (CuiKeypad *self,
   if (!self->entry)
     return;
 
-  g_signal_emit_by_name (self->entry, "insert-at-cursor", string, NULL);
+  g_signal_emit_by_name (self->entry, "insert-text", string, 1, string, NULL);
   /* Set focus to the entry only when it can get focus
    * https://gitlab.gnome.org/GNOME/gtk/issues/2204
    */
@@ -136,7 +135,16 @@ insert_text_cb (CuiKeypad   *self,
        g_regex_match (self->re_no_digits, text, 0, NULL))) {
     gtk_widget_error_bell (GTK_WIDGET (editable));
     g_signal_stop_emission_by_name (editable, "insert-text");
+    return;
   }
+
+  g_signal_handlers_block_by_func (editable,
+                               (gpointer) insert_text_cb, self);
+  gtk_editable_insert_text (editable, text, length, position);
+  g_signal_handlers_unblock_by_func (editable,
+                               (gpointer) insert_text_cb, self);
+  g_signal_stop_emission_by_name (editable, "insert-text");
+  gtk_editable_set_position(editable, strlen(gtk_editable_get_text(editable)) + 1);
 }
 
 
@@ -230,11 +238,46 @@ cui_keypad_get_property (GObject    *object,
 
 
 static void
+cui_keypad_measure (GtkWidget     *widget,
+                    GtkOrientation orientation,
+                    int            for_size,
+                    int           *minimum,
+                    int           *natural,
+                    int           *minimum_baseline,
+                    int           *natural_baseline)
+{
+  CuiKeypad *self = CUI_KEYPAD (widget);
+  GtkWidget *grid = GTK_WIDGET (self->grid);
+  gtk_widget_measure(grid, orientation, for_size, minimum, natural, minimum_baseline, natural_baseline);
+}
+
+
+static GtkSizeRequestMode
+cui_keypad_get_request_mode (GtkWidget *widget)
+{
+  CuiKeypad *self = CUI_KEYPAD (widget);
+  GtkWidget *grid = GTK_WIDGET (self->grid);
+  return gtk_widget_get_request_mode(grid);
+}
+
+
+static void
+cui_keypad_dispose (GObject *object)
+{
+  CuiKeypad *self = CUI_KEYPAD (object);
+
+  GtkWidget *grid = GTK_WIDGET (self->grid);
+  g_clear_pointer (&grid, gtk_widget_unparent);
+
+  G_OBJECT_CLASS (cui_keypad_parent_class)->dispose (object);
+}
+
+
+static void
 cui_keypad_finalize (GObject *object)
 {
   CuiKeypad *self = CUI_KEYPAD (object);
 
-  g_clear_object (&self->long_press_zero_gesture);
   g_clear_pointer (&self->re_separators, g_regex_unref);
   g_clear_pointer (&self->re_no_digits, g_regex_unref);
   g_clear_pointer (&self->re_no_digits_or_symbols, g_regex_unref);
@@ -249,10 +292,14 @@ cui_keypad_class_init (CuiKeypadClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose = cui_keypad_dispose;
   object_class->finalize = cui_keypad_finalize;
 
   object_class->set_property = cui_keypad_set_property;
   object_class->get_property = cui_keypad_get_property;
+
+  widget_class->measure = cui_keypad_measure;
+  widget_class->get_request_mode = cui_keypad_get_request_mode;
 
   /**
    * CuiKeypad:row-spacing:
@@ -347,15 +394,17 @@ cui_keypad_class_init (CuiKeypadClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiKeypad, grid);
   gtk_widget_class_bind_template_child (widget_class, CuiKeypad, label_asterisk);
   gtk_widget_class_bind_template_child (widget_class, CuiKeypad, label_hash);
-  gtk_widget_class_bind_template_child (widget_class, CuiKeypad, long_press_zero_gesture);
+  gtk_widget_class_bind_template_child (widget_class, CuiKeypad, btn_0);
 
   gtk_widget_class_bind_template_callback (widget_class, button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, asterisk_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, hash_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, long_press_zero_cb);
 
-  gtk_widget_class_set_accessible_role (widget_class, ATK_ROLE_DIAL);
+  gtk_widget_class_set_accessible_role (widget_class, GTK_ACCESSIBLE_ROLE_GRID);
   gtk_widget_class_set_css_name (widget_class, "cui-keypad");
+
+  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_GRID_LAYOUT);
 }
 
 
@@ -363,6 +412,9 @@ static void
 cui_keypad_init (CuiKeypad *self)
 {
   g_autoptr (GError) error = NULL;
+
+  GtkGesture *gesture = gtk_gesture_long_press_new ();
+  g_signal_connect_swapped (gesture, "pressed", G_CALLBACK (long_press_zero_cb), self);
 
   self->row_spacing = 6;
   self->column_spacing = 6;
@@ -388,6 +440,8 @@ cui_keypad_init (CuiKeypad *self)
 
   g_type_ensure (CUI_TYPE_KEYPAD_BUTTON);
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  gtk_widget_add_controller (GTK_WIDGET (self->btn_0), GTK_EVENT_CONTROLLER (gesture));
 }
 
 
@@ -602,12 +656,12 @@ cui_keypad_set_entry (CuiKeypad *self,
   if (entry) {
     self->entry = g_object_ref (entry);
 
-    gtk_widget_show (GTK_WIDGET (self->entry));
+    gtk_widget_set_visible (GTK_WIDGET (self->entry), true);
     /* Workaround: To keep the osk closed
      * https://gitlab.gnome.org/GNOME/gtk/merge_requests/978#note_546576 */
     g_object_set (self->entry, "im-module", "gtk-im-context-none", NULL);
 
-    g_signal_connect_swapped (G_OBJECT (self->entry),
+    g_signal_connect_swapped (G_OBJECT (gtk_editable_get_delegate (GTK_EDITABLE (self->entry))),
                               "insert-text",
                               G_CALLBACK (insert_text_cb),
                               self);
@@ -657,7 +711,7 @@ cui_keypad_set_start_action (CuiKeypad *self,
     return;
 
   if (old_widget != NULL)
-    gtk_container_remove (GTK_CONTAINER (self->grid), old_widget);
+    gtk_grid_remove (self->grid, old_widget);
 
   if (start_action != NULL)
     gtk_grid_attach (GTK_GRID (self->grid), start_action, 0, 3, 1, 1);
@@ -707,7 +761,7 @@ cui_keypad_set_end_action (CuiKeypad *self,
     return;
 
   if (old_widget != NULL)
-    gtk_container_remove (GTK_CONTAINER (self->grid), old_widget);
+    gtk_grid_remove (self->grid, old_widget);
 
   if (end_action != NULL)
     gtk_grid_attach (GTK_GRID (self->grid), end_action, 2, 3, 1, 1);
