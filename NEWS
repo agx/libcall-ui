@@ -4,7 +4,6 @@ Released: September 2023
 * Switch to GTK4
 * Ignore visual separators in entry
 * Add call duration format helper
-Updating v0.1.0..HEAD
 * Contributors:
     * Anton Lazarev
     * Evangelos Ribeiro Tzaras
