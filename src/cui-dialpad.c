@@ -64,7 +64,7 @@ cui_dialpad_get_property (GObject    *object,
 
   switch (property_id) {
   case PROP_NUMBER:
-    g_value_set_string (value, gtk_editable_get_text (GTK_EDITABLE (self->keypad_entry)));
+    g_value_set_string (value, cui_dialpad_get_number (self));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -82,7 +82,7 @@ cui_dialpad_set_property (GObject      *object,
 
   switch (property_id) {
   case PROP_NUMBER:
-    gtk_editable_set_text (GTK_EDITABLE (self->keypad_entry), g_value_get_string (value));
+    cui_dialpad_set_number (self, g_value_get_string (value));
     break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -154,6 +154,11 @@ cui_dialpad_class_init (CuiDialpadClass *klass)
                   1,
                   G_TYPE_STRING);
 
+  /**
+   * CuiDialpad:number:
+   *
+   * The current number in the dialpad
+   */
   props[PROP_NUMBER] = g_param_spec_string ("number",
                                             "phone number",
                                             "phone number to dial",
@@ -202,4 +207,35 @@ cui_dialpad_new (void)
 {
   return g_object_new (CUI_TYPE_DIALPAD,
                        NULL);
+}
+
+/**
+ * cui_dialpad_get_number:
+ * @self: The dialpad
+ *
+ * Gets the current number in the dialpad
+ *
+ * Returns: the current number
+ */
+const char *
+cui_dialpad_get_number (CuiDialpad *self)
+{
+  g_return_val_if_fail (CUI_IS_DIALPAD (self), NULL);
+
+  return gtk_editable_get_text (GTK_EDITABLE (self->keypad_entry));
+}
+
+/**
+ * cui_dialpad_set_number:
+ * @self: The dialpad
+ * @number: The number to set
+ *
+ * Sets the current number in the dialpad
+ */
+void
+cui_dialpad_set_number (CuiDialpad *self, const char *number)
+{
+  g_return_if_fail (CUI_IS_DIALPAD (self));
+
+  gtk_editable_set_text (GTK_EDITABLE (self->keypad_entry), number);
 }
