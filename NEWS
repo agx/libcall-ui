@@ -1,3 +1,17 @@
+libcall-ui 0.2.0
+----------------
+Released: April 2024
+* Add getters for dialpad properties
+* Remove superfluous layout managers
+* Build system cleanups
+* Contributors:
+    * Anton Lazarev
+    * Guido Günther
+* UI translations:
+    * Pierre Michel Augustin (ht)
+    * Vasil Pupkin (be)
+    * Vittorio Monti (it)
+
 libcall-ui 0.2.0~beta1
 -----------------------
 Released: September 2023
