@@ -530,8 +530,6 @@ cui_call_display_class_init (CuiCallDisplayClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, speaker_toggled_cb);
 
   gtk_widget_class_set_css_name (widget_class, "cui-call-display");
-
-  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 
