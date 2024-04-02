@@ -180,8 +180,6 @@ cui_dialpad_class_init (CuiDialpadClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, long_press_backspace_cb);
 
   gtk_widget_class_set_css_name (widget_class, "cui-dialpad");
-
-  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
 
 

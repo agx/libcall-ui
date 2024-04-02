@@ -137,6 +137,4 @@ cui_encryption_indicator_class_init (CuiEncryptionIndicatorClass *klass)
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, is_not_encrypted);
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, is_encrypted);
   gtk_widget_class_bind_template_child (widget_class, CuiEncryptionIndicator, stack);
-
-  gtk_widget_class_set_layout_manager_type(widget_class, GTK_TYPE_BOX_LAYOUT);
 }
