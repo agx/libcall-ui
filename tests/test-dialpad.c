@@ -27,6 +27,7 @@ test_dialpad (void)
   g_object_get_property (G_OBJECT (dialpad), "number", &val);
 
   g_assert_cmpstr (g_value_get_string (&val), ==, "+3129877983#*3129877983");
+  g_assert_cmpstr (cui_dialpad_get_number (dialpad), ==, "+3129877983#*3129877983");
 
   /* Clean up */
   g_value_unset (&val);
