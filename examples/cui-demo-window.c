@@ -164,7 +164,7 @@ cui_demo_window_class_init (CuiDemoWindowClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/Demo/ui/cui-demo-window.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/org/gnome/CallUI/Demo/cui-demo-window.ui");
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, stack);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, split_view);
   gtk_widget_class_bind_template_child (widget_class, CuiDemoWindow, call_display);
@@ -203,7 +203,7 @@ cui_demo_window_init (CuiDemoWindow *self)
 }
 
 CuiDemoWindow *
-cui_demo_window_new (GtkApplication *application)
+cui_demo_window_new (AdwApplication *application)
 {
   return g_object_new (CUI_TYPE_DEMO_WINDOW, "application", application, NULL);
 }
