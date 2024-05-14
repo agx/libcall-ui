@@ -4,7 +4,7 @@ stages:
   - deploy
 
 variables:
-  DIST: bookworm
+  DIST: trixie
   DEPS: >-
     ccache build-essential libgtk-4-dev libcallaudio-dev libadwaita-1-dev meson
     python3-toml python3-jinja2 python3-typogrify libgirepository1.0-dev git
@@ -24,7 +24,7 @@ before_script:
     ninja -C _build
 
 build-debian-gcc:
-  image: debian:bookworm
+  image: debian:trixie
   stage: build
   variables:
     BUILD_OPTS: -Db_coverage=true --werror
@@ -37,7 +37,7 @@ build-debian-gcc:
 
 # TODO: move to prebuilt container
 doc:
-  image: debian:bookworm
+  image: debian:trixie
   stage: build
   variables:
     BUILD_OPTS: >-
@@ -52,7 +52,7 @@ doc:
       - _doc/
 
 check-po:
-  image: debian:bookworm
+  image: debian:trixie
   stage: tests
   before_script:
     - apt-get -y update
@@ -61,7 +61,7 @@ check-po:
     - tools/check-po
 
 tests:
-  image: debian:bookworm
+  image: debian:trixie
   stage: tests
   variables:
   needs: ['build-debian-gcc']
