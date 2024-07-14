@@ -60,6 +60,10 @@ check-po:
   stage: tests
   extends: .phosh-check-po
 
+check-consistency:
+  stage: tests
+  extends: .phosh-check-consistency
+
 tests:
   image: debian:trixie
   stage: tests
