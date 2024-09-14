@@ -1,3 +1,8 @@
+include:
+ - project: 'guidog/meta-phosh'
+   ref: '545f3904b42e88618c1344d99d252a023f275967'
+   file: '/ci/phosh-common-jobs.yml'
+
 stages:
   - build
   - tests
@@ -52,13 +57,12 @@ doc:
       - _doc/
 
 check-po:
-  image: debian:trixie
   stage: tests
-  before_script:
-    - apt-get -y update
-    - apt-get -y install intltool gettext
-  script:
-    - tools/check-po
+  extends: .phosh-check-po
+
+check-consistency:
+  stage: tests
+  extends: .phosh-check-consistency
 
 tests:
   image: debian:trixie
