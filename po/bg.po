@@ -1,0 +1,52 @@
+# Bulgarian translation of libcall-ui po-file.
+# Copyright (C) 2024 libcall-ui's COPYRIGHT HOLDER
+# This file is distributed under the same license as the libcall-ui package.
+# twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libcall-ui main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
+"issues/\n"
+"POT-Creation-Date: 2024-09-14 20:23+0000\n"
+"PO-Revision-Date: 2024-10-22 18:12+0200\n"
+"Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
+"Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 46.1\n"
+
+#: src/cui-call.c:308
+msgid "Call active"
+msgstr "Активно обаждане"
+
+#: src/cui-call.c:310
+msgid "Call held"
+msgstr "Задържано обаждане"
+
+#: src/cui-call.c:312
+msgid "Calling…"
+msgstr "Обаждане…"
+
+#: src/cui-call.c:314
+msgid "Incoming call"
+msgstr "Входящо обаждане"
+
+#: src/cui-call.c:316
+msgid "Call ended"
+msgstr "Обаждането приключи"
+
+#: src/cui-call.c:319 src/cui-call-display.c:285
+msgid "Unknown"
+msgstr "Непознат"
+
+#: src/cui-call-display.c:102
+msgid "Accepting call…"
+msgstr "Приемане на обаждането…"
+
+#: src/cui-call-display.c:117
+msgid "Hanging up…"
+msgstr "Затваряне…"
