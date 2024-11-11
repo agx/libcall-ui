@@ -9,9 +9,6 @@
 
 #pragma once
 
-#if !defined(_HANDY_INSIDE) && !defined(HANDY_COMPILATION)
-#endif
-
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
