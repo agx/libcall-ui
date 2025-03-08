@@ -1,0 +1,51 @@
+# Arabic translation for libcall-ui.
+# Copyright (C) 2024 libcall-ui's COPYRIGHT HOLDER
+# This file is distributed under the same license as the libcall-ui package.
+# Ahmed Mohammed <iramosu@protonmail.com>,  2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libcall-ui main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Phosh/libcall-ui/"
+"issues/\n"
+"POT-Creation-Date: 2024-09-14 20:23+0000\n"
+"PO-Revision-Date: 2024-10-22 13:56+0300\n"
+"Last-Translator: Ahmed Mohammed <iramosu@protonmail.com>\n"
+"Language-Team: Arabic <Arabic>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.3\n"
+
+#: src/cui-call.c:308
+msgid "Call active"
+msgstr "المكالمة نشطة"
+
+#: src/cui-call.c:310
+msgid "Call held"
+msgstr "المكالمة محجوزة"
+
+#: src/cui-call.c:312
+msgid "Calling…"
+msgstr "يتصل…"
+
+#: src/cui-call.c:314
+msgid "Incoming call"
+msgstr "مكالمة واردة"
+
+#: src/cui-call.c:316
+msgid "Call ended"
+msgstr "انتهت المكالمة"
+
+#: src/cui-call.c:319 src/cui-call-display.c:285
+msgid "Unknown"
+msgstr "مجهول"
+
+#: src/cui-call-display.c:102
+msgid "Accepting call…"
+msgstr "تُقبل المكالمة…"
+
+#: src/cui-call-display.c:117
+msgid "Hanging up…"
+msgstr "تُقطع المكالمة…"
