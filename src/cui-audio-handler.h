@@ -20,6 +20,8 @@ G_DECLARE_INTERFACE (CuiAudioHandler, cui_audio_handler, CUI, AUDIO_HANDLER, GOb
  * @enable_call_mode: Enable or disable the "call" audio mode
  *
  * Interface for handling audio management during a call.
+ *
+ * All interface methods are required to be implemented.
  */
 struct _CuiAudioHandlerInterface {
   GTypeInterface parent_iface;
