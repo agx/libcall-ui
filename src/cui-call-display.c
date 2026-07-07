@@ -16,11 +16,12 @@
 #include "cui-encryption-indicator-priv.h"
 
 #include "cui-call.h"
+#include "cui-main.h"
+#include "cui-audio-handler.h"
 
 #include <adwaita.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <libcallaudio.h>
 
 #define IS_NULL_OR_EMPTY(x)  ((x) == NULL || (x)[0] == '\0')
 
@@ -80,18 +81,6 @@ struct _CuiCallDisplay {
 G_DEFINE_TYPE (CuiCallDisplay, cui_call_display, ADW_TYPE_BIN);
 
 
-/* Just print an error, the main point is that libcallaudio uses async DBus calls */
-static void
-on_libcallaudio_async_finished (gboolean success, GError *error, gpointer data)
-{
-  if (!success) {
-    g_return_if_fail (error && error->message);
-    g_warning ("Failed to select audio mode: %s", error->message);
-    g_error_free (error);
-  }
-}
-
-
 static void
 on_answer_clicked (CuiCallDisplay *self)
 {
@@ -134,11 +123,13 @@ mute_toggled_cb (GtkToggleButton *togglebutton,
                  CuiCallDisplay  *self)
 {
   gboolean want_mute;
+  CuiAudioHandler *audio_handler;
 
   want_mute = gtk_toggle_button_get_active (togglebutton);
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  call_audio_mute_mic_async (want_mute, on_libcallaudio_async_finished, NULL);
-G_GNUC_END_IGNORE_DEPRECATIONS
+
+  audio_handler = cui_get_default_audio_handler ();
+  g_return_if_fail (audio_handler);
+  cui_audio_handler_mute_mic (audio_handler, want_mute);
 }
 
 
@@ -147,11 +138,14 @@ speaker_toggled_cb (GtkToggleButton *togglebutton,
                     CuiCallDisplay  *self)
 {
   gboolean want_speaker;
+  CuiAudioHandler *audio_handler;
 
   want_speaker = gtk_toggle_button_get_active (togglebutton);
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  call_audio_enable_speaker_async (want_speaker, on_libcallaudio_async_finished, NULL);
-G_GNUC_END_IGNORE_DEPRECATIONS
+
+  audio_handler = cui_get_default_audio_handler ();
+  g_return_if_fail (audio_handler);
+  cui_audio_handler_enable_speaker (audio_handler, want_speaker);
+
 }
 
 
@@ -191,6 +185,7 @@ on_call_state_changed (CuiCallDisplay *self,
                        CuiCall        *call)
 {
   CuiCallState state;
+  CuiAudioHandler *handler;
 
   g_return_if_fail (CUI_IS_CALL_DISPLAY (self));
   g_return_if_fail (CUI_IS_CALL (call));
@@ -200,6 +195,8 @@ on_call_state_changed (CuiCallDisplay *self,
   g_debug ("Call %p changed state to %s",
            call,
            cui_call_state_to_string (state));
+
+  handler = cui_get_default_audio_handler ();
 
   /* if the state changed than the call must be responsive */
   self->update_status_time = TRUE;
@@ -233,25 +230,20 @@ on_call_state_changed (CuiCallDisplay *self,
       state != CUI_CALL_STATE_CALLING);
 
     /* TODO: remove CUI_CALL_TYPE_UNKNOWN when all library users are recent enough */
-    if (cui_call_get_call_type(call) == CUI_CALL_TYPE_CELLULAR ||
-        cui_call_get_call_type(call) == CUI_CALL_TYPE_UNKNOWN) {
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-      call_audio_select_mode_async (CALL_AUDIO_MODE_CALL,
-                                    on_libcallaudio_async_finished,
-                                    NULL);
-G_GNUC_END_IGNORE_DEPRECATIONS
+    if (cui_call_get_call_type (call) == CUI_CALL_TYPE_CELLULAR ||
+        cui_call_get_call_type (call) == CUI_CALL_TYPE_UNKNOWN) {
+      if (handler &&
+          cui_call_get_call_type (call) == CUI_CALL_TYPE_CELLULAR) {
+        cui_audio_handler_enable_call_mode (handler, TRUE);
+      }
       self->needs_cam_reset = TRUE;
     }
     break;
 
   case CUI_CALL_STATE_DISCONNECTED:
-    if (self->needs_cam_reset)
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-      call_audio_select_mode_async (CALL_AUDIO_MODE_DEFAULT,
-                                    on_libcallaudio_async_finished,
-                                    NULL);
-G_GNUC_END_IGNORE_DEPRECATIONS
-
+    if (self->needs_cam_reset && handler) {
+      cui_audio_handler_enable_call_mode (handler, FALSE);
+    }
     gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
     break;
 
@@ -557,14 +549,6 @@ cui_call_display_init (CuiCallDisplay *self)
                             "delete-text",
                             G_CALLBACK (block_delete_cb),
                             self);
-
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  if (!call_audio_is_inited ()) {
-G_GNUC_END_IGNORE_DEPRECATIONS
-    g_warning ("libcallaudio not initialized");
-    gtk_widget_set_sensitive (GTK_WIDGET (self->speaker), FALSE);
-    gtk_widget_set_sensitive (GTK_WIDGET (self->mute), FALSE);
-  }
 }
 
 /**
